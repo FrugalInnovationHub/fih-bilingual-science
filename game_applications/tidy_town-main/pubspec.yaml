@@ -1,0 +1,164 @@
+name: tidy_town
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '^3.7.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  shared_preferences: ^2.2.2
+  lottie: ^3.3.1
+  google_fonts: ^6.1.0
+  flutter_tts: ^3.8.5
+  audioplayers: ^5.2.1
+  redis: ^3.0.2
+  http: ^1.1.0
+  dio: ^5.3.2
+  
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/tidytown/images/welcome.gif
+    
+    - assets/tidytown/images/avatar.png
+    - assets/tidytown/images/home_back.png
+    - assets/tidytown/images/1.png
+    - assets/tidytown/images/recycle/recycle_ws.jpeg
+    - assets/tidytown/images/recycle/paper.png
+    - assets/tidytown/images/recycle/plastic.png
+    - assets/tidytown/images/recycle/glass.png
+    - assets/tidytown/images/recycle/metal.png
+    - assets/tidytown/images/recycle/pizza.jpg
+    - assets/tidytown/images/recycle/banana.jpeg
+    # - assets/tidytown/images/recycle/background.jpeg
+    - assets/tidytown/images/recycle/story1.jpeg
+    - assets/tidytown/images/recycle/story2.png
+    - assets/tidytown/images/recycle/story3.png
+    - assets/tidytown/images/recycle/story4.png
+    - assets/tidytown/images/recycle/rocky_pic1.png
+    - assets/tidytown/images/recycle/rocky_pic2.png
+    - assets/tidytown/images/recycle/rocky_pic3.png
+    - assets/tidytown/images/recycle/rocky_pic4.png
+    - assets/tidytown/images/compost/compost_ws.png
+    - assets/tidytown/images/landfill/landfill_ws.jpg
+    - assets/tidytown/images/recycle/lunalast.gif
+    - assets/tidytown/images/recycle/luna3.png
+    - assets/tidytown/images/recycle/luna1.png
+    - assets/tidytown/images/recycle/luna2.png
+    - assets/tidytown/images/recycle/luna4.png
+    - assets/tidytown/images/recycle/luna5.png
+    
+    - assets/tidytown/images/recycle/wally1.png
+    - assets/tidytown/images/recycle/wally2.png
+    - assets/tidytown/images/recycle/wally3.png
+    - assets/tidytown/images/recycle/wally4.png
+    - assets/tidytown/images/recycle/wally5.png
+    - assets/tidytown/images/recycle/wally6.png
+    - assets/tidytown/images/recycle/wally7.png
+    - assets/tidytown/images/recycle/wally8.png
+    - assets/tidytown/images/recycle/moral.png
+    - assets/tidytown/images/HomePage.png
+    - assets/tidytown/images/recycle/learning.png
+    - assets/tidytown/images/recycle/whatcanbe.png
+    - assets/tidytown/images/recycle/newb.gif
+    
+    # Compost images
+    - assets/tidytown/images/compost/background.jpeg
+    - assets/tidytown/images/compost/whatcanbe.png
+    - assets/tidytown/images/compost/fruits.png
+    - assets/tidytown/images/compost/coffee.png
+    - assets/tidytown/images/compost/eggshells.png
+    - assets/tidytown/images/compost/yard.png
+    - assets/tidytown/images/compost/plastic.png
+    - assets/tidytown/images/compost/meat.png
+    - assets/tidytown/images/compost/learning.png
+    - assets/tidytown/images/compost/CompostLearning1.png
+    - assets/tidytown/images/compost/CompostLearning2.png
+    - assets/tidytown/images/compost/CompostLearning3.png
+    - assets/tidytown/images/compost/CompostLearning4.png
+    - assets/tidytown/images/compost/CompostLearning5.png
+    - assets/tidytown/images/compost/CompostLearning6.png
+    - assets/tidytown/images/compost/whatisc.gif
+
+    # Landfill images
+    - assets/tidytown/images/landfill/whatisl.gif
+    - assets/tidytown/images/landfill/whatgoes.png
+    - assets/tidytown/images/landfill/learning.png
+    - assets/tidytown/images/landfill/LandfillLearning1.png
+    - assets/tidytown/images/landfill/LandfillLearning2.png
+    - assets/tidytown/images/landfill/LandfillLearning3.png
+    - assets/tidytown/images/landfill/LandfillLearning4.png
+    - assets/tidytown/images/landfill/LandfillLearning5.png
+    - assets/tidytown/images/landfill/LandfillLearning6.png
+
+    # Game images - Bins
+    - assets/tidytown/images/game/bin_green.png
+    - assets/tidytown/images/game/bin_yellow.png
+    - assets/tidytown/images/game/bin_red.png
+    
+    # Game images - Memory Match Items
+    - assets/tidytown/images/game/plastic_bottle.png
+    - assets/tidytown/images/game/apple_core.png
+    - assets/tidytown/images/game/newspaper.png
+    - assets/tidytown/images/game/broken_glass.png
+    - assets/tidytown/images/game/banana_peel.png
+    - assets/tidytown/images/game/plastic_bag.png
+    - assets/tidytown/images/game/aluminum_can.png
+    - assets/tidytown/images/game/coffee_grounds.png
+
+    # Beach Game Items - Only the items you actually have
+    # Compost Items (Beach)
+    - assets/tidytown/images/compost/fresh_seaweed.png
+    - assets/tidytown/images/compost/driftwood.png
+    - assets/tidytown/images/compost/coconut_shells.png
+
+    # Recycle Items (Beach)
+    - assets/tidytown/images/recycle/ocean_plastic_bottles.png
+    - assets/tidytown/images/recycle/beach_cans.png
+    - assets/tidytown/images/recycle/glass_bottles.png
+
+    # Landfill Items (Beach)
+    - assets/tidytown/images/landfill/dangerous_plastic_bags.png
+    - assets/tidytown/images/landfill/waterlogged_papers.png
+    - assets/tidytown/images/landfill/styrofoam_containers.png
+    - assets/tidytown/images/landfill/broken_flip_flops.png
+
+    # Thumbnail images for game selection
+    - assets/tidytown/images/village_thumbnail.png
+    - assets/tidytown/images/town_thumbnail.png
+    - assets/tidytown/images/space_thumbnail.png
+    - assets/tidytown/images/beach_thumbnail.png  
+
+    - assets/tidytown/animations/cheer.gif
+    - assets/tidytown/animations/confetti.json
+    - assets/tidytown/animations/sad.json
+    - assets/tidytown/animations/animal.json
+
+    # Beach Game Character Images
+    - assets/tidytown/images/beach_alex_happy.png
+    - assets/tidytown/images/beach_alex_sad.png
+    - assets/tidytown/images/beach_alex_neutral.png
+    
+    # Beach Background
+    - assets/tidytown/images/background.png
+    
+
+  fonts:
+    - family: ComicNeue
+      fonts:
+        - asset: assets/tidytown/fonts/ComicNeue-Regular.ttf
+        - asset: assets/tidytown/fonts/ComicNeue-Bold.ttf
+          weight: 700

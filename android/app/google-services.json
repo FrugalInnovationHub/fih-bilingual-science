@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1058242616848",
+    "project_id": "fih-superset-dev",
+    "storage_bucket": "fih-superset-dev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058242616848:android:117e1c2b04ee21b1fb3495",
+        "android_client_info": {
+          "package_name": "com.example.supersetfirebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnzBf-KnyZBux5edK9oAxkWBGyLYyMO9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
