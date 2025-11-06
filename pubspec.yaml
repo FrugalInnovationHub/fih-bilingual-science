@@ -1,0 +1,165 @@
+
+name: supersetfirebase
+description: A new Flutter project.
+
+publish_to: 'none'
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^3.8.0
+  firebase_auth: ^5.3.3
+  firebase_database: ^11.1.6
+  cloud_firestore: ^5.5.1
+  provider: ^6.1.2
+
+  http: ^1.2.2
+  audioplayers: ^6.0.1
+  firebase_analytics: ^11.3.0 
+  confetti: ^0.8.0
+  flutter_tts: ^4.2.1
+  translator: ^1.0.0
+  flip_card: ^0.7.0
+  number_to_words_english: ^2.0.2
+  number_to_words: ^1.0.0
+  animated_text_kit: ^4.2.2
+  spelling_number: ^0.0.4
+  flutter_svg: ^2.0.5
+  shared_preferences: ^2.2.0
+  
+  # Tidy Town dependencies
+  lottie: ^3.3.1
+  google_fonts: ^6.1.0
+  redis: ^3.0.2
+  dio: ^5.3.2
+  
+  # BioApp dependencies
+  flutter_gemini: ^2.0.4
+  speech_to_text: ^6.6.0
+  flutter_animate: ^4.5.0
+  
+  # ColorTheory dependencies
+  flutter_localizations:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  go_router: ^12.1.3
+  auto_size_text: ^3.0.0
+  cached_network_image: ^3.4.1
+  font_awesome_flutter: ^10.7.0
+  from_css_color: ^2.0.0
+  intl: ^0.20.2
+  json_path: ^0.6.3
+  just_audio: ^0.9.36
+  page_transition: ^2.1.0
+  path_provider: ^2.1.4
+  sqflite: ^2.3.3+1
+  timeago: ^3.7.1
+  url_launcher: ^6.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Rubik Moonrocks
+      fonts:
+        - asset: assets/fonts/RubikMoonrocks-Regular.ttf
+          weight: 400
+          style: normal
+    - family: Ranchers
+      fonts:
+        - asset: assets/fonts/Ranchers-Regular.ttf
+          weight: 400
+          style: normal
+    - family: Galindo
+      fonts:
+        - asset: assets/fonts/Galindo-Regular.ttf
+          weight: 400
+          style: normal
+    - family: BungeeInline
+      fonts:
+        - asset: assets/fonts/BungeeInline-Regular.ttf
+          weight: 400
+          style: normal
+    - family: Monoton
+      fonts:
+        - asset: assets/fonts/Monoton-Regular.ttf
+          weight: 400
+          style: normal
+    - family: SairaStencilOne
+      fonts:
+        - asset: assets/fonts/SairaStencilOne-Regular.ttf
+          weight: 400
+          style: normal
+    - family: Honk-Regular-VariableFont_MORF,SHLN
+      fonts:
+        - asset: assets/fonts/Honk-Regular-VariableFont_MORF,SHLN.ttf
+          weight: 400
+          style: normal
+    - family: LuckiestGuy
+      fonts:
+        - asset: assets/bioappdr/fonts/LuckiestGuy-Regular.ttf
+    - family: Butterfly
+      fonts:
+        - asset: assets/bioappdr/fonts/ButterflyKids-Regular.ttf
+    - family: Kablammo
+      fonts:
+        - asset: assets/bioappdr/fonts/Kablammo-Regular-VariableFont_MORF.ttf
+    - family: Sunshine
+      fonts:
+        - asset: assets/bioappdr/fonts/Sunshiney-Regular.ttf
+    - family: Silkscreen
+      fonts:
+        - asset: assets/colortheory/fonts/Silkscreen-Regular.ttf
+        - asset: assets/colortheory/fonts/Silkscreen-Bold.ttf
+          weight: 700
+
+  assets:
+    - assets/images/background.png
+    - assets/images/profile_pic.png
+    - assets/images/purplebackground.png
+    - assets/images/greenbackground.png
+    - assets/images/bluebackground.png
+    - assets/images/spiderman.png
+    - assets/images/art_studio.png
+    - assets/images/icon1.png
+    - assets/images/icon2.png
+    - assets/images/icon3.png
+    - assets/images/cute-cool-astronaut-dabbing-pose-cartoon-vector-icon-illustration-astronaut-fashion-icon-minimalist_1167562-12345.avif
+    
+    - assets/images/wallpapers/wallpaper1.png
+    - assets/images/wallpapers/wallpaper2.png
+    - assets/images/wallpapers/wallpaper3.png
+    - assets/images/wallpapers/wallpaper4.png
+    
+    # Tidy Town assets
+    - assets/tidytown/images/
+    - assets/tidytown/images/compost/
+    - assets/tidytown/images/game/
+    - assets/tidytown/images/landfill/
+    - assets/tidytown/images/recycle/
+    - assets/tidytown/animations/
+    - assets/tidytown/fonts/
+    - assets/tidytown/lottie/
+    
+    # BioApp assets
+    - assets/bioappdr/
+    - assets/bioappdr/fonts/
+    
+    # ColorTheory assets
+    - assets/colortheory/fonts/
+    - assets/colortheory/images/
+    - assets/colortheory/videos/
+    - assets/colortheory/audios/
+    - assets/colortheory/rive_animations/
+    - assets/colortheory/pdfs/
+    - assets/colortheory/jsons/
+   
+
