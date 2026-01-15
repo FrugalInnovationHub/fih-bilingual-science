@@ -199,7 +199,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ## Contact
 
-For any inquiries or contributions, reach out to pujithakallu.21@gmial.com maddurisriram09@gmail.com.
+For any inquiries or contributions, reach out to saivineeth81799@gmail.com, satyaharthiks@gmail.com, pujithakallu.21@gmial.com, maddurisriram09@gmail.com.
 
 ---
 
