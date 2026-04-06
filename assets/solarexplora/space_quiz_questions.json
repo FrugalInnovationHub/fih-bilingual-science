@@ -1,0 +1,172 @@
+[
+  {
+    "question_en": "Which planet is the only one known to support life?",
+    "question_es": "¿Cuál es el único planeta conocido que alberga vida?",
+    "options_en": [
+      "Mars",
+      "Earth",
+      "Venus",
+      "Mercury"
+    ],
+    "options_es": [
+      "Marte",
+      "Tierra",
+      "Venus",
+      "Mercurio"
+    ],
+    "answer": 1
+  },
+  {
+    "question_en": "Which planet has two moons named Phobos and Deimos?",
+    "question_es": "¿Qué planeta tiene dos lunas llamadas Fobos y Deimos?",
+    "options_en": [
+      "Earth",
+      "Mars",
+      "Venus",
+      "Jupiter"
+    ],
+    "options_es": [
+      "Tierra",
+      "Marte",
+      "Venus",
+      "Júpiter"
+    ],
+    "answer": 1
+  },
+  {
+    "question_en": "Which planet is famous for its bright yellow color and rings?",
+    "question_es": "¿Qué planeta es famoso por su color amarillo brillante y sus anillos?",
+    "options_en": [
+      "Saturn",
+      "Jupiter",
+      "Neptune",
+      "Mars"
+    ],
+    "options_es": [
+      "Saturno",
+      "Júpiter",
+      "Neptuno",
+      "Marte"
+    ],
+    "answer": 0
+  },
+  {
+    "question_en": "Which planet has rings made of ice and rock?",
+    "question_es": "¿Qué planeta tiene anillos formados por hielo y roca?",
+    "options_en": [
+      "Mars",
+      "Saturn",
+      "Uranus",
+      "Earth"
+    ],
+    "options_es": [
+      "Marte",
+      "Saturno",
+      "Urano",
+      "Tierra"
+    ],
+    "answer": 1
+  },
+  {
+    "question_en": "Which planet is the largest in our solar system?",
+    "question_es": "¿Cuál es el planeta más grande de nuestro sistema solar?",
+    "options_en": [
+      "Saturn",
+      "Neptune",
+      "Jupiter",
+      "Earth"
+    ],
+    "options_es": [
+      "Saturno",
+      "Neptuno",
+      "Júpiter",
+      "Tierra"
+    ],
+    "answer": 2
+  },
+  {
+    "question_en": "Which planet is known as the Red Planet?",
+    "question_es": "¿Qué planeta es conocido como el Planeta Rojo?",
+    "options_en": [
+      "Earth",
+      "Mars",
+      "Venus",
+      "Jupiter"
+    ],
+    "options_es": [
+      "Tierra",
+      "Marte",
+      "Venus",
+      "Júpiter"
+    ],
+    "answer": 1
+  },
+  {
+    "question_en": "Which planet is the closest to the Sun?",
+    "question_es": "¿Qué planeta está más cerca del Sol?",
+    "options_en": [
+      "Venus",
+      "Mars",
+      "Mercury",
+      "Earth"
+    ],
+    "options_es": [
+      "Venus",
+      "Marte",
+      "Mercurio",
+      "Tierra"
+    ],
+    "answer": 2
+  },
+  {
+    "question_en": "Which planet is known for its Great Red Spot?",
+    "question_es": "¿Qué planeta es conocido por su Gran Mancha Roja?",
+    "options_en": [
+      "Jupiter",
+      "Mars",
+      "Saturn",
+      "Neptune"
+    ],
+    "options_es": [
+      "Júpiter",
+      "Marte",
+      "Saturno",
+      "Neptuno"
+    ],
+    "answer": 0
+  },
+  {
+    "question_en": "Which planet is tilted and spins on its side?",
+    "question_es": "¿Qué planeta está inclinado y gira sobre su lado?",
+    "options_en": [
+      "Uranus",
+      "Neptune",
+      "Earth",
+      "Saturn"
+    ],
+    "options_es": [
+      "Urano",
+      "Neptuno",
+      "Tierra",
+      "Saturno"
+    ],
+    "answer": 0
+  },
+  {
+    "question_en": "Which planet has the longest orbit around the Sun?",
+    "question_es": "¿Qué planeta tiene la órbita más larga alrededor del Sol?",
+    "options_en": [
+      "Saturn",
+      "Uranus",
+      "Neptune",
+      "Jupiter"
+    ],
+    "options_es": [
+      "Saturno",
+      "Urano",
+      "Neptuno",
+      "Júpiter"
+    ],
+    "answer": 2
+  }
+]
