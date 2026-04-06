@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'login_screen.dart';
+import 'package:provider/provider.dart';
+import '../provider/language_provider.dart';
+import '../widgets/language_toggle.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -104,9 +106,12 @@ class _SignupScreenState extends State<SignupScreen>
 
   Future<void> _signup() async {
     String pin = _controllers.map((c) => c.text).join();
+    final languageProvider =
+        Provider.of<LanguageProvider>(context, listen: false);
     if (pin.length != 3) {
       setState(() {
-        _errorMessage = 'Oops! We need all 3 numbers for your secret code! 🎯';
+        _errorMessage = languageProvider
+            .translate('Oops! We need all 3 numbers for your secret code! 🎯');
       });
       return;
     }
@@ -119,9 +124,11 @@ class _SignupScreenState extends State<SignupScreen>
       final existingUser =
           await FirebaseFirestore.instance.collection('users').doc(pin).get();
       if (existingUser.exists) {
+        final languageProvider =
+            Provider.of<LanguageProvider>(context, listen: false);
         setState(() {
-          _errorMessage =
-              'This secret code is already taken! Try another one! 🎲';
+          _errorMessage = languageProvider.translate(
+              'This secret code is already taken! Try another one! 🎲');
           _isLoading = false;
         });
         return;
@@ -179,9 +186,19 @@ class _SignupScreenState extends State<SignupScreen>
           ),
           SafeArea(
             bottom: false,
-            child: isMobile
-                ? _buildMobileLayout(keyboardHeight)
-                : _buildTabletLayout(keyboardHeight),
+            child: Stack(
+              children: [
+                isMobile
+                    ? _buildMobileLayout(keyboardHeight)
+                    : _buildTabletLayout(keyboardHeight),
+                // Language toggle in top right
+                Positioned(
+                  top: 16,
+                  right: 16,
+                  child: const LanguageToggle(),
+                ),
+              ],
+            ),
           ),
           // Modern Wallpaper Indicator (only show on tablet/desktop)
           if (!isMobile)
@@ -283,120 +300,129 @@ class _SignupScreenState extends State<SignupScreen>
 
   // Shared signup content for both layouts
   Widget _buildSignupContent() {
-    return Column(
-      children: [
-        Column(
+    return Consumer<LanguageProvider>(
+      builder: (context, languageProvider, child) {
+        return Column(
           children: [
+            Column(
+              children: [
+                Text(
+                  languageProvider.translate('BILINGUAL'),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 86,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Rubik Moonrocks',
+                    color: Colors.white,
+                    letterSpacing: 0.4,
+                    height: 1.1,
+                  ),
+                ),
+                Text(
+                  languageProvider.translate('SCIENTISTS'),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 86,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Rubik Moonrocks',
+                    color: Colors.white,
+                    letterSpacing: 0.4,
+                    height: 1.1,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
             Text(
-              'BILINGUAL',
+              languageProvider.translate('Learning Made Fun'),
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 86,
-                fontWeight: FontWeight.w900,
-                fontFamily: 'Rubik Moonrocks',
-                color: Colors.white,
-                letterSpacing: 0.4,
-                height: 1.1,
+                fontSize: 14,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
+                color: Colors.white.withOpacity(0.7),
+                letterSpacing: 1.2,
               ),
             ),
+            SizedBox(height: 80),
             Text(
-              'SCIENTISTS',
-              textAlign: TextAlign.center,
+              languageProvider.translate('Create Your Access Code'),
               style: TextStyle(
-                fontSize: 86,
-                fontWeight: FontWeight.w900,
-                fontFamily: 'Rubik Moonrocks',
-                color: Colors.white,
-                letterSpacing: 0.4,
-                height: 1.1,
+                fontSize: 18,
+                fontFamily: 'Poppins',
+                color: Colors.white.withOpacity(0.8),
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.5,
               ),
             ),
+            SizedBox(height: 30),
+            _buildNameInput(),
+            SizedBox(height: 20),
+            _buildPinInputBoxes(),
+            _buildBackButton(),
+            SizedBox(height: 20),
+            if (_errorMessage.isNotEmpty)
+              Text(
+                _errorMessage,
+                style: TextStyle(
+                  color: Colors.red.shade300,
+                  fontSize: 14,
+                  fontFamily: 'BungeeInline',
+                  fontWeight: FontWeight.w900,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            SizedBox(height: 20),
+            MouseRegion(
+              onEnter: (_) => setState(() => _isSignupHovering = true),
+              onExit: (_) => setState(() => _isSignupHovering = false),
+              child: SizedBox(
+                width: 250,
+                height: 70,
+                child: SignupButton(
+                  onPressed: _isLoading ? null : _signup,
+                  isHovered: _isSignupHovering,
+                  text: languageProvider.translate("Sign Up!"),
+                ),
+              ),
+            ),
+            SizedBox(height: 40),
           ],
-        ),
-        SizedBox(height: 8),
-        Text(
-          'Learning Made Fun',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 14,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
-            color: Colors.white.withOpacity(0.7),
-            letterSpacing: 1.2,
-          ),
-        ),
-        SizedBox(height: 80),
-        Text(
-          'Create Your Access Code',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'Poppins',
-            color: Colors.white.withOpacity(0.8),
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.5,
-          ),
-        ),
-        SizedBox(height: 30),
-        _buildNameInput(),
-        SizedBox(height: 20),
-        _buildPinInputBoxes(),
-        _buildBackButton(),
-        SizedBox(height: 20),
-        if (_errorMessage.isNotEmpty)
-          Text(
-            _errorMessage,
-            style: TextStyle(
-              color: Colors.red.shade300,
-              fontSize: 14,
-              fontFamily: 'BungeeInline',
-              fontWeight: FontWeight.w900,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        SizedBox(height: 20),
-        MouseRegion(
-          onEnter: (_) => setState(() => _isSignupHovering = true),
-          onExit: (_) => setState(() => _isSignupHovering = false),
-          child: SizedBox(
-            width: 250,
-            height: 70,
-            child: SignupButton(
-              onPressed: _isLoading ? null : _signup,
-              isHovered: _isSignupHovering,
-            ),
-          ),
-        ),
-        SizedBox(height: 40),
-      ],
+        );
+      },
     );
   }
 
   // Name input widget
   Widget _buildNameInput() {
-    return Container(
-      width: 250,
-      height: 60,
-      child: TextField(
-        textAlign: TextAlign.center,
-        controller: _nameController,
-        decoration: InputDecoration(
-          labelText: 'Name',
-          filled: true,
-          fillColor: Colors.white.withOpacity(0.7),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Colors.white.withOpacity(0.3),
-              width: 1,
+    return Consumer<LanguageProvider>(
+      builder: (context, languageProvider, child) {
+        return Container(
+          width: 250,
+          height: 60,
+          child: TextField(
+            textAlign: TextAlign.center,
+            controller: _nameController,
+            decoration: InputDecoration(
+              labelText: languageProvider.translate('Name'),
+              filled: true,
+              fillColor: Colors.white.withOpacity(0.7),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(
+                  color: Colors.white.withOpacity(0.3),
+                  width: 1,
+                ),
+              ),
+            ),
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.black,
+              fontFamily: 'Galindo',
             ),
           ),
-        ),
-        style: TextStyle(
-          fontSize: 20,
-          color: Colors.black,
-          fontFamily: 'Galindo',
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -498,38 +524,42 @@ class _SignupScreenState extends State<SignupScreen>
 
   // Back button widget
   Widget _buildBackButton() {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isBackHovering = true),
-      onExit: (_) => setState(() => _isBackHovering = false),
-      child: SizedBox(
-        width: 250,
-        height: 35,
-        child: TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor:
-                _isBackHovering ? Colors.grey.shade800 : Colors.black,
-            foregroundColor: Colors.white,
-            padding: EdgeInsets.symmetric(vertical: 8),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
+    return Consumer<LanguageProvider>(
+      builder: (context, languageProvider, child) {
+        return MouseRegion(
+          onEnter: (_) => setState(() => _isBackHovering = true),
+          onExit: (_) => setState(() => _isBackHovering = false),
+          child: SizedBox(
+            width: 250,
+            height: 35,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor:
+                    _isBackHovering ? Colors.grey.shade800 : Colors.black,
+                foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => LoginScreen()),
+                );
+              },
+              child: Text(
+                languageProvider.translate('Back to Login'),
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  letterSpacing: 0.3,
+                ),
+              ),
             ),
           ),
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (_) => LoginScreen()),
-            );
-          },
-          child: Text(
-            'Back to Login',
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-              letterSpacing: 0.3,
-            ),
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
@@ -537,8 +567,13 @@ class _SignupScreenState extends State<SignupScreen>
 class SignupButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool isHovered;
-  const SignupButton(
-      {super.key, required this.onPressed, required this.isHovered});
+  final String text;
+  const SignupButton({
+    super.key,
+    required this.onPressed,
+    required this.isHovered,
+    this.text = "Sign Up!",
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -593,7 +628,7 @@ class SignupButton extends StatelessWidget {
                   child: SizedBox(
                     width: 250,
                     child: Text(
-                      "Sign Up!",
+                      text,
                       textAlign: TextAlign.center,
                     ),
                   ),

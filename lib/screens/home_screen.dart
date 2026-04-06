@@ -6,12 +6,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'login_screen.dart';
+import '../provider/language_provider.dart';
+import '../widgets/language_toggle.dart';
 
 import 'package:supersetfirebase/services/firestore_score.dart';
 import 'package:supersetfirebase/provider/user_pin_provider.dart';
 import '../gamescreen/tidy_town/wrapper.dart';
 import '../gamescreen/bioapp/wrapper.dart';
 import '../gamescreen/colortheory_wrapper.dart';
+import '../gamescreen/solar_explora_wrapper.dart';
+import '../gamescreen/measurements_wrapper.dart';
+import '../gamescreen/safe_water_heroes_wrapper.dart';
 
 // import 'package:supersetfirebase/services/test_score.dart';
 class HomeScreen extends StatefulWidget {
@@ -38,9 +43,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late List<Animation<double>> _tileScaleAnimations;
   late List<Animation<double>> _tileElevationAnimations;
 
-  // Auto-scroll controller
-  late ScrollController _scrollController;
-  Timer? _autoScrollTimer;
+  // Page controller for carousel
+  late PageController _pageController;
+  int _currentPage = 0;
 
   final List<String> _backgroundImages = [
     "assets/images/wallpapers/wallpaper1.png",
@@ -98,8 +103,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ));
     }).toList();
 
-    // Initialize scroll controller
-    _scrollController = ScrollController();
+    // Initialize page controller for carousel
+    _pageController = PageController(
+      viewportFraction: 0.35,
+      initialPage:
+          (games.length * 1000) ~/ 2, // Start in the middle for infinite scroll
+    );
 
     // Auto-scroll disabled - only manual scrolling
     // _startAutoScroll();
@@ -126,8 +135,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _wallpaperController.dispose();
     _wallpaperTimer?.cancel();
     scoreUpdateTimer?.cancel();
-    _autoScrollTimer?.cancel();
-    _scrollController.dispose();
+    _pageController.dispose();
     // Dispose tile controllers
     for (var controller in _tileControllers) {
       controller.dispose();
@@ -139,18 +147,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final scores = await _scoreService.getUserScores(widget.pin);
     setState(() {
       totalScore = scores['TotalBestScore'] ?? 0;
-    });
-  }
-
-  void _startAutoScroll() {
-    _autoScrollTimer = Timer.periodic(Duration(seconds: 3), (timer) {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          _scrollController.offset + 220, // Move by one tile width + margin
-          duration: Duration(milliseconds: 1000),
-          curve: Curves.easeInOut,
-        );
-      }
     });
   }
 
@@ -207,6 +203,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       'icon': Icons.show_chart,
       'route': (String pin) => BioAppWrapper(userPin: pin),
     },
+    {
+      'title': 'Solar Explora',
+      'backgroundImage': 'assets/images/icon4.png',
+      'description': 'Explore the Solar System!',
+      'icon': Icons.rocket_launch,
+      'route': (String pin) => SolarExploraWrapper(userPin: pin),
+    },
+    {
+      'title': 'Measurements',
+      'backgroundImage': 'assets/images/icon5.png',
+      'description': 'Learn Measurements!',
+      'icon': Icons.straighten,
+      'route': (String pin) => MeasurementsWrapper(userPin: pin),
+    },
+    {
+      'title': 'Safe Water Heroes',
+      'backgroundImage': 'assets/images/icon6.png',
+      'description': 'Become a Safe Water Hero!',
+      'icon': Icons.water_drop,
+      'route': (String pin) => SafeWaterHeroesWrapper(userPin: pin),
+    },
   ];
 
   @override
@@ -217,85 +234,45 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 8.0, top: 8.0, bottom: 8.0),
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFFFD700), Color(0xFFFFA500)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+        leading: Container(
+          margin: const EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
+          child: GestureDetector(
+            onTap: () async {
+              // Clear saved PIN and timestamp from SharedPreferences
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.remove('user_pin');
+              await prefs.remove('user_pin_timestamp');
+
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => LoginScreen()),
+              );
+            },
+            child: Container(
+              width: 80,
+              height: 70,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.orange.withOpacity(0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.star, color: Colors.white, size: 20),
-                const SizedBox(width: 6),
-                Text(
-                  'Score: $totalScore',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Galindo',
-                  ),
-                ),
-                const SizedBox(width: 8),
-                GestureDetector(
-                  onTap: refreshTotalScore,
-                  child: const Icon(
-                    Icons.refresh,
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                ),
-              ],
+              child: const Icon(
+                Icons.logout,
+                color: Colors.white,
+                size: 28,
+              ),
             ),
           ),
+        ),
+        actions: [
           Container(
             margin: const EdgeInsets.only(right: 16.0, top: 8.0, bottom: 8.0),
-            child: GestureDetector(
-              onTap: () async {
-                // Clear saved PIN from SharedPreferences
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.remove('user_pin');
-
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => LoginScreen()),
-                );
-              },
-              child: Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
-                      blurRadius: 6,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: const Icon(
-                  Icons.logout,
-                  color: Colors.white,
-                  size: 20,
-                ),
-              ),
-            ),
+            child: const LanguageToggle(),
           ),
         ],
       ),
@@ -325,152 +302,279 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 100),
-                  FutureBuilder<DocumentSnapshot>(
-                    future: FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(widget.pin)
-                        .get(),
-                    builder: (context, snapshot) {
-                      String displayName = widget.pin;
-                      if (snapshot.hasData && snapshot.data != null) {
-                        final data =
-                            snapshot.data!.data() as Map<String, dynamic>?;
-                        if (data != null &&
-                            data['name'] != null &&
-                            data['name'].toString().isNotEmpty) {
-                          displayName = data['name'];
+                  const SizedBox(height: 40),
+                  Center(
+                    child: FutureBuilder<DocumentSnapshot>(
+                      future: FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(widget.pin)
+                          .get(),
+                      builder: (context, snapshot) {
+                        String displayName = widget.pin;
+                        if (snapshot.hasData && snapshot.data != null) {
+                          final data =
+                              snapshot.data!.data() as Map<String, dynamic>?;
+                          if (data != null &&
+                              data['name'] != null &&
+                              data['name'].toString().isNotEmpty) {
+                            displayName = data['name'];
+                          }
                         }
-                      }
-                      return Text(
-                        "Hi, $displayName!",
-                        style: const TextStyle(
-                          fontSize: 54,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Honk-Regular-VariableFont_MORF,SHLN',
-                          color: Colors.red,
-                        ),
-                      );
-                    },
+                        return Consumer<LanguageProvider>(
+                          builder: (context, languageProvider, child) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "${languageProvider.translate('Hi')} $displayName",
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontSize: 62,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily:
+                                        'Honk-Regular-VariableFont_MORF,SHLN',
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                const Text(
+                                  " | ",
+                                  style: TextStyle(
+                                    fontSize: 48,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    shadows: [
+                                      Shadow(
+                                        color: Colors.black54,
+                                        offset: Offset(2, 2),
+                                        blurRadius: 4,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Text(
+                                  '${languageProvider.translate('Score')}: $totalScore',
+                                  style: const TextStyle(
+                                    fontSize: 48,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Galindo',
+                                    shadows: [
+                                      Shadow(
+                                        color: Colors.black54,
+                                        offset: Offset(2, 2),
+                                        blurRadius: 4,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                GestureDetector(
+                                  onTap: refreshTotalScore,
+                                  child: const Icon(
+                                    Icons.refresh,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
-                  const SizedBox(height: 80),
-                  // Horizontal scrolling tiles with original size
+                  const SizedBox(height: 60),
+                  // Carousel with centered large tile and smaller side tiles
                   LayoutBuilder(
                     builder: (context, constraints) {
                       double maxWidth = constraints.maxWidth;
-                      double tileSize = maxWidth > 1000
-                          ? maxWidth / 4 - 20
+                      double centerTileSize = maxWidth > 1000
+                          ? maxWidth * 0.35
                           : maxWidth > 800
-                              ? maxWidth / 3 - 20
+                              ? maxWidth * 0.4
                               : maxWidth > 500
-                                  ? maxWidth / 2 - 20
-                                  : maxWidth - 40;
+                                  ? maxWidth * 0.45
+                                  : maxWidth * 0.5;
 
                       return SizedBox(
-                        height: tileSize + 120, // Original height + text space
-                        child: ListView.builder(
-                          controller: _scrollController,
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          itemCount: games.length *
-                              1000, // Infinite scroll by repeating 1000 times
+                        height: centerTileSize +
+                            120, // Height for center tile + text
+                        child: PageView.builder(
+                          controller: _pageController,
+                          onPageChanged: (index) {
+                            setState(() {
+                              _currentPage = index % games.length;
+                            });
+                          },
+                          itemCount: games.length * 1000, // Infinite scroll
                           itemBuilder: (context, index) {
-                            final game = games[
-                                index % games.length]; // Use modulo to repeat
-                            return Container(
-                              width: tileSize + 20, // Original width + margin
-                              margin: const EdgeInsets.only(right: 20),
-                              child: MouseRegion(
-                                cursor: game['route'] != null
-                                    ? SystemMouseCursors.click
-                                    : SystemMouseCursors.basic,
-                                onEnter: (_) {
-                                  _tileControllers[index % games.length]
-                                      .forward();
-                                },
-                                onExit: (_) {
-                                  _tileControllers[index % games.length]
-                                      .reverse();
-                                },
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    if (game['route'] != null) {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              game['route'](widget.pin),
-                                        ),
-                                      );
-                                      refreshTotalScore();
-                                    }
-                                  },
-                                  child: AnimatedBuilder(
-                                    animation:
-                                        _tileControllers[index % games.length],
-                                    builder: (context, child) {
-                                      return Transform.scale(
-                                        scale: _tileScaleAnimations[
-                                                index % games.length]
-                                            .value,
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Container(
-                                              width: tileSize,
-                                              height: tileSize,
-                                              alignment: Alignment.center,
-                                              child: Container(
-                                                width: tileSize * 0.9,
-                                                height: tileSize * 0.9,
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                    image: AssetImage(game[
-                                                        'backgroundImage']),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.black26,
-                                                      blurRadius:
-                                                          _tileElevationAnimations[
-                                                                  index %
-                                                                      games
-                                                                          .length]
-                                                              .value,
-                                                      offset: Offset(
-                                                          0,
-                                                          _tileElevationAnimations[
-                                                                      index %
-                                                                          games
-                                                                              .length]
-                                                                  .value /
-                                                              2),
+                            final gameIndex = index % games.length;
+                            return AnimatedBuilder(
+                              animation: _pageController,
+                              builder: (context, child) {
+                                double value = 1.0;
+                                double scale = 1.0;
+
+                                if (_pageController.position.haveDimensions) {
+                                  value = (_pageController.page! - index);
+                                  double absValue = value.abs();
+                                  value =
+                                      (1 - (absValue * 0.9)).clamp(0.5, 1.0);
+                                  scale =
+                                      (0.55 + (value * 0.45)).clamp(0.55, 1.0);
+                                } else {
+                                  // Initial state: show first tile as center, others as side tiles
+                                  if (gameIndex == 0) {
+                                    scale = 1.0;
+                                    value = 1.0;
+                                  } else {
+                                    scale = 0.55;
+                                    value = 0.5;
+                                  }
+                                }
+
+                                final game = games[gameIndex];
+                                final isCenter = scale >=
+                                    0.95; // Consider center if scale is close to 1.0
+
+                                return Center(
+                                  child: Transform.scale(
+                                    scale: scale,
+                                    child: Opacity(
+                                      opacity: value.clamp(0.5, 1.0),
+                                      child: MouseRegion(
+                                        cursor: game['route'] != null
+                                            ? SystemMouseCursors.click
+                                            : SystemMouseCursors.basic,
+                                        onEnter: (_) {
+                                          _tileControllers[gameIndex].forward();
+                                        },
+                                        onExit: (_) {
+                                          _tileControllers[gameIndex].reverse();
+                                        },
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            if (game['route'] != null) {
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      game['route'](widget.pin),
+                                                ),
+                                              );
+                                              refreshTotalScore();
+                                            }
+                                          },
+                                          child: AnimatedBuilder(
+                                            animation:
+                                                _tileControllers[gameIndex],
+                                            builder: (context, child) {
+                                              return Transform.scale(
+                                                scale: _tileScaleAnimations[
+                                                        gameIndex]
+                                                    .value,
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Container(
+                                                      width: centerTileSize,
+                                                      height: centerTileSize,
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Container(
+                                                        width: centerTileSize *
+                                                            0.9,
+                                                        height: centerTileSize *
+                                                            0.9,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          image:
+                                                              DecorationImage(
+                                                            image: AssetImage(game[
+                                                                'backgroundImage']),
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              color: Colors
+                                                                  .black26,
+                                                              blurRadius:
+                                                                  _tileElevationAnimations[
+                                                                          gameIndex]
+                                                                      .value,
+                                                              offset: Offset(
+                                                                  0,
+                                                                  _tileElevationAnimations[
+                                                                              gameIndex]
+                                                                          .value /
+                                                                      2),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
                                                     ),
+                                                    if (isCenter) ...[
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                          horizontal: 12,
+                                                          vertical: 6,
+                                                        ),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white
+                                                              .withOpacity(0.9),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              color: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                      0.2),
+                                                              blurRadius: 4,
+                                                              offset:
+                                                                  const Offset(
+                                                                      0, 2),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        child: Text(
+                                                          game['title'],
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.black,
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ],
                                                 ),
-                                              ),
-                                            ),
-                                            const SizedBox(height: 10),
-                                            Text(
-                                              game['title'],
-                                              style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ],
+                                              );
+                                            },
+                                          ),
                                         ),
-                                      );
-                                    },
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
+                                );
+                              },
                             );
                           },
                         ),

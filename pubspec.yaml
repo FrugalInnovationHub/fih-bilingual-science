@@ -18,7 +18,7 @@ dependencies:
 
   http: ^1.2.2
   audioplayers: ^6.0.1
-  firebase_analytics: ^11.3.0 
+  firebase_analytics: ^11.6.0 
   confetti: ^0.8.0
   flutter_tts: ^4.2.1
   translator: ^1.0.0
@@ -59,6 +59,16 @@ dependencies:
   sqflite: ^2.3.3+1
   timeago: ^3.7.1
   url_launcher: ^6.3.1
+  
+  # Solar Explora dependencies
+  rive: ^0.12.4
+
+  # Measurements dependencies
+  shimmer: ^3.0.0
+
+  # Safe Water Heroes dependencies
+  flutter_riverpod: ^2.5.1
+  video_player: ^2.8.1
 
 dev_dependencies:
   flutter_test:
@@ -122,17 +132,12 @@ flutter:
           weight: 700
 
   assets:
-    - assets/images/background.png
-    - assets/images/profile_pic.png
-    - assets/images/purplebackground.png
-    - assets/images/greenbackground.png
-    - assets/images/bluebackground.png
-    - assets/images/spiderman.png
-    - assets/images/art_studio.png
     - assets/images/icon1.png
     - assets/images/icon2.png
     - assets/images/icon3.png
-    - assets/images/cute-cool-astronaut-dabbing-pose-cartoon-vector-icon-illustration-astronaut-fashion-icon-minimalist_1167562-12345.avif
+    - assets/images/icon4.png
+    - assets/images/icon5.png
+    - assets/images/icon6.png
     
     - assets/images/wallpapers/wallpaper1.png
     - assets/images/wallpapers/wallpaper2.png
@@ -161,5 +166,22 @@ flutter:
     - assets/colortheory/rive_animations/
     - assets/colortheory/pdfs/
     - assets/colortheory/jsons/
+    
+    # Solar Explora assets
+    - assets/solarexplora/
+    - assets/solarexplora/planet_tiles/
+    - assets/solarexplora/rive/
+
+    # Measurements assets
+    - assets/measurements/images/
+    - assets/measurements/images/big_small_custom/
+    - assets/measurements/sounds/
+
+    # Safe Water Heroes assets
+    - assets/safewaterheroes/images/
+    - assets/safewaterheroes/images/scenes/
+    - assets/safewaterheroes/images/items/
+    - assets/safewaterheroes/images/sorting/
+    - assets/safewaterheroes/videos/
    
 

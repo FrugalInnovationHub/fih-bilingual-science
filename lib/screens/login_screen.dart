@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'dart:async';
 import 'dart:ui';
 import 'signup_screen.dart';
 import 'home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:supersetfirebase/provider/user_pin_provider.dart';
+import '../provider/language_provider.dart';
+import '../widgets/language_toggle.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -125,9 +127,35 @@ class _LoginScreenState extends State<LoginScreen>
 
   Future<void> _login() async {
     String pin = _controllers.map((c) => c.text).join();
+    final languageProvider =
+        Provider.of<LanguageProvider>(context, listen: false);
+
+    // Track button click in Firestore for PIN-based tracking
+    if (pin.isNotEmpty && pin.length == 3) {
+      final timestamp = DateTime.now();
+      await FirebaseFirestore.instance.collection('button_clicks').add({
+        'user_pin': pin,
+        'timestamp': timestamp,
+        'click_time': FieldValue.serverTimestamp(),
+        'language': languageProvider.language,
+        'button_name': 'lets_play',
+      });
+    }
+
+    // Track button click with Analytics
+    final analytics = Provider.of<FirebaseAnalytics>(context, listen: false);
+    analytics.logEvent(
+      name: 'lets_play_button_clicked',
+      parameters: {
+        'user_pin': pin.isNotEmpty ? pin : 'no_pin_entered',
+        'timestamp': DateTime.now().toIso8601String(),
+        'language': languageProvider.language,
+      },
+    );
+
     if (pin.length != 3) {
       setState(() {
-        _errorMessage = 'Please enter your code';
+        _errorMessage = languageProvider.translate('Please enter your code');
       });
       return;
     }
@@ -152,8 +180,24 @@ class _LoginScreenState extends State<LoginScreen>
       print('Document data: ${userDoc.data()}');
 
       if (!userDoc.exists) {
+        final languageProvider =
+            Provider.of<LanguageProvider>(context, listen: false);
+
+        // Track failed login attempt
+        final analytics =
+            Provider.of<FirebaseAnalytics>(context, listen: false);
+        analytics.logEvent(
+          name: 'login_failed',
+          parameters: {
+            'user_pin': pin,
+            'reason': 'pin_not_found',
+            'timestamp': DateTime.now().toIso8601String(),
+          },
+        );
+
         setState(() {
-          _errorMessage = 'Oops! Wrong PIN. Try again!';
+          _errorMessage =
+              languageProvider.translate('Oops! Wrong PIN. Try again!');
           _isLoading = false;
         });
         return;
@@ -162,9 +206,38 @@ class _LoginScreenState extends State<LoginScreen>
       // Store the PIN in Provider
       Provider.of<UserPinProvider>(context, listen: false).setPin(pin);
 
+      // Track successful login in Firestore for easy PIN-based queries
+      final timestamp = DateTime.now();
+      await FirebaseFirestore.instance.collection('login_events').add({
+        'user_pin': pin,
+        'timestamp': timestamp,
+        'login_time': FieldValue.serverTimestamp(),
+        'language': languageProvider.language,
+        'event_type': 'login_successful',
+      });
+
+      // Track successful login in Analytics
+      final analytics = Provider.of<FirebaseAnalytics>(context, listen: false);
+      analytics.logEvent(
+        name: 'login_successful',
+        parameters: {
+          'user_pin': pin,
+          'timestamp': timestamp.toIso8601String(),
+          'language': languageProvider.language,
+        },
+      );
+
+      // Set user properties for better analytics
+      await analytics.setUserId(id: pin);
+      await analytics.setUserProperty(
+          name: 'language', value: languageProvider.language);
+
       // Save PIN to SharedPreferences for persistent login
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('user_pin', pin);
+      // Save timestamp when PIN was saved
+      await prefs.setInt(
+          'user_pin_timestamp', DateTime.now().millisecondsSinceEpoch);
 
       if (mounted) {
         Navigator.of(context).pushReplacement(
@@ -215,9 +288,19 @@ class _LoginScreenState extends State<LoginScreen>
           ),
           SafeArea(
             bottom: false,
-            child: isMobile
-                ? _buildMobileLayout(keyboardHeight)
-                : _buildTabletLayout(keyboardHeight),
+            child: Stack(
+              children: [
+                isMobile
+                    ? _buildMobileLayout(keyboardHeight)
+                    : _buildTabletLayout(keyboardHeight),
+                // Language toggle in top right
+                Positioned(
+                  top: 16,
+                  right: 16,
+                  child: const LanguageToggle(),
+                ),
+              ],
+            ),
           ),
           // Modern Wallpaper Indicator (only show on tablet/desktop)
           if (!isMobile)
@@ -319,86 +402,93 @@ class _LoginScreenState extends State<LoginScreen>
 
   // Shared login content for both layouts
   Widget _buildLoginContent() {
-    return Column(
-      children: [
-        Column(
+    return Consumer<LanguageProvider>(
+      builder: (context, languageProvider, child) {
+        return Column(
           children: [
+            Column(
+              children: [
+                Text(
+                  languageProvider.translate('BILINGUAL'),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 86,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Rubik Moonrocks',
+                    color: Colors.white,
+                    letterSpacing: 0.4,
+                    height: 1.1,
+                  ),
+                ),
+                Text(
+                  languageProvider.translate('SCIENTISTS'),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 86,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Rubik Moonrocks',
+                    color: Colors.white,
+                    letterSpacing: 0.4,
+                    height: 1.1,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
             Text(
-              'BILINGUAL',
+              languageProvider.translate('Learning Made Fun'),
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 86,
-                fontWeight: FontWeight.w900,
-                fontFamily: 'Rubik Moonrocks',
-                color: Colors.white,
-                letterSpacing: 0.4,
-                height: 1.1,
+                fontSize: 14,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
+                color: Colors.white.withOpacity(0.7),
+                letterSpacing: 1.2,
               ),
             ),
+            SizedBox(height: 80),
             Text(
-              'SCIENTISTS',
-              textAlign: TextAlign.center,
+              languageProvider.translate('Enter Your Access Code'),
               style: TextStyle(
-                fontSize: 86,
-                fontWeight: FontWeight.w900,
-                fontFamily: 'Rubik Moonrocks',
-                color: Colors.white,
-                letterSpacing: 0.4,
-                height: 1.1,
+                fontSize: 18,
+                fontFamily: 'Poppins',
+                color: Colors.white.withOpacity(0.8),
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.5,
               ),
             ),
+            SizedBox(height: 30),
+            _buildPinInputBoxes(),
+            _buildSignupButton(),
+            SizedBox(height: 20),
+            if (_errorMessage.isNotEmpty)
+              Text(
+                _errorMessage,
+                style: TextStyle(
+                  color: Colors.red.shade300,
+                  fontSize: 14,
+                  fontFamily: 'BungeeInline',
+                  fontWeight: FontWeight.w900,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            SizedBox(height: 20),
+            MouseRegion(
+              onEnter: (_) => setState(() => _isPlayHovering = true),
+              onExit: (_) => setState(() => _isPlayHovering = false),
+              child: SizedBox(
+                width: 250,
+                height: 70,
+                child: LetsPlayButton(
+                  onPressed: _isLoading ? null : _login,
+                  text: languageProvider.translate("Let's Play"),
+                ),
+              ),
+            ),
+            SizedBox(height: 40),
           ],
-        ),
-        SizedBox(height: 8),
-        Text(
-          'Learning Made Fun',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 14,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
-            color: Colors.white.withOpacity(0.7),
-            letterSpacing: 1.2,
-          ),
-        ),
-        SizedBox(height: 80),
-        Text(
-          'Enter Your Access Code',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'Poppins',
-            color: Colors.white.withOpacity(0.8),
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.5,
-          ),
-        ),
-        SizedBox(height: 30),
-        _buildPinInputBoxes(),
-        _buildSignupButton(),
-        SizedBox(height: 20),
-        if (_errorMessage.isNotEmpty)
-          Text(
-            _errorMessage,
-            style: TextStyle(
-              color: Colors.red.shade300,
-              fontSize: 14,
-              fontFamily: 'BungeeInline',
-              fontWeight: FontWeight.w900,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        SizedBox(height: 20),
-        MouseRegion(
-          onEnter: (_) => setState(() => _isPlayHovering = true),
-          onExit: (_) => setState(() => _isPlayHovering = false),
-          child: SizedBox(
-            width: 250,
-            height: 70,
-            child: LetsPlayButton(onPressed: _isLoading ? null : _login),
-          ),
-        ),
-        SizedBox(height: 40),
-      ],
+        );
+      },
     );
   }
 
@@ -500,45 +590,51 @@ class _LoginScreenState extends State<LoginScreen>
 
   // Signup button widget
   Widget _buildSignupButton() {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isSignupHovering = true),
-      onExit: (_) => setState(() => _isSignupHovering = false),
-      child: SizedBox(
-        width: 250,
-        height: 35,
-        child: TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor:
-                _isSignupHovering ? Colors.grey.shade800 : Colors.black,
-            foregroundColor: Colors.white,
-            padding: EdgeInsets.symmetric(vertical: 8),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
+    return Consumer<LanguageProvider>(
+      builder: (context, languageProvider, child) {
+        return MouseRegion(
+          onEnter: (_) => setState(() => _isSignupHovering = true),
+          onExit: (_) => setState(() => _isSignupHovering = false),
+          child: SizedBox(
+            width: 250,
+            height: 35,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor:
+                    _isSignupHovering ? Colors.grey.shade800 : Colors.black,
+                foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => SignupScreen()),
+                );
+              },
+              child: Text(
+                languageProvider.translate("Don't have a code? Create one"),
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  letterSpacing: 0.3,
+                ),
+              ),
             ),
           ),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => SignupScreen()),
-            );
-          },
-          child: Text(
-            "Don't have a code? Create one",
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-              letterSpacing: 0.3,
-            ),
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
 
 class LetsPlayButton extends StatefulWidget {
   final VoidCallback? onPressed;
-  const LetsPlayButton({super.key, required this.onPressed});
+  final String text;
+  const LetsPlayButton(
+      {super.key, required this.onPressed, this.text = "Let's Play"});
 
   @override
   State<LetsPlayButton> createState() => _LetsPlayButtonState();
@@ -549,6 +645,8 @@ class _LetsPlayButtonState extends State<LetsPlayButton> {
 
   @override
   Widget build(BuildContext context) {
+    // Analytics tracking is now handled in _login() method
+    // where we have access to the PIN
     const double boxHeight = 70;
 
     return MouseRegion(
@@ -603,7 +701,7 @@ class _LetsPlayButtonState extends State<LetsPlayButton> {
                     child: SizedBox(
                       width: 250,
                       child: Text(
-                        "Let's Play",
+                        widget.text,
                         textAlign: TextAlign.center,
                       ),
                     ),
