@@ -12,6 +12,7 @@ import '../screens/games/adventure_game_screen.dart';
 import '../screens/progress_screen.dart';
 import '../widgets/app_scaffold.dart';
 import '../providers/app_settings_provider.dart';
+import '../services/audio_controller.dart';
 
 // Define route paths as constants
 class AppRoutes {
@@ -26,54 +27,67 @@ class AppRoutes {
   static const progress = '/progress';
 }
 
-final routerProvider = Provider<GoRouter>((ref) {
-  // Reset language to English on every route change
-  final settingsNotifier = ref.read(appSettingsProvider.notifier);
+final exitToHostCallbackProvider = Provider<VoidCallback?>((ref) => null);
 
-  // In a real scenario, this might be passed in by the host app constructor
-  // or defined as a known deep link scheme (e.g., 'hostapp://home').
-  void exitToHostApp(BuildContext context) {
-    debugPrint("Exiting Module -> Returning to HOST APP Home");
-    // Example integration: Navigator.of(context, rootNavigator: true).pop();
-    // For this standalone build, we'll show a dialog confirming exit.
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text("Exit Module"),
-        content: const Text("Return to Host App Home Screen?"),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("Cancel")),
-          ElevatedButton(onPressed: () {
-             Navigator.pop(ctx);
-             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Exited to Host App (Simulation)")));
-             // Actual exit logic goes here in real integration
-          }, child: const Text("Exit")),
-        ],
-      )
-    );
-  }
+final routerProvider = Provider<GoRouter>((ref) {
+  final settingsNotifier = ref.read(appSettingsProvider.notifier);
+  String? lastLocation;
 
   return GoRouter(
     initialLocation: AppRoutes.entry,
     redirect: (context, state) {
-      // Reset audio language to English on every navigation
+      final nextLocation = state.uri.toString();
+      if (lastLocation != null && lastLocation != nextLocation) {
+        ref.read(audioControllerProvider).stop();
+      }
+      lastLocation = nextLocation;
       settingsNotifier.resetAudioToEnglish();
-      return null; // No actual redirect, just reset audio language
+      return null;
     },
     routes: [
-      // Entry screen is not wrapped in AppScaffold (has its own specialized layout)
       GoRoute(
         path: AppRoutes.entry,
-        builder: (context, state) => EntryScreen(onExitToHost: () => exitToHostApp(context)),
+        builder: (context, state) => EntryScreen(
+          onExitToHost: () {
+            ref.read(audioControllerProvider).stop();
+            final exitToHost = ref.read(exitToHostCallbackProvider);
+            if (exitToHost != null) {
+              exitToHost();
+              return;
+            }
+
+            final rootNavigator = Navigator.of(context, rootNavigator: true);
+            if (rootNavigator.canPop()) {
+              rootNavigator.pop();
+            } else {
+              context.go(AppRoutes.entry);
+            }
+          },
+        ),
       ),
-      // ShellRoute wraps all internal module screens with the AppScaffold
       ShellRoute(
         builder: (context, state, child) {
-          // Determine if we should show the Back button (not on Dashboard)
-          final showBack = state.uri.toString() != AppRoutes.dashboard;
+          final currentLocation = state.uri.toString();
+          final showBack = currentLocation != AppRoutes.entry &&
+              currentLocation != AppRoutes.dashboard;
           return AppScaffold(
             showBackButton: showBack,
-            onHomePressed: () => exitToHostApp(context),
+            currentLocation: currentLocation,
+            onHomePressed: () {
+              ref.read(audioControllerProvider).stop();
+              final exitToHost = ref.read(exitToHostCallbackProvider);
+              if (exitToHost != null) {
+                exitToHost();
+                return;
+              }
+
+              final rootNavigator = Navigator.of(context, rootNavigator: true);
+              if (rootNavigator.canPop()) {
+                rootNavigator.pop();
+              } else {
+                context.go(AppRoutes.entry);
+              }
+            },
             child: child,
           );
         },

@@ -48,9 +48,21 @@ class _SafeWaterHeroesWrapperState extends State<SafeWaterHeroesWrapper> {
       );
     }
 
+    void exitToHostApp() {
+      if (!mounted) {
+        return;
+      }
+
+      final rootNavigator = Navigator.of(context, rootNavigator: true);
+      if (rootNavigator.canPop()) {
+        rootNavigator.pop();
+      }
+    }
+
     return ProviderScope(
       overrides: [
         userPinProvider.overrideWith((ref) => widget.userPin),
+        exitToHostCallbackProvider.overrideWith((ref) => exitToHostApp),
       ],
       child: const _SafeWaterHeroesApp(),
     );

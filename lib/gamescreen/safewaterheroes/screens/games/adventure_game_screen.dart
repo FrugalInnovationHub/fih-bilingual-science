@@ -10,8 +10,7 @@ import '../../constants/assets.dart';
 import '../../providers/app_settings_provider.dart';
 import '../../providers/user_progress_provider.dart';
 import '../../services/audio_controller.dart';
-import '../../widgets/game_intro_banner.dart';
-import '../../widgets/tappable_text.dart';
+import '../../widgets/game_screen_back_bar.dart';
 
 // --- STATE MACHINE ---
 enum AdventurePhase {
@@ -569,6 +568,23 @@ class _AdventureGameScreenState extends ConsumerState<AdventureGameScreen> with 
                   ),
                 );
               }),
+            ),
+          ),
+
+          // 8. BACK (above scene so it stays tappable)
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: GameScreenBackBar(
+                  contrastBackdrop: true,
+                  title: lang == 'es' ? 'Aventura del Agua' : 'Water Adventure',
+                ),
+              ),
             ),
           ),
         ],

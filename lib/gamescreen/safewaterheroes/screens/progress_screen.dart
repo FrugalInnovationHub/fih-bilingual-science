@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../config/theme.dart';
+import '../config/router.dart';
 import '../constants/game_data.dart';
 import '../providers/app_settings_provider.dart';
 import '../providers/user_progress_provider.dart';
@@ -39,7 +41,28 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          TappableText(text: isEs ? "Mi Progreso" : "My Progress", style: Theme.of(context).textTheme.headlineSmall),
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back_rounded),
+                onPressed: () {
+                  if (context.canPop()) {
+                    context.pop();
+                  } else {
+                    context.go(AppRoutes.dashboard);
+                  }
+                },
+              ),
+              Expanded(
+                child: TappableText(
+                  text: isEs ? "Mi Progreso" : "My Progress",
+                  style: Theme.of(context).textTheme.headlineSmall,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(width: 48),
+            ],
+          ),
           const SizedBox(height: 24),
           // Stats Card
           Card(

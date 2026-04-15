@@ -21,10 +21,27 @@ class LearningHubScreen extends ConsumerWidget {
 
     return Column(
       children: [
-        TappableText(
-          text: isEs ? 'Misiones de Aprendizaje' : 'Learning Missions',
-          style: Theme.of(context).textTheme.headlineSmall,
-          textAlign: TextAlign.center,
+        Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back_rounded),
+              onPressed: () {
+                if (context.canPop()) {
+                  context.pop();
+                } else {
+                  context.go(AppRoutes.dashboard);
+                }
+              },
+            ),
+            Expanded(
+              child: TappableText(
+                text: isEs ? 'Misiones de Aprendizaje' : 'Learning Missions',
+                style: Theme.of(context).textTheme.headlineSmall,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(width: 48),
+          ],
         ),
         const SizedBox(height: 24),
         Expanded(

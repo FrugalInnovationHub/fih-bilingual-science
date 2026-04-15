@@ -9,6 +9,7 @@ import '../../providers/user_progress_provider.dart';
 import '../../services/audio_controller.dart';
 import '../../widgets/tappable_text.dart';
 import '../../widgets/game_intro_banner.dart';
+import '../../widgets/game_screen_back_bar.dart';
 
 class SortingGameScreen extends ConsumerStatefulWidget {
   const SortingGameScreen({super.key});
@@ -108,6 +109,9 @@ class _SortingGameScreenState extends ConsumerState<SortingGameScreen> {
 
     return Column(
       children: [
+        GameScreenBackBar(
+          title: isEs ? 'Clasificación de Agua' : 'Water Sorting',
+        ),
         GameIntroBanner(
           textEn: "Drag the water picture into the right bin: Safe, Needs Filter, or Unsafe.",
           textEs: "Arrastra la imagen del agua al contenedor correcto: Seguro, Necesita Filtro o Inseguro.",

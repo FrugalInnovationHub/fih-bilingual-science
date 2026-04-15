@@ -4,24 +4,16 @@ import 'package:flutter_tts/flutter_tts.dart';
 
 class TtsService {
   final FlutterTts _flutterTts = FlutterTts();
+  final Completer<void> _readyCompleter = Completer<void>();
   Completer<void>? _speechCompleter;
+  bool _isReady = false;
 
   TtsService() {
     _init();
   }
 
-  void _init() async {
-    // Improved voice clarity settings
-    await _flutterTts.setSpeechRate(0.45); // Slightly faster for clarity (0.3 was too slow)
-    await _flutterTts.setVolume(1.0);
-    await _flutterTts.setPitch(1.1); // Slightly higher pitch for clearer voice
-
-    // Log available voices for debugging
-    var voices = await _flutterTts.getVoices;
-    var languages = await _flutterTts.getLanguages;
-    debugPrint('TTS Available languages: $languages');
-    
-    // KEY FIX: Listen for completion
+  Future<void> _init() async {
+    // Listen for completion as early as possible so early speech still resolves.
     _flutterTts.setCompletionHandler(() {
       if (_speechCompleter != null && !_speechCompleter!.isCompleted) {
         _speechCompleter!.complete();
@@ -34,13 +26,45 @@ class TtsService {
         _speechCompleter!.complete(); // Don't hang on error
       }
     });
+
+    try {
+      // Improved voice clarity settings
+      await _flutterTts.setSpeechRate(0.45);
+      await _flutterTts.setVolume(1.0);
+      await _flutterTts.setPitch(1.1);
+
+      try {
+        final languages = await _flutterTts.getLanguages;
+        debugPrint('TTS Available languages: $languages');
+      } catch (e) {
+        debugPrint('TTS language lookup failed: $e');
+      }
+
+      _isReady = true;
+    } catch (e) {
+      debugPrint('TTS init failed: $e');
+    } finally {
+      if (!_readyCompleter.isCompleted) {
+        _readyCompleter.complete();
+      }
+    }
+  }
+
+  Future<void> _ensureReady() async {
+    if (_isReady) {
+      return;
+    }
+    await _readyCompleter.future;
   }
 
   /// Returns a Future that completes when speech finishes
   Future<void> speak(String text, String languageCode) async {
+    await _ensureReady();
+
     // Cancel previous if running
     if (_speechCompleter != null && !_speechCompleter!.isCompleted) {
-      _speechCompleter!.complete(); 
+      _speechCompleter!.complete();
+      await _flutterTts.stop();
     }
     
     _speechCompleter = Completer<void>();
@@ -64,6 +88,7 @@ class TtsService {
   }
 
   Future<void> stop() async {
+    await _ensureReady();
     if (_speechCompleter != null && !_speechCompleter!.isCompleted) {
       _speechCompleter!.complete();
     }
