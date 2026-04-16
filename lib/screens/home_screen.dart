@@ -17,6 +17,7 @@ import '../gamescreen/colortheory_wrapper.dart';
 import '../gamescreen/solar_explora_wrapper.dart';
 import '../gamescreen/measurements_wrapper.dart';
 import '../gamescreen/safe_water_heroes_wrapper.dart';
+import '../gamescreen/animalwizz_wrapper.dart';
 
 // import 'package:supersetfirebase/services/test_score.dart';
 class HomeScreen extends StatefulWidget {
@@ -223,6 +224,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       'description': 'Become a Safe Water Hero!',
       'icon': Icons.water_drop,
       'route': (String pin) => SafeWaterHeroesWrapper(userPin: pin),
+    },
+
+    {
+      'title': 'AnimalWizz',
+      'backgroundImage': 'assets/images/icon7.png',
+      'description': 'Learn, play, and explore the jungle!',
+      'icon': Icons.pets,
+      'route': (String pin) => AnimalWizzWrapper(userPin: pin),
     },
   ];
 

@@ -70,6 +70,11 @@ dependencies:
   flutter_riverpod: ^2.5.1
   video_player: ^2.8.1
 
+
+
+  # AnimalWizz dependencies
+  animate_do: ^2.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -138,6 +143,7 @@ flutter:
     - assets/images/icon4.png
     - assets/images/icon5.png
     - assets/images/icon6.png
+    - assets/images/icon7.png
     
     - assets/images/wallpapers/wallpaper1.png
     - assets/images/wallpapers/wallpaper2.png
@@ -183,5 +189,10 @@ flutter:
     - assets/safewaterheroes/images/items/
     - assets/safewaterheroes/images/sorting/
     - assets/safewaterheroes/videos/
+    
+
+    # AnimalWizz assets
+    - assets/animalwizz/images/
+    - assets/animalwizz/sounds/
    
 
