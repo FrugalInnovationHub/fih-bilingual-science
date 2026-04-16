@@ -10,6 +10,7 @@ import '../../providers/user_progress_provider.dart';
 import '../../services/audio_controller.dart';
 import '../../widgets/tappable_text.dart';
 import '../../widgets/game_intro_banner.dart';
+import '../../widgets/game_screen_back_bar.dart';
 
 class FilterGameScreen extends ConsumerStatefulWidget {
   const FilterGameScreen({super.key});
@@ -139,6 +140,9 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen> {
 
     return Column(
       children: [
+        GameScreenBackBar(
+          title: isEs ? 'Crear un Filtro' : 'Filter Making',
+        ),
         // 1. Intro Banner
         GameIntroBanner(
           textEn: "Build a filter! Use Pebbles, Sand, Charcoal, and Cloth in order.",

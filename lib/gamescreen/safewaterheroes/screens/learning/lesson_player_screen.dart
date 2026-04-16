@@ -75,6 +75,14 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
     });
   }
 
+  void _handleBack() {
+    if (context.canPop()) {
+      context.pop();
+    } else {
+      context.go(AppRoutes.learningHub);
+    }
+  }
+
   Future<void> _showCompletionDialog() async {
   final currentLessonIndex = kAllLessons.indexOf(_lesson);
   final hasPrevious = currentLessonIndex > 0;
@@ -214,18 +222,32 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
       children: [
         Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TappableText(
-                text: lang == 'es' ? _lesson.titleEs : _lesson.titleEn,
-                style: Theme.of(context).textTheme.headlineSmall,
-                textAlign: TextAlign.center,
-              ),
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back_rounded),
+                  onPressed: _handleBack,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TappableText(
+                      text: lang == 'es' ? _lesson.titleEs : _lesson.titleEn,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 48),
+              ],
             ),
-            LinearProgressIndicator(
-              value: (_currentPage + 1) / _lesson.cards.length,
-              backgroundColor: Colors.white,
-              color: AppTheme.accentOrange,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: LinearProgressIndicator(
+                value: (_currentPage + 1) / _lesson.cards.length,
+                backgroundColor: Colors.white,
+                color: AppTheme.accentOrange,
+              ),
             ),
             
             // CARD SECTION

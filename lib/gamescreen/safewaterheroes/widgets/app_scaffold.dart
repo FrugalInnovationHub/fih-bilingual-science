@@ -14,12 +14,14 @@ import 'coin_badge.dart';
 class AppScaffold extends ConsumerWidget {
   final Widget child;
   final bool showBackButton;
+  final String? currentLocation;
   final VoidCallback onHomePressed;
 
   const AppScaffold({
     super.key,
     required this.child,
     this.showBackButton = true,
+    this.currentLocation,
     required this.onHomePressed,
   });
 
@@ -28,27 +30,40 @@ class AppScaffold extends ConsumerWidget {
     final settings = ref.watch(appSettingsProvider);
     final audioLang = settings.audioLanguageCode; // For audio only
     final settingsCtrl = ref.read(appSettingsProvider.notifier);
-    
+    final routerLocation =
+        currentLocation ??
+        GoRouter.of(context).routeInformationProvider.value.uri.toString();
+    final location =
+        routerLocation.isEmpty ? GoRouterState.of(context).matchedLocation : routerLocation;
+    final fallbackRoute = _fallbackRouteForLocation(location);
+    final effectiveShowBackButton = _routeNeedsBackButton(location) || showBackButton;
+
     // Watch repeat visibility
     final showRepeat = ref.watch(repeatButtonVisibleProvider);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        leading: showBackButton
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back_rounded, size: 32),
-                onPressed: () {
-                  // Reset audio language to English on navigation
-                  settingsCtrl.resetAudioToEnglish();
-                  if (context.canPop()) {
-                    context.pop();
-                  } else {
-                    context.go(AppRoutes.dashboard);
-                  }
-                },
+        automaticallyImplyLeading: false,
+        leadingWidth: effectiveShowBackButton ? 64 : 0,
+        leading: effectiveShowBackButton
+            ? Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back_rounded, size: 32),
+                  tooltip: 'Back',
+                  onPressed: () {
+                    // Reset audio language to English on navigation
+                    settingsCtrl.resetAudioToEnglish();
+                    if (context.canPop()) {
+                      context.pop();
+                    } else {
+                      context.go(fallbackRoute);
+                    }
+                  },
+                ),
               )
-            : null,
+            : const SizedBox.shrink(),
         title: Image.asset(AppAssets.logo, height: 60),
         centerTitle: true,
         actions: [
@@ -129,5 +144,19 @@ class AppScaffold extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  String _fallbackRouteForLocation(String location) {
+    if (location.startsWith('${AppRoutes.gamesHub}/')) {
+      return AppRoutes.gamesHub;
+    }
+    if (location.startsWith('${AppRoutes.learningHub}/')) {
+      return AppRoutes.learningHub;
+    }
+    return AppRoutes.dashboard;
+  }
+
+  bool _routeNeedsBackButton(String location) {
+    return location != AppRoutes.entry && location != AppRoutes.dashboard;
   }
 }

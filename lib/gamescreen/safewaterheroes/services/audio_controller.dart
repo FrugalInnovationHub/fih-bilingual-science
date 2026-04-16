@@ -7,7 +7,9 @@ import '../providers/repeat_button_provider.dart';
 import 'tts_service.dart';
 
 final audioControllerProvider = Provider<AudioController>((ref) {
-  return AudioController(ref);
+  final controller = AudioController(ref);
+  ref.onDispose(controller.dispose);
+  return controller;
 });
 
 class AudioController {
@@ -31,7 +33,7 @@ class AudioController {
   /// Fire-and-forget (for UI clicks)
   void requestSpeak(String text) {
     if (_isMuted) return;
-    speakAndWait(text);
+    unawaited(speakAndWait(text));
   }
 
   /// Awaitable speak (For Game Flow)
@@ -66,6 +68,11 @@ class AudioController {
 
   void stop() {
     _repeatTimer?.cancel();
-    _ttsService.stop();
+    _ref.read(repeatButtonVisibleProvider.notifier).state = false;
+    unawaited(_ttsService.stop());
+  }
+
+  void dispose() {
+    stop();
   }
 }

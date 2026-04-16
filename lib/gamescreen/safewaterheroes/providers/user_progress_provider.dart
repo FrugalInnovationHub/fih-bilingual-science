@@ -135,7 +135,10 @@ class UserProgressNotifier extends StateNotifier<UserProgress> {
      final newState = UserProgress.initial();
      state = newState;
      if (_isFirebaseAvailable && _userPin != null && _userPin!.isNotEmpty) {
-        await _firestore.collection('users').doc(_userPin).set(newState.toFirestore());
+        await _firestore.collection('users').doc(_userPin).set(
+          newState.toFirestore(),
+          SetOptions(merge: true),
+        );
         await _syncScoreToMainAppFormat(0);
      }
   }

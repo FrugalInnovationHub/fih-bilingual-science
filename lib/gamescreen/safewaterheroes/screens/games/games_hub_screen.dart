@@ -18,9 +18,27 @@ class GamesHubScreen extends ConsumerWidget {
 
     return Column(
       children: [
-        TappableText(
-          text: isEs ? 'Centro de Juegos' : 'Games Hub',
-          style: Theme.of(context).textTheme.headlineSmall,
+        Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back_rounded),
+              onPressed: () {
+                if (context.canPop()) {
+                  context.pop();
+                } else {
+                  context.go(AppRoutes.dashboard);
+                }
+              },
+            ),
+            Expanded(
+              child: TappableText(
+                text: isEs ? 'Centro de Juegos' : 'Games Hub',
+                style: Theme.of(context).textTheme.headlineSmall,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(width: 48),
+          ],
         ),
         const SizedBox(height: 24),
         Expanded(
