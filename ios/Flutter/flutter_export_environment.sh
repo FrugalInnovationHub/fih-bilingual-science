@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/saivineethpinnoju/development/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/saivineethpinnoju/frugal-silvia/fih-bilingual-science-main"
+export "FLUTTER_ROOT=/opt/homebrew/share/flutter"
+export "FLUTTER_APPLICATION_PATH=/Users/prafulreddy/Desktop/codex/FRUGAL REPO/fih-bilingual-science"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
