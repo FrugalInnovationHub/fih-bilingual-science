@@ -392,7 +392,7 @@ class _MemoryGamePageState extends State<MemoryGamePage> {
 
   String _animalSoundPath(String name) {
     final sanitized = name.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '_');
-    return 'assets/animalwizz/sounds/animals/${sanitized}.mp3';
+    return 'animalwizz/sounds/animals/${sanitized}.mp3';
   }
 
   Future<void> _speak(String text) async {

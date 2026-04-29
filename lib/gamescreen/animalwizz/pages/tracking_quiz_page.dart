@@ -14,7 +14,7 @@ class Animal {
   final String name;
   final String? nameEs;
   final String image;
-  final String? sound; // optional asset path under assets/animalwizz/sounds/
+  final String? sound; // optional asset path under assets/sounds/
   final List<String> clues; // audio clue text, track clue, object/behavior clue
   final List<String>? cluesEs;
   final String fact;
@@ -392,6 +392,10 @@ class _TrackingQuizPageState extends State<TrackingQuizPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Text(showSpanish ? 'Rastreo' : 'Tracking Quiz'),
         backgroundColor: Colors.green.shade700,
         actions: [
