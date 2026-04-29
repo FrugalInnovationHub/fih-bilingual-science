@@ -8,16 +8,12 @@ class HabitatConfig {
   final String name;
   final String backgroundImage;
   final String bannerText;
-  final String prevRoute;
-  final String nextRoute;
   final Color arrowColor;
 
   const HabitatConfig({
     required this.name,
     required this.backgroundImage,
     required this.bannerText,
-    required this.prevRoute,
-    required this.nextRoute,
     required this.arrowColor,
   });
 }
@@ -28,8 +24,6 @@ const desertConfig = HabitatConfig(
   name: 'Desert',
   backgroundImage: 'assets/animalwizz/images/desser_bg.png',
   bannerText: "🏜️ Let's explore the desert habitat!",
-  prevRoute: '/arctic',
-  nextRoute: '/forest',
   arrowColor: Color(0xFF3E2723),
 );
 
@@ -37,8 +31,6 @@ const forestConfig = HabitatConfig(
   name: 'Forest',
   backgroundImage: 'assets/animalwizz/images/forest_bg.png',
   bannerText: "🌲 Let's explore the forest habitat!",
-  prevRoute: '/desert',
-  nextRoute: '/ocean',
   arrowColor: Color(0xFF1B5E20),
 );
 
@@ -46,8 +38,6 @@ const arcticConfig = HabitatConfig(
   name: 'Arctic',
   backgroundImage: 'assets/animalwizz/images/arctic_bg.png',
   bannerText: "❄️ Let's discover the arctic habitat!",
-  prevRoute: '/ocean',
-  nextRoute: '/desert',
   arrowColor: Color(0xFF3E2723),
 );
 
@@ -55,10 +45,23 @@ const oceanConfig = HabitatConfig(
   name: 'Ocean',
   backgroundImage: 'assets/animalwizz/images/ocean_bg.png',
   bannerText: "🌊 Let's dive into the ocean habitat!",
-  prevRoute: '/forest',
-  nextRoute: '/arctic',
   arrowColor: Color(0xFF3E2723),
 );
+
+// Cycling order for prev/next navigation between habitats.
+const _habitatOrder = [desertConfig, forestConfig, oceanConfig, arcticConfig];
+
+extension HabitatNav on HabitatConfig {
+  HabitatConfig get prevHabitat {
+    final i = _habitatOrder.indexOf(this);
+    return _habitatOrder[(i - 1 + _habitatOrder.length) % _habitatOrder.length];
+  }
+
+  HabitatConfig get nextHabitat {
+    final i = _habitatOrder.indexOf(this);
+    return _habitatOrder[(i + 1) % _habitatOrder.length];
+  }
+}
 
 // --- The Unified Widget ---
 
@@ -298,9 +301,12 @@ class _HabitatPageState extends State<HabitatPage> {
                       child: IconButton(
                         icon: const Icon(Icons.arrow_back_ios),
                         color: config.arrowColor,
-                        onPressed: () => Navigator.pushReplacementNamed(
+                        onPressed: () => Navigator.pushReplacement(
                           context,
-                          config.prevRoute,
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                HabitatPage(config: config.prevHabitat),
+                          ),
                         ),
                       ),
                     ),
@@ -328,9 +334,12 @@ class _HabitatPageState extends State<HabitatPage> {
                       child: IconButton(
                         icon: const Icon(Icons.arrow_forward_ios),
                         color: config.arrowColor,
-                        onPressed: () => Navigator.pushReplacementNamed(
+                        onPressed: () => Navigator.pushReplacement(
                           context,
-                          config.nextRoute,
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                HabitatPage(config: config.nextHabitat),
+                          ),
                         ),
                       ),
                     ),

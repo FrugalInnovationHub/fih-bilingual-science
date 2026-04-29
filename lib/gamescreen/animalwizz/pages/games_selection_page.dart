@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
-import 'unified_quiz_page.dart';
-import '../data/quiz_questions.dart';
+import 'memory_game_page.dart';
+import 'food_chain_game_page.dart';
+import 'life_cycles_game_page.dart';
+import 'animal_word_puzzle_page.dart';
+import 'tracking_quiz_page.dart';
 import '../widgets/background_scaffold.dart';
 import '../widgets/selection_card.dart';
 import '../widgets/responsive_grid.dart';
 
-class QuizSelectionPage extends StatelessWidget {
-  const QuizSelectionPage({super.key});
+class GamesSelectionPage extends StatelessWidget {
+  const GamesSelectionPage({super.key});
 
-  static final List<Map<String, dynamic>> _quizSections = [
+  static final List<Map<String, dynamic>> _games = [
     {
-      'title': 'Animals',
-      'image': 'assets/animalwizz/images/lion.jpg',
-      'color': Colors.orange,
-      'icon': Icons.pets,
+      'title': 'Memory Match',
+      'image': 'assets/animalwizz/images/owl.jpg',
+      'color': Colors.teal,
+      'icon': Icons.grid_view_rounded,
     },
     {
-      'title': 'Habitats',
-      'image': 'assets/animalwizz/images/animal_habitats.png',
-      'color': Colors.green,
-      'icon': Icons.landscape,
+      'title': 'Word Puzzle',
+      'image': 'assets/animalwizz/images/word.jpg',
+      'color': Colors.deepOrange,
+      'icon': Icons.grid_4x4,
     },
     {
-      'title': 'Life Cycles',
-      'image': 'assets/animalwizz/images/butterfly.png',
-      'color': Colors.blue,
-      'icon': Icons.refresh,
+      'title': 'Animal Detective',
+      'image': 'assets/animalwizz/images/fox.jpg',
+      'color': Colors.indigo,
+      'icon': Icons.search,
     },
     {
       'title': 'Food Chain',
@@ -34,10 +37,10 @@ class QuizSelectionPage extends StatelessWidget {
       'icon': Icons.restaurant,
     },
     {
-      'title': 'Feed Animals',
-      'image': 'assets/animalwizz/images/elephant.jpg',
-      'color': Colors.pink,
-      'icon': Icons.fastfood,
+      'title': 'Life Cycles',
+      'image': 'assets/animalwizz/images/butterfly.png',
+      'color': Colors.blue,
+      'icon': Icons.refresh,
     },
   ];
 
@@ -57,7 +60,7 @@ class QuizSelectionPage extends StatelessWidget {
                 bottom: grid.bottomPadding,
               ),
               child: Text(
-                'Choose Your Quiz Topic',
+                'Choose Your Game',
                 style: TextStyle(
                   fontSize: grid.isLandscape ? 28 : 32,
                   fontWeight: FontWeight.bold,
@@ -85,15 +88,15 @@ class QuizSelectionPage extends StatelessWidget {
                   mainAxisSpacing: grid.mainAxisSpacing,
                   childAspectRatio: grid.childAspectRatio,
                 ),
-                itemCount: _quizSections.length,
+                itemCount: _games.length,
                 itemBuilder: (context, index) {
-                  final section = _quizSections[index];
+                  final game = _games[index];
                   return SelectionCard(
-                    title: section['title'],
-                    image: section['image'],
-                    color: section['color'],
-                    icon: section['icon'],
-                    onTap: () => _navigateToQuiz(context, section['title']),
+                    title: game['title'],
+                    image: game['image'],
+                    color: game['color'],
+                    icon: game['icon'],
+                    onTap: () => _navigateToGame(context, game['title']),
                   );
                 },
               ),
@@ -105,18 +108,25 @@ class QuizSelectionPage extends StatelessWidget {
     );
   }
 
-  void _navigateToQuiz(BuildContext context, String title) {
-    final config = switch (title) {
-      'Animals' => animalsQuizConfig,
-      'Habitats' => habitatsQuizConfig,
-      'Life Cycles' => lifeCyclesQuizConfig,
-      'Food Chain' => foodChainQuizConfig,
-      'Feed Animals' => feedAnimalsQuizConfig,
-      _ => animalsQuizConfig,
-    };
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => UnifiedQuizPage(config: config)),
-    );
+  void _navigateToGame(BuildContext context, String title) {
+    Widget destination;
+    switch (title) {
+      case 'Memory Match':
+        destination = const MemoryGamePage(
+          lessonTitle: 'All Animals',
+          lessonImage: 'assets/animalwizz/images/animal_habitats.png',
+        );
+      case 'Word Puzzle':
+        destination = const AnimalWordPuzzlePage(sectionName: 'Animals');
+      case 'Animal Detective':
+        destination = const TrackingQuizPage();
+      case 'Food Chain':
+        destination = const FoodChainGamePage();
+      case 'Life Cycles':
+        destination = const LifeCyclesGamePage(animal: 'Butterfly');
+      default:
+        return;
+    }
+    Navigator.push(context, MaterialPageRoute(builder: (_) => destination));
   }
 }

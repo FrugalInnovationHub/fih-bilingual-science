@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pages/jungle_lessons.dart';
+import 'pages/games_selection_page.dart';
 import 'pages/quiz_selection_page.dart';
-import 'pages/habitat_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -18,20 +18,14 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.black,
         fontFamily: 'Roboto',
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const JungleMainPage(),
-        '/desert': (context) => const HabitatPage(config: desertConfig),
-        '/forest': (context) => const HabitatPage(config: forestConfig),
-        '/arctic': (context) => const HabitatPage(config: arcticConfig),
-        '/ocean': (context) => const HabitatPage(config: oceanConfig),
-      },
+      home: const JungleMainPage(userPin: ''),
     );
   }
 }
 
 class JungleMainPage extends StatefulWidget {
-  const JungleMainPage({super.key});
+  final String userPin;
+  const JungleMainPage({super.key, required this.userPin});
 
   @override
   State<JungleMainPage> createState() => _JungleMainPageState();
@@ -69,9 +63,11 @@ class _JungleMainPageState extends State<JungleMainPage> {
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    "Email: user@example.com",
-                    style: TextStyle(fontSize: 16),
+                  Text(
+                    widget.userPin.isEmpty
+                        ? "Email: user@example.com"
+                        : "PIN: ${widget.userPin}",
+                    style: const TextStyle(fontSize: 16),
                   ),
                   const Spacer(),
                   ElevatedButton.icon(
@@ -97,11 +93,35 @@ class _JungleMainPageState extends State<JungleMainPage> {
     final List<Widget> pages = [
       JungleHomePage(onNavigate: _onItemTapped),
       const JungleLessonsPage(),
-      const QuizSelectionPage(), // Changed from JungleQuizPage()
+      const GamesSelectionPage(),
+      const QuizSelectionPage(),
     ];
 
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white.withValues(alpha: 0.9),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.3),
+                  blurRadius: 6,
+                  offset: const Offset(2, 3),
+                ),
+              ],
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.home),
+              color: Colors.green.shade800,
+              tooltip: 'Exit to Home',
+              onPressed: () =>
+                  Navigator.of(context, rootNavigator: true).pop(),
+            ),
+          ),
+        ),
         title: const Text(
           '',
           style: TextStyle(
@@ -158,6 +178,10 @@ class _JungleMainPageState extends State<JungleMainPage> {
                 icon: Icon(Icons.menu_book),
                 label: 'Lessons',
               ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.sports_esports),
+                label: 'Games',
+              ),
               BottomNavigationBarItem(icon: Icon(Icons.quiz), label: 'Quiz'),
             ],
           ),
@@ -204,8 +228,10 @@ class JungleHomePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 20,
+                runSpacing: 16,
                 children: [
                   _buildAnimatedCard(
                     context,
@@ -214,12 +240,18 @@ class JungleHomePage extends StatelessWidget {
                     onTap: () => onNavigate(1),
                     glowColor: Colors.greenAccent,
                   ),
-                  const SizedBox(width: 30),
+                  _buildAnimatedCard(
+                    context,
+                    image: 'assets/animalwizz/images/quiz_icon.png',
+                    label: 'Games',
+                    onTap: () => onNavigate(2),
+                    glowColor: Colors.cyanAccent,
+                  ),
                   _buildAnimatedCard(
                     context,
                     image: 'assets/animalwizz/images/quiz_icon.png',
                     label: 'Quiz',
-                    onTap: () => onNavigate(2),
+                    onTap: () => onNavigate(3),
                     glowColor: Colors.amberAccent,
                   ),
                 ],
@@ -272,7 +304,7 @@ class JungleHomePage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Image.asset(image, height: 100, width: 175, fit: BoxFit.cover),
+            Image.asset(image, height: 80, width: 130, fit: BoxFit.cover),
             const SizedBox(height: 10),
             Text(
               label,
