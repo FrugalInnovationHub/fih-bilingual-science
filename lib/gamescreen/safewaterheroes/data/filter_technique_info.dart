@@ -24,7 +24,7 @@ class FilterTechniqueInfo {
       id: 'mechanical',
       displayName: 'Regular Filter',
       introVoiceLine:
-          'We use pebbles, sand and charcoal to clean dirty water!',
+          'We use pebbles, sand, charcoal, and cloth to clean dirty water!',
       infographicImagePath:
           'assets/safewaterheroes/images/infographic_mechanical.jpg',
       accentColor: Color(0xFF0288D1),
@@ -110,7 +110,7 @@ class FilterTechniqueInfo {
       id: 'distillation',
       displayName: 'Distillation Filter',
       introVoiceLine:
-          'We heat water until it turns to steam, then cool it back into clean water!',
+          'Distillation filter We heat water until it turns to steam, then cool it back into clean water!',
       infographicImagePath:
           'assets/safewaterheroes/images/infographic_distillation.jpg',
       accentColor: Color(0xFFE65100),

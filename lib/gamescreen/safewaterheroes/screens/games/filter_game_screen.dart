@@ -79,13 +79,13 @@ class _TechniqueBuildConfig {
 class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
     with TickerProviderStateMixin {
   static const String _defaultTechniqueVideo =
-      'assets/safewaterheroes/videos/water_filtration.mp4';
+      'assets/safewaterheroes/videos/Regular_Filter.mp4';
 
   static const Map<String, String> _techniqueVideos = {
-    'mechanical': 'assets/safewaterheroes/videos/mechanical_filter.mp4',
-    'osmosis': 'assets/safewaterheroes/videos/osmosis_filter.mp4',
-    'distillation': 'assets/safewaterheroes/videos/distillation_filter.mp4',
-    'uv': 'assets/safewaterheroes/videos/uv_filter.mp4',
+    'mechanical': 'assets/safewaterheroes/videos/Regular_Filter.mp4',
+    'osmosis': 'assets/safewaterheroes/videos/Osmosis_filter.mp4',
+    'distillation': 'assets/safewaterheroes/videos/Distilation_Filter.mp4',
+    'uv': 'assets/safewaterheroes/videos/UV_Filter.mp4',
   };
 
   static const List<_FilterTechnique> _techniques = [
@@ -450,9 +450,13 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
           final screenHeight = MediaQuery.of(ctx).size.height;
           return Dialog(
             backgroundColor: Colors.transparent,
-            insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            insetPadding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: screenHeight * 0.85),
+              constraints: BoxConstraints(
+                maxWidth: 680,
+                maxHeight: screenHeight * 0.78,
+              ),
               child: Container(
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
@@ -464,7 +468,7 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                       Color(0xFFE0F7FA),
                     ],
                   ),
-                  borderRadius: BorderRadius.circular(28),
+                  borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.2),
@@ -473,82 +477,122 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                     ),
                   ],
                 ),
-                padding: const EdgeInsets.all(24),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
-                        '🤿 Filter Complete!',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(color: Colors.black26, blurRadius: 4),
-                          ],
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      '🤿 Filter Complete!',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(color: Colors.black26, blurRadius: 4),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    const Text(
+                      'You cleaned the water! 🌊',
+                      style: TextStyle(fontSize: 13, color: Colors.white70),
+                    ),
+                    const SizedBox(height: 12),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: VideoPlayer(videoController),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: SizedBox(
+                        height: 4,
+                        child: VideoProgressIndicator(
+                          videoController,
+                          allowScrubbing: true,
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      const Text(
-                        'You cleaned the water! 🌊',
-                        style: TextStyle(fontSize: 14, color: Colors.white70),
-                      ),
-                      const SizedBox(height: 16),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: AspectRatio(
-                          aspectRatio: videoController.value.aspectRatio == 0
-                              ? 16 / 9
-                              : videoController.value.aspectRatio,
-                          child: Stack(
-                            alignment: Alignment.bottomCenter,
-                            children: [
-                              VideoPlayer(videoController),
-                              VideoProgressIndicator(videoController, allowScrubbing: true),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.15),
-                              blurRadius: 8,
-                              offset: const Offset(0, 3),
+                    ),
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: Row(
+                        children: [
+                          // BUTTON 1 — Watch Again
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              onPressed: () async {
+                                await videoController.seekTo(Duration.zero);
+                                await videoController.play();
+                              },
+                              icon: const Icon(
+                                Icons.replay,
+                                color: Color(0xFF0288D1),
+                              ),
+                              label: const Text(
+                                'Watch Again',
+                                style: TextStyle(
+                                  color: Color(0xFF0288D1),
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(
+                                  color: Color(0xFF0288D1),
+                                  width: 2,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                padding: const EdgeInsets.symmetric(vertical: 14),
+                              ),
                             ),
-                          ],
-                        ),
-                        child: TextButton.icon(
-                          onPressed: () async {
-                            // Stop playback, but DO NOT dispose here
-                            await videoController.pause();
-                            Navigator.of(ctx).pop(); // close dialog
-                          },
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
+                          ),
+                          const SizedBox(width: 12),
+                          // BUTTON 2 — Exit
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [Color(0xFF0288D1), Color(0xFF26C6DA)],
+                                ),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: TextButton.icon(
+                                onPressed: () async {
+                                  await videoController.pause();
+                                  Navigator.of(ctx).pop();
+                                },
+                                icon: const Icon(
+                                  Icons.flag,
+                                  color: Colors.white,
+                                ),
+                                label: const Text(
+                                  'Exit',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(vertical: 14),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                          icon: const Icon(Icons.check_circle, color: Color(0xFF0288D1)),
-                          label: const Text(
-                            "Finish & Exit",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF0288D1),
-                            ),
-                          ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 4),
+                  ],
                 ),
               ),
             ),
@@ -572,11 +616,151 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
         await videoController.dispose();
       } catch (_) {}
 
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Video failed to load.")),
-        );
-      }
+      if (!mounted) return;
+
+      // Show fallback dialog with error placeholder + buttons
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) {
+          final screenHeight = MediaQuery.of(ctx).size.height;
+          return Dialog(
+            backgroundColor: Colors.transparent,
+            insetPadding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: 680,
+                maxHeight: screenHeight * 0.78,
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF0288D1),
+                      Color(0xFF26C6DA),
+                      Color(0xFFE0F7FA),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 20,
+                      offset: const Offset(0, 12),
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      '🤿 Filter Complete!',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(color: Colors.black26, blurRadius: 4),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    const Text(
+                      'You cleaned the water! 🌊',
+                      style: TextStyle(fontSize: 13, color: Colors.white70),
+                    ),
+                    const SizedBox(height: 12),
+                    // Video error fallback
+                    Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF0288D1).withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.videocam_off_rounded,
+                            color: Color(0xFF0288D1),
+                            size: 48,
+                          ),
+                          SizedBox(height: 12),
+                          Text(
+                            'Video not available',
+                            style: TextStyle(
+                              color: Color(0xFF0288D1),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    // Exit-only button row (no replay since video failed)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: Row(
+                        children: [
+                          const Spacer(),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [Color(0xFF0288D1), Color(0xFF26C6DA)],
+                                ),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: TextButton.icon(
+                                onPressed: () {
+                                  Navigator.of(ctx).pop();
+                                },
+                                icon: const Icon(
+                                  Icons.flag,
+                                  color: Colors.white,
+                                ),
+                                label: const Text(
+                                  'Exit',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(vertical: 14),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+
+      await Future.delayed(const Duration(milliseconds: 300));
+
+      if (!mounted) return;
+
+      // Go back to Games Hub
+      GoRouter.of(screenContext).go('/games');
     }
   }
 
@@ -1052,7 +1236,10 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
         );
       },
       child: MouseRegion(
-        onEnter: (_) => setState(() => _hoveredMaterials.add(id)),
+        onEnter: (_) {
+          setState(() => _hoveredMaterials.add(id));
+          ref.read(audioControllerProvider).requestSpeak(label);
+        },
         onExit: (_) => setState(() => _hoveredMaterials.remove(id)),
         child: AnimatedScale(
           scale: isHovered ? 1.08 : 1.0,

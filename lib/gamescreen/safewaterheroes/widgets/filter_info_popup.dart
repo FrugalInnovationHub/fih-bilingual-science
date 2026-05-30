@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../constants/strings.dart';
 import '../data/filter_technique_info.dart';
+import '../providers/app_settings_provider.dart';
 import '../services/audio_controller.dart';
 
-class FilterInfoPopup extends StatefulWidget {
+class FilterInfoPopup extends ConsumerStatefulWidget {
   const FilterInfoPopup({
     super.key,
     required this.info,
@@ -16,15 +19,18 @@ class FilterInfoPopup extends StatefulWidget {
   final AudioController audioController;
 
   @override
-  State<FilterInfoPopup> createState() => _FilterInfoPopupState();
+  ConsumerState<FilterInfoPopup> createState() => _FilterInfoPopupState();
 }
 
-class _FilterInfoPopupState extends State<FilterInfoPopup> {
+class _FilterInfoPopupState extends ConsumerState<FilterInfoPopup> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.audioController.requestSpeak(widget.info.introVoiceLine);
+      final lang = ref.read(appSettingsProvider).audioLanguageCode;
+      widget.audioController.requestSpeak(
+        AppStrings.translateForAudio(widget.info.introVoiceLine, lang),
+      );
     });
   }
 
@@ -103,8 +109,12 @@ class _FilterInfoPopupState extends State<FilterInfoPopup> {
                           shape: const CircleBorder(),
                           child: InkWell(
                             customBorder: const CircleBorder(),
-                            onTap: () => widget.audioController
-                                .requestSpeak(widget.info.introVoiceLine),
+                            onTap: () {
+                              final lang = ref.read(appSettingsProvider).audioLanguageCode;
+                              widget.audioController.requestSpeak(
+                                AppStrings.translateForAudio(widget.info.introVoiceLine, lang),
+                              );
+                            },
                             child: const Padding(
                               padding: EdgeInsets.all(10),
                               child: Icon(

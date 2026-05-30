@@ -45,8 +45,7 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
       setState(() => _currentPage = index);
     }
     
-    final lang = ref.read(appSettingsProvider).languageCode;
-    final text = lang == 'es' ? _lesson.cards[index].textEs : _lesson.cards[index].textEn;
+    final text = _lesson.cards[index].textEn;
 
     ref.read(audioControllerProvider).requestSpeak(text);
 
