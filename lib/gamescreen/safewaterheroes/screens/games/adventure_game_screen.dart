@@ -398,6 +398,7 @@ class _AdventureGameScreenState extends ConsumerState<AdventureGameScreen> with 
   }
 
   void _showGameComplete() {
+    ref.read(userProgressProvider.notifier).markGameBadge('adventure');
     final lang = ref.read(appSettingsProvider).languageCode;
     showDialog(
       context: context,

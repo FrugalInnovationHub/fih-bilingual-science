@@ -11,6 +11,7 @@ import '../../config/theme.dart';
 import '../../constants/assets.dart';
 import '../../services/audio_controller.dart';
 import '../../widgets/tappable_text.dart';
+import '../../providers/user_progress_provider.dart';
 
 class _RegularFilterSlide {
   const _RegularFilterSlide({
@@ -269,6 +270,7 @@ class _RegularFilterLessonScreenState extends ConsumerState<RegularFilterLessonS
   late final ConfettiController _confettiController;
   bool _showingCompletion = false;
   int _index = 0;
+  final Set<int> _visitedSlides = {0};
 
   @override
   void initState() {
@@ -301,6 +303,10 @@ class _RegularFilterLessonScreenState extends ConsumerState<RegularFilterLessonS
   }
 
   void _onPageChanged(int i) {
+    if (i > _index && !_visitedSlides.contains(i)) {
+      _visitedSlides.add(i);
+      ref.read(userProgressProvider.notifier).addCoins(1);
+    }
     setState(() => _index = i);
     unawaited(_speakSlide(i));
   }
@@ -325,6 +331,7 @@ class _RegularFilterLessonScreenState extends ConsumerState<RegularFilterLessonS
 
     final screenContext = context;
     ref.read(audioControllerProvider).stop();
+    ref.read(userProgressProvider.notifier).markLessonComplete(101);
     _confettiController.play();
 
     await showDialog<void>(

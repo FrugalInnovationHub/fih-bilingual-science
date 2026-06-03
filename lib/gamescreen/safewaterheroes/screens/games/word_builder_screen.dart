@@ -8,6 +8,7 @@ import '../../config/theme.dart';
 import '../../data/word_builder_words.dart';
 import '../../services/audio_controller.dart';
 import '../../widgets/tappable_text.dart';
+import '../../providers/user_progress_provider.dart';
 
 class WordBuilderScreen extends ConsumerStatefulWidget {
   const WordBuilderScreen({super.key});
@@ -25,6 +26,12 @@ class _WordBuilderScreenState extends ConsumerState<WordBuilderScreen>
   late List<_LetterTileData> _tiles;
   int _wordIndex = 0;
   bool _isComplete = false;
+
+  bool _showWrongFeedback = false;
+  String _wrongFeedbackText = '';
+  bool _showCorrectFeedback = false;
+  String _correctFeedbackText = '';
+  int? _shakingSlotIndex;
 
   // Animation controllers
   late final AnimationController _bgController;
@@ -114,6 +121,28 @@ class _WordBuilderScreenState extends ConsumerState<WordBuilderScreen>
     return availableLetters.take(3).toList();
   }
 
+  String _getWrongFeedbackText() {
+    final messages = [
+      'Oops! Try again! 🙈',
+      'Not quite! Keep going! 💪',
+      'Almost! Try another! 🤔',
+      'Whoops! You got this! ⭐',
+    ];
+    final random = Random();
+    return messages[random.nextInt(messages.length)];
+  }
+
+  String _getCorrectFeedbackText() {
+    final messages = [
+      'Great! ⭐',
+      'Yes! 🎉',
+      'Nice! 💧',
+      'Yay! ✨',
+    ];
+    final random = Random();
+    return messages[random.nextInt(messages.length)];
+  }
+
   void _speakCurrentWord() {
     ref.read(audioControllerProvider).requestSpeak(_currentWord.word);
   }
@@ -124,17 +153,54 @@ class _WordBuilderScreenState extends ConsumerState<WordBuilderScreen>
   ) async {
     if (_isComplete || _placedTiles.containsKey(slotIndex)) return;
 
-    setState(() {
-      _placedTiles[slotIndex] = tile;
-    });
+    if (tile.correctIndex == slotIndex) {
+      final isLastLetter =
+          (_placedTiles.length + 1) == _currentLetters.length;
 
-    final audioController = ref.read(audioControllerProvider);
-    await audioController.speakAndWait(tile.letter.toLowerCase());
+      setState(() {
+        _placedTiles[slotIndex] = tile;
+      });
 
-    if (_placedTiles.length == _currentLetters.length) {
-      setState(() => _isComplete = true);
-      _confettiController.play();
-      await audioController.speakAndWait(_currentWord.word);
+      ref.read(userProgressProvider.notifier).addCoins(2);
+
+      if (!isLastLetter) {
+        setState(() {
+          _showCorrectFeedback = true;
+          _correctFeedbackText = _getCorrectFeedbackText();
+        });
+
+        Future.delayed(const Duration(milliseconds: 800), () {
+          if (mounted) setState(() => _showCorrectFeedback = false);
+        });
+      }
+
+      final audioController = ref.read(audioControllerProvider);
+      await audioController.speakAndWait(tile.letter.toLowerCase());
+
+      if (_placedTiles.length == _currentLetters.length) {
+        setState(() => _isComplete = true);
+        _confettiController.play();
+        ref.read(userProgressProvider.notifier).addCoins(5);
+        await audioController.speakAndWait(_currentWord.word);
+      }
+    } else {
+      setState(() {
+        _showWrongFeedback = true;
+        _wrongFeedbackText = _getWrongFeedbackText();
+        _shakingSlotIndex = slotIndex;
+      });
+      Future.delayed(const Duration(milliseconds: 1200), () {
+        if (mounted) setState(() => _showWrongFeedback = false);
+      });
+      Future.delayed(const Duration(milliseconds: 400), () {
+        if (mounted) setState(() => _shakingSlotIndex = null);
+      });
+      ref.read(audioControllerProvider).requestSpeak('Oops! Try again!');
+
+      final current = ref.read(userProgressProvider).coins;
+      if (current > 0) {
+        ref.read(userProgressProvider.notifier).addCoins(-1);
+      }
     }
   }
 
@@ -290,6 +356,108 @@ class _WordBuilderScreenState extends ConsumerState<WordBuilderScreen>
             ),
           ),
         ),
+
+        if (_showCorrectFeedback)
+          Positioned(
+            top: 120,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0.0, end: 1.0),
+                duration: const Duration(milliseconds: 150),
+                builder: (context, value, child) => Opacity(
+                  opacity: value,
+                  child: Transform.scale(
+                    scale: 0.85 + (0.15 * value),
+                    child: child,
+                  ),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF66BB6A),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.15),
+                        blurRadius: 10,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    _correctFeedbackText,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black26,
+                          blurRadius: 3,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+        if (_showWrongFeedback)
+          Positioned(
+            top: 120,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0.0, end: 1.0),
+                duration: const Duration(milliseconds: 200),
+                builder: (context, value, child) => Opacity(
+                  opacity: value,
+                  child: Transform.scale(
+                    scale: 0.8 + (0.2 * value),
+                    child: child,
+                  ),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 28,
+                    vertical: 14,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEF5350),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    _wrongFeedbackText,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black26,
+                          blurRadius: 4,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
 
         if (_isComplete) _buildCompletionOverlay(context),
       ],
@@ -464,7 +632,6 @@ class _WordBuilderScreenState extends ConsumerState<WordBuilderScreen>
                   onWillAccept: (tile) {
                     return !_isComplete &&
                         tile != null &&
-                        tile.correctIndex == index &&
                         !_placedTiles.containsKey(index);
                   },
                   onAccept: (tile) {
@@ -472,7 +639,8 @@ class _WordBuilderScreenState extends ConsumerState<WordBuilderScreen>
                   },
                   builder: (context, candidateData, rejectedData) {
                     final placedTile = _placedTiles[index];
-                    final isHighlighted = candidateData.isNotEmpty;
+                    final isHighlighted = candidateData.isNotEmpty &&
+                        candidateData.any((tile) => tile != null && tile.correctIndex == index);
 
                     if (placedTile != null) {
                       return _PlacedLetterSlot(
@@ -481,34 +649,46 @@ class _WordBuilderScreenState extends ConsumerState<WordBuilderScreen>
                       );
                     }
 
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 180),
-                      width: tileSize,
-                      height: tileSize + 6,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: isHighlighted
-                            ? AppTheme.accentOrange.withOpacity(0.18)
-                            : Colors.white.withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: isHighlighted
-                              ? AppTheme.accentOrange
-                              : const Color(0xFFFFD54F),
-                          width: isHighlighted ? 3 : 2,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFFFFD54F).withOpacity(0.3),
-                            blurRadius: 8,
-                          ),
-                        ],
+                    return TweenAnimationBuilder<double>(
+                      key: ValueKey('shake_${index}_${_shakingSlotIndex == index}'),
+                      tween: _shakingSlotIndex == index
+                          ? Tween(begin: -1.0, end: 1.0)
+                          : Tween(begin: 0.0, end: 0.0),
+                      duration: const Duration(milliseconds: 400),
+                      curve: Curves.elasticOut,
+                      builder: (context, value, child) => Transform.translate(
+                        offset: Offset(value * 6, 0),
+                        child: child,
                       ),
-                      child: Text(
-                        '⭐',
-                        style: TextStyle(
-                          fontSize: tileSize * 0.32,
-                          color: Colors.amber.withOpacity(0.35),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 180),
+                        width: tileSize,
+                        height: tileSize + 6,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: isHighlighted
+                              ? AppTheme.accentOrange.withOpacity(0.18)
+                              : Colors.white.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: isHighlighted
+                                ? AppTheme.accentOrange
+                                : const Color(0xFFFFD54F),
+                            width: isHighlighted ? 3 : 2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFFFFD54F).withOpacity(0.3),
+                              blurRadius: 8,
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          '⭐',
+                          style: TextStyle(
+                            fontSize: tileSize * 0.32,
+                            color: Colors.amber.withOpacity(0.35),
+                          ),
                         ),
                       ),
                     );
