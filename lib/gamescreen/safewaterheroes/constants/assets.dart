@@ -106,6 +106,44 @@ class AppAssets {
   static const String l10c5 = '$_imgRoot/l10_c5.png';
   static const String l10c6 = '$_imgRoot/l10_c6.png';
 
+  // Regular filter lesson (Build a Regular Filter)
+  static const String l11c1 = '$_imgRoot/l11_c1.png';
+  static const String l11c2 = '$_imgRoot/l11_c2.png';
+  static const String l11c3 = '$_imgRoot/l11_c3.png';
+  static const String l11c4 = '$_imgRoot/l11_c4.png';
+  static const String l11c5 = '$_imgRoot/l11_c5.png';
+  static const String l11c6 = '$_imgRoot/l11_c6.png';
+
+  // Osmosis filter lesson (Build an Osmosis Filter)
+  static const String l12c1 = '$_imgRoot/l12_c1.png';
+  static const String l12c2 = '$_imgRoot/l12_c2.png';
+  static const String l12c3 = '$_imgRoot/l12_c3.png';
+  static const String l12c4 = '$_imgRoot/l12_c4.png';
+  static const String l12c5 = '$_imgRoot/l12_c5.png';
+  static const String l12c6 = '$_imgRoot/l12_c6.png';
+  static const String osmosisFilterCover =
+      '$_imgRoot/osmosis_filter_cover.png';
+
+  // Distillation filter lesson (Build a Distillation Filter)
+  static const String l13c1 = '$_imgRoot/l13_c1.png';
+  static const String l13c2 = '$_imgRoot/l13_c2.png';
+  static const String l13c3 = '$_imgRoot/l13_c3.png';
+  static const String l13c4 = '$_imgRoot/l13_c4.png';
+  static const String l13c5 = '$_imgRoot/l13_c5.png';
+  static const String l13c6 = '$_imgRoot/l13_c6.png';
+  static const String distillationFilterCover =
+      '$_imgRoot/distillation_filter_cover.png';
+
+  // UV filter lesson (Build a UV Filter)
+  static const String l14c1 = '$_imgRoot/l14_c1.png';
+  static const String l14c2 = '$_imgRoot/l14_c2.png';
+  static const String l14c3 = '$_imgRoot/l14_c3.png';
+  static const String l14c4 = '$_imgRoot/l14_c4.png';
+  static const String l14c5 = '$_imgRoot/l14_c5.png';
+  static const String l14c6 = '$_imgRoot/l14_c6.png';
+  static const String uvFilterCover =
+      '$_imgRoot/uv_filter_cover.png';
+
   // Badges & Misc
   static const String badgeCoin = '$_imgRoot/badge_coin.png';
   static const String kidWalking = '$_imgRoot/kid_walking.png';

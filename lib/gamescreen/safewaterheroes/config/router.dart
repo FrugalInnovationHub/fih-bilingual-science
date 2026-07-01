@@ -4,7 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../screens/entry_screen.dart';
 import '../screens/dashboard_screen.dart';
 import '../screens/learning/learning_hub_screen.dart';
+import '../screens/learning/learn_about_water_screen.dart';
+import '../screens/learning/learn_filters_screen.dart';
 import '../screens/learning/lesson_player_screen.dart';
+import '../screens/learning/regular_filter_lesson_screen.dart';
+import '../screens/learning/osmosis_filter_lesson_screen.dart';
+import '../screens/learning/distillation_filter_lesson_screen.dart';
+import '../screens/learning/uv_filter_lesson_screen.dart';
 import '../screens/games/games_hub_screen.dart';
 import '../screens/games/sorting_game_screen.dart';
 import '../screens/games/filter_game_screen.dart';
@@ -19,6 +25,12 @@ class AppRoutes {
   static const entry = '/';
   static const dashboard = '/dashboard';
   static const learningHub = '/learning';
+  static const waterLessons = 'water';
+  static const filterLessons = 'filters';
+  static const regularFilterLesson = 'regular-filter';
+  static const osmosisFilterLesson = 'osmosis-filter';
+  static const distillationFilterLesson = 'distillation-filter';
+  static const uvFilterLesson = 'uv-filter';
   static const lessonPlayer = 'player/:lessonId';
   static const gamesHub = '/games';
   static const gameSorting = 'sorting';
@@ -100,11 +112,36 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: AppRoutes.learningHub,
             builder: (context, state) => const LearningHubScreen(),
             routes: [
-               GoRoute(
+              GoRoute(
+                path: AppRoutes.waterLessons,
+                builder: (context, state) => const LearnAboutWaterScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.filterLessons,
+                builder: (context, state) => const LearnFiltersScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.regularFilterLesson,
+                builder: (context, state) => const RegularFilterLessonScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.osmosisFilterLesson,
+                builder: (context, state) => const OsmosisFilterLessonScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.distillationFilterLesson,
+                builder: (context, state) => const DistillationFilterLessonScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.uvFilterLesson,
+                builder: (context, state) => const UVFilterLessonScreen(),
+              ),
+              GoRoute(
                 path: AppRoutes.lessonPlayer,
                 builder: (context, state) {
-                   final lessonId = int.tryParse(state.pathParameters['lessonId'] ?? '0') ?? 0;
-                   return LessonPlayerScreen(lessonId: lessonId);
+                  final lessonId =
+                      int.tryParse(state.pathParameters['lessonId'] ?? '0') ?? 0;
+                  return LessonPlayerScreen(lessonId: lessonId);
                 },
               ),
             ],

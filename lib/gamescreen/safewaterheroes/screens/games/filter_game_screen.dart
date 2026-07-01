@@ -9,9 +9,11 @@ import 'package:video_player/video_player.dart';
 
 import '../../config/theme.dart';
 import '../../constants/strings.dart';
+import '../../data/filter_technique_info.dart';
 import '../../providers/app_settings_provider.dart';
 import '../../providers/user_progress_provider.dart';
 import '../../services/audio_controller.dart';
+import '../../widgets/filter_info_popup.dart';
 import '../../widgets/game_intro_banner.dart';
 import '../../widgets/game_screen_back_bar.dart';
 
@@ -22,11 +24,266 @@ class FilterGameScreen extends ConsumerStatefulWidget {
   ConsumerState<FilterGameScreen> createState() => _FilterGameScreenState();
 }
 
+class _FilterTechnique {
+  const _FilterTechnique({
+    required this.id,
+    required this.labelEn,
+    required this.labelEs,
+    required this.descriptionEn,
+    required this.descriptionEs,
+  });
+
+  final String id;
+  final String labelEn;
+  final String labelEs;
+  final String descriptionEn;
+  final String descriptionEs;
+}
+
+class _MaterialDef {
+  const _MaterialDef({
+    required this.id,
+    required this.labelEn,
+    required this.labelEs,
+    this.assetPath,
+    required this.slotColor,
+    this.icon,
+  });
+
+  final int id;
+  final String labelEn;
+  final String labelEs;
+  final String? assetPath;
+  final Color slotColor;
+  final IconData? icon;
+}
+
+class _TechniqueBuildConfig {
+  const _TechniqueBuildConfig({
+    required this.materials,
+    required this.requiredOrder,
+    required this.introEn,
+    required this.introEs,
+    required this.titleEn,
+    required this.titleEs,
+  });
+
+  final List<_MaterialDef> materials;
+  final List<int> requiredOrder;
+  final String introEn;
+  final String introEs;
+  final String titleEn;
+  final String titleEs;
+}
+
 class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
     with TickerProviderStateMixin {
-  // 0: Empty, 1: Pebbles, 2: Sand, 3: Charcoal, 4: Cloth
+  static const String _defaultTechniqueVideo =
+      'assets/safewaterheroes/videos/Regular_Filter.mp4';
+
+  static const Map<String, String> _techniqueVideos = {
+    'mechanical': 'assets/safewaterheroes/videos/Regular_Filter.mp4',
+    'osmosis': 'assets/safewaterheroes/videos/Osmosis_filter.mp4',
+    'distillation': 'assets/safewaterheroes/videos/Distilation_Filter.mp4',
+    'uv': 'assets/safewaterheroes/videos/UV_Filter.mp4',
+  };
+
+  static const List<_FilterTechnique> _techniques = [
+    _FilterTechnique(
+      id: 'mechanical',
+      labelEn: 'Regular Filter',
+      labelEs: 'Filtro Mecanico',
+      descriptionEn:
+          'Build layered filters (pebbles, charcoal, sand, cloth) to trap particles.',
+      descriptionEs:
+          'Construye filtros en capas (piedras, carbon, arena, tela) para atrapar particulas.',
+    ),
+    _FilterTechnique(
+      id: 'osmosis',
+      labelEn: 'Osmosis Filter',
+      labelEs: 'Osmosis',
+      descriptionEn:
+          'Water moves across a semi-permeable membrane and leaves many impurities behind.',
+      descriptionEs:
+          'El agua cruza una membrana semipermeable y deja muchas impurezas atras.',
+    ),
+    _FilterTechnique(
+      id: 'distillation',
+      labelEn: 'Distillation Filter',
+      labelEs: 'Destilacion',
+      descriptionEn:
+          'Water is heated to vapor and condensed again, separating many dissolved contaminants.',
+      descriptionEs:
+          'El agua se calienta a vapor y se condensa otra vez, separando muchos contaminantes disueltos.',
+    ),
+    _FilterTechnique(
+      id: 'uv',
+      labelEn: 'UV Purification Filter',
+      labelEs: 'Purificacion UV',
+      descriptionEn:
+          'Ultraviolet light helps inactivate many microorganisms after pre-filtering.',
+      descriptionEs:
+          'La luz ultravioleta ayuda a inactivar muchos microorganismos despues del prefiltrado.',
+    ),
+  ];
+
+  String _selectedTechniqueId = 'mechanical';
+
+  static const Map<String, _TechniqueBuildConfig> _buildConfigs = {
+    'mechanical': _TechniqueBuildConfig(
+      materials: [
+        _MaterialDef(
+          id: 1,
+          labelEn: 'Pebbles',
+          labelEs: 'Piedras',
+          assetPath: 'assets/safewaterheroes/images/items/pebbles.png',
+          slotColor: Color(0xFF90A4AE),
+        ),
+        _MaterialDef(
+          id: 2,
+          labelEn: 'Sand',
+          labelEs: 'Arena',
+          assetPath: 'assets/safewaterheroes/images/items/sand.png',
+          slotColor: Color(0xFFFFD54F),
+        ),
+        _MaterialDef(
+          id: 3,
+          labelEn: 'Charcoal',
+          labelEs: 'Carbón',
+          assetPath: 'assets/safewaterheroes/images/items/charcoal.png',
+          slotColor: Color(0xFF37474F),
+        ),
+        _MaterialDef(
+          id: 4,
+          labelEn: 'Cloth',
+          labelEs: 'Tela',
+          assetPath: 'assets/safewaterheroes/images/items/cloth.png',
+          slotColor: Color(0xFF81D4FA),
+        ),
+      ],
+      requiredOrder: [1, 3, 2, 4],
+      introEn: 'Build a filter! Use Pebbles, Sand, Charcoal, and Cloth in the correct order.',
+      introEs: '¡Construye un filtro! Usa Piedras, Arena, Carbón y Tela en el orden correcto.',
+      titleEn: 'Help the diver build a filter! 🤿',
+      titleEs: '¡Ayuda al buzo a construir un filtro! 🤿',
+    ),
+    'osmosis': _TechniqueBuildConfig(
+      materials: [
+        _MaterialDef(
+          id: 1,
+          labelEn: 'Sediment filter',
+          labelEs: 'Filtro de sedimentos',
+          slotColor: Color(0xFF8D6E63),
+          icon: Icons.filter_alt,
+        ),
+        _MaterialDef(
+          id: 2,
+          labelEn: 'Carbon filter',
+          labelEs: 'Filtro de carbón',
+          slotColor: Color(0xFF424242),
+          icon: Icons.view_week,
+        ),
+        _MaterialDef(
+          id: 3,
+          labelEn: 'RO membrane',
+          labelEs: 'Membrana de ósmosis',
+          slotColor: Color(0xFF1565C0),
+          icon: Icons.blur_circular,
+        ),
+        _MaterialDef(
+          id: 4,
+          labelEn: 'Storage tank',
+          labelEs: 'Tanque de almacenamiento',
+          slotColor: Color(0xFF4FC3F7),
+          icon: Icons.propane_tank_outlined,
+        ),
+      ],
+      requiredOrder: [1, 2, 3, 4],
+      introEn:
+          'Build reverse osmosis! Drag sediment filter, carbon filter, membrane, and tank in order.',
+      introEs:
+          '¡Construye ósmosis inversa! Arrastra filtro de sedimentos, carbón, membrana y tanque en orden.',
+      titleEn: 'Stack the RO stages! 💧',
+      titleEs: '¡Apila las etapas de ósmosis! 💧',
+    ),
+    'distillation': _TechniqueBuildConfig(
+      materials: [
+        _MaterialDef(
+          id: 1,
+          labelEn: 'Heat source',
+          labelEs: 'Fuente de calor',
+          slotColor: Color(0xFFFF7043),
+          icon: Icons.local_fire_department,
+        ),
+        _MaterialDef(
+          id: 2,
+          labelEn: 'Boiling chamber',
+          labelEs: 'Cámara de ebullición',
+          slotColor: Color(0xFF78909C),
+          icon: Icons.science_outlined,
+        ),
+        _MaterialDef(
+          id: 3,
+          labelEn: 'Condenser',
+          labelEs: 'Condensador',
+          slotColor: Color(0xFF90CAF9),
+          icon: Icons.ac_unit,
+        ),
+        _MaterialDef(
+          id: 4,
+          labelEn: 'Collection jar',
+          labelEs: 'Recipiente de recolección',
+          slotColor: Color(0xFF26A69A),
+          icon: Icons.water_drop_outlined,
+        ),
+      ],
+      requiredOrder: [1, 2, 3, 4],
+      introEn: 'Build distillation! Drag heat, boiler, condenser, and collection jar in order.',
+      introEs: '¡Construye destilación! Arrastra calor, caldera, condensador y recipiente en orden.',
+      titleEn: 'Stack the distillation path! ♨️',
+      titleEs: '¡Apila la ruta de destilación! ♨️',
+    ),
+    'uv': _TechniqueBuildConfig(
+      materials: [
+        _MaterialDef(
+          id: 1,
+          labelEn: 'Pre-filter',
+          labelEs: 'Prefiltro',
+          slotColor: Color(0xFF5C6BC0),
+          icon: Icons.filter_list,
+        ),
+        _MaterialDef(
+          id: 2,
+          labelEn: 'UV lamp',
+          labelEs: 'Lámpara UV',
+          slotColor: Color(0xFFFFEE58),
+          icon: Icons.wb_incandescent_outlined,
+        ),
+        _MaterialDef(
+          id: 3,
+          labelEn: 'Quartz sleeve',
+          labelEs: 'Manga de cuarzo',
+          slotColor: Color(0xFFB0BEC5),
+          icon: Icons.view_column_outlined,
+        ),
+        _MaterialDef(
+          id: 4,
+          labelEn: 'Clean outlet',
+          labelEs: 'Salida limpia',
+          slotColor: Color(0xFF66BB6A),
+          icon: Icons.water_damage_outlined,
+        ),
+      ],
+      requiredOrder: [1, 2, 3, 4],
+      introEn: 'Build UV purification! Drag pre-filter, lamp, quartz sleeve, and outlet in order.',
+      introEs: '¡Construye purificación UV! Arrastra prefiltro, lámpara, manga de cuarzo y salida en orden.',
+      titleEn: 'Stack the UV stages! ✨',
+      titleEs: '¡Apila las etapas UV! ✨',
+    ),
+  };
+
+  // One slot per layer; material ids are defined per technique in [_buildConfigs].
   final List<int?> _slots = [null, null, null, null];
-  final List<int> _requiredOrder = [1, 3, 2, 4]; // Top to bottom: Pebbles, Sand, Charcoal, Cloth
   bool _isPouring = false;
   bool _isComplete = false;
 
@@ -39,6 +296,8 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
   late final List<AnimationController> _cardFloatControllers;
   late final ConfettiController _confettiController;
   bool _confettiStarted = false;
+
+  _TechniqueBuildConfig get _activeBuild => _buildConfigs[_selectedTechniqueId]!;
 
   @override
   void initState() {
@@ -72,6 +331,24 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
     _confettiController = ConfettiController(
       duration: const Duration(seconds: 3),
     );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showInfoPopupForCurrentTechnique();
+    });
+  }
+
+  Future<void> _showInfoPopupForCurrentTechnique() async {
+    if (!mounted) return;
+    final info = FilterTechniqueInfo.byId(_selectedTechniqueId);
+    if (info == null) return;
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => FilterInfoPopup(
+        info: info,
+        audioController: ref.read(audioControllerProvider),
+        onClose: () => Navigator.of(dialogContext).pop(),
+      ),
+    );
   }
 
   @override
@@ -92,14 +369,21 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
     final lang = ref.read(appSettingsProvider).languageCode;
 
     // Check if correct material for this slot position
-    if (_requiredOrder[slotIndex] == materialId) {
+    if (_activeBuild.requiredOrder[slotIndex] == materialId) {
       setState(() {
         _slots[slotIndex] = materialId;
       });
       ref.read(audioControllerProvider).requestSpeak(AppStrings.get('goodJob', lang));
       _checkCompletion();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Wrong layer order!")));
+      final isEs = lang == 'es';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            isEs ? '¡Orden de capas incorrecto!' : 'Wrong layer order!',
+          ),
+        ),
+      );
       ref.read(audioControllerProvider).requestSpeak(AppStrings.get('tryAgain', lang));
     }
   }
@@ -122,15 +406,32 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
     }
   }
 
+  Future<void> _onTechniqueChanged(String? value) async {
+    if (value == null || value == _selectedTechniqueId) {
+      return;
+    }
+    setState(() {
+      _selectedTechniqueId = value;
+      _slots.setAll(0, [null, null, null, null]);
+      _isPouring = false;
+      _isComplete = false;
+      _confettiStarted = false;
+    });
+    _confettiController.stop();
+    await _showInfoPopupForCurrentTechnique();
+  }
+
   Future<void> _showVideoSuccess() async {
     // Prevent double dialogs (very important)
     if (_isComplete == false) return; // safety; optional
     if (!mounted) return;
 
     final screenContext = context; // router scope
+    final videoPath =
+        _techniqueVideos[_selectedTechniqueId] ?? _defaultTechniqueVideo;
 
     final VideoPlayerController videoController =
-        VideoPlayerController.asset("assets/safewaterheroes/videos/water_filtration.mp4");
+        VideoPlayerController.asset(videoPath);
 
     try {
       await videoController.initialize();
@@ -149,9 +450,13 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
           final screenHeight = MediaQuery.of(ctx).size.height;
           return Dialog(
             backgroundColor: Colors.transparent,
-            insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            insetPadding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: screenHeight * 0.85),
+              constraints: BoxConstraints(
+                maxWidth: 680,
+                maxHeight: screenHeight * 0.78,
+              ),
               child: Container(
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
@@ -163,7 +468,7 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                       Color(0xFFE0F7FA),
                     ],
                   ),
-                  borderRadius: BorderRadius.circular(28),
+                  borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.2),
@@ -172,82 +477,122 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                     ),
                   ],
                 ),
-                padding: const EdgeInsets.all(24),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
-                        '🤿 Filter Complete!',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(color: Colors.black26, blurRadius: 4),
-                          ],
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      '🤿 Filter Complete!',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(color: Colors.black26, blurRadius: 4),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    const Text(
+                      'You cleaned the water! 🌊',
+                      style: TextStyle(fontSize: 13, color: Colors.white70),
+                    ),
+                    const SizedBox(height: 12),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: VideoPlayer(videoController),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: SizedBox(
+                        height: 4,
+                        child: VideoProgressIndicator(
+                          videoController,
+                          allowScrubbing: true,
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      const Text(
-                        'You cleaned the water! 🌊',
-                        style: TextStyle(fontSize: 14, color: Colors.white70),
-                      ),
-                      const SizedBox(height: 16),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: AspectRatio(
-                          aspectRatio: videoController.value.aspectRatio == 0
-                              ? 16 / 9
-                              : videoController.value.aspectRatio,
-                          child: Stack(
-                            alignment: Alignment.bottomCenter,
-                            children: [
-                              VideoPlayer(videoController),
-                              VideoProgressIndicator(videoController, allowScrubbing: true),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.15),
-                              blurRadius: 8,
-                              offset: const Offset(0, 3),
+                    ),
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: Row(
+                        children: [
+                          // BUTTON 1 — Watch Again
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              onPressed: () async {
+                                await videoController.seekTo(Duration.zero);
+                                await videoController.play();
+                              },
+                              icon: const Icon(
+                                Icons.replay,
+                                color: Color(0xFF0288D1),
+                              ),
+                              label: const Text(
+                                'Watch Again',
+                                style: TextStyle(
+                                  color: Color(0xFF0288D1),
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(
+                                  color: Color(0xFF0288D1),
+                                  width: 2,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                padding: const EdgeInsets.symmetric(vertical: 14),
+                              ),
                             ),
-                          ],
-                        ),
-                        child: TextButton.icon(
-                          onPressed: () async {
-                            // Stop playback, but DO NOT dispose here
-                            await videoController.pause();
-                            Navigator.of(ctx).pop(); // close dialog
-                          },
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
+                          ),
+                          const SizedBox(width: 12),
+                          // BUTTON 2 — Exit
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [Color(0xFF0288D1), Color(0xFF26C6DA)],
+                                ),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: TextButton.icon(
+                                onPressed: () async {
+                                  await videoController.pause();
+                                  Navigator.of(ctx).pop();
+                                },
+                                icon: const Icon(
+                                  Icons.flag,
+                                  color: Colors.white,
+                                ),
+                                label: const Text(
+                                  'Exit',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(vertical: 14),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                          icon: const Icon(Icons.check_circle, color: Color(0xFF0288D1)),
-                          label: const Text(
-                            "Finish & Exit",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF0288D1),
-                            ),
-                          ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 4),
+                  ],
                 ),
               ),
             ),
@@ -271,11 +616,151 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
         await videoController.dispose();
       } catch (_) {}
 
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Video failed to load.")),
-        );
-      }
+      if (!mounted) return;
+
+      // Show fallback dialog with error placeholder + buttons
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) {
+          final screenHeight = MediaQuery.of(ctx).size.height;
+          return Dialog(
+            backgroundColor: Colors.transparent,
+            insetPadding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: 680,
+                maxHeight: screenHeight * 0.78,
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF0288D1),
+                      Color(0xFF26C6DA),
+                      Color(0xFFE0F7FA),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 20,
+                      offset: const Offset(0, 12),
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      '🤿 Filter Complete!',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(color: Colors.black26, blurRadius: 4),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    const Text(
+                      'You cleaned the water! 🌊',
+                      style: TextStyle(fontSize: 13, color: Colors.white70),
+                    ),
+                    const SizedBox(height: 12),
+                    // Video error fallback
+                    Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF0288D1).withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.videocam_off_rounded,
+                            color: Color(0xFF0288D1),
+                            size: 48,
+                          ),
+                          SizedBox(height: 12),
+                          Text(
+                            'Video not available',
+                            style: TextStyle(
+                              color: Color(0xFF0288D1),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    // Exit-only button row (no replay since video failed)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: Row(
+                        children: [
+                          const Spacer(),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [Color(0xFF0288D1), Color(0xFF26C6DA)],
+                                ),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: TextButton.icon(
+                                onPressed: () {
+                                  Navigator.of(ctx).pop();
+                                },
+                                icon: const Icon(
+                                  Icons.flag,
+                                  color: Colors.white,
+                                ),
+                                label: const Text(
+                                  'Exit',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(vertical: 14),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+
+      await Future.delayed(const Duration(milliseconds: 300));
+
+      if (!mounted) return;
+
+      // Go back to Games Hub
+      GoRouter.of(screenContext).go('/games');
     }
   }
 
@@ -344,8 +829,13 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
               title: isEs ? 'Crear un Filtro' : 'Filter Making',
             ),
             GameIntroBanner(
-              textEn: "Build a filter! Use Pebbles, Sand, Charcoal, and Cloth in order.",
-              textEs: "¡Construye un filtro! Usa Piedras, Arena, Carbón y Tela en orden.",
+              key: ValueKey(_selectedTechniqueId),
+              textEn: _activeBuild.introEn,
+              textEs: _activeBuild.introEs,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+              child: _buildTechniqueDropdown(isEs),
             ),
             Expanded(
               child: Padding(
@@ -355,8 +845,6 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                     final availH = constraints.maxHeight;
                     final tubeHeight =
                         (availH * 0.52).clamp(260.0, 360.0).toDouble();
-                    final tubeWidth =
-                        (tubeHeight * 0.44).clamp(180.0, 250.0).toDouble();
                     const diverHeight = 75.0;
                     final totalRightH = diverHeight + tubeHeight + 30.0 + 40.0;
                     final adjustedTubeH = totalRightH > availH
@@ -378,9 +866,7 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 12),
                                 child: Center(
-                                  child: _buildMaterialsPanel(
-                                    isEs,
-                                  ),
+                                  child: _buildMaterialsPanel(isEs),
                                 ),
                               ),
                             ),
@@ -460,7 +946,7 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 22,
                   fontWeight: FontWeight.w900,
                   shadows: [
                     Shadow(color: Colors.black38, blurRadius: 4),
@@ -475,7 +961,7 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white.withOpacity(0.88),
-                  fontSize: 11,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -490,42 +976,44 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    _buildDraggableMaterial(
-                      1,
-                      isEs ? "Piedras" : "Pebbles",
-                      "assets/safewaterheroes/images/items/pebbles.png",
-                      Colors.grey[700]!,
-                      cardWidth,
-                      cardHeight,
-                    ),
-                    _buildDraggableMaterial(
-                      2,
-                      isEs ? "Arena" : "Sand",
-                      "assets/safewaterheroes/images/items/sand.png",
-                      Colors.orange[200]!,
-                      cardWidth,
-                      cardHeight,
-                    ),
-                    _buildDraggableMaterial(
-                      3,
-                      isEs ? "Carbón" : "Charcoal",
-                      "assets/safewaterheroes/images/items/charcoal.png",
-                      Colors.black,
-                      cardWidth,
-                      cardHeight,
-                    ),
-                    _buildDraggableMaterial(
-                      4,
-                      isEs ? "Tela" : "Cloth",
-                      "assets/safewaterheroes/images/items/cloth.png",
-                      Colors.teal[100]!,
-                      cardWidth,
-                      cardHeight,
-                    ),
+                    for (final m in _activeBuild.materials)
+                      _buildDraggableMaterial(m, isEs, cardWidth, cardHeight),
                   ],
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTechniqueDropdown(bool isEs) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.14),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white.withOpacity(0.28)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            value: _selectedTechniqueId,
+            isExpanded: true,
+            dropdownColor: const Color(0xFF0277BD),
+            iconEnabledColor: Colors.white,
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+            onChanged: _onTechniqueChanged,
+            items: _techniques.map((technique) {
+              return DropdownMenuItem<String>(
+                value: technique.id,
+                child: Text(
+                  isEs ? technique.labelEs : technique.labelEn,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              );
+            }).toList(),
           ),
         ),
       ),
@@ -546,11 +1034,11 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Help the diver build a filter! 🤿',
+            Text(
+              isEs ? _activeBuild.titleEs : _activeBuild.titleEn,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 13,
+              style: const TextStyle(
+                fontSize: 18,
                 fontWeight: FontWeight.w800,
                 color: Colors.white,
                 shadows: [
@@ -724,13 +1212,13 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
   }
 
   Widget _buildDraggableMaterial(
-    int id,
-    String label,
-    String assetPath,
-    Color fallbackColor,
+    _MaterialDef material,
+    bool isEs,
     double cardWidth,
     double cardHeight,
   ) {
+    final id = material.id;
+    final label = isEs ? material.labelEs : material.labelEn;
     final isPlaced = _slots.contains(id);
     final isHovered = _hoveredMaterials.contains(id);
     final controller = _cardFloatControllers[id - 1];
@@ -748,7 +1236,10 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
         );
       },
       child: MouseRegion(
-        onEnter: (_) => setState(() => _hoveredMaterials.add(id)),
+        onEnter: (_) {
+          setState(() => _hoveredMaterials.add(id));
+          ref.read(audioControllerProvider).requestSpeak(label);
+        },
         onExit: (_) => setState(() => _hoveredMaterials.remove(id)),
         child: AnimatedScale(
           scale: isHovered ? 1.08 : 1.0,
@@ -806,13 +1297,10 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                           ),
                           padding: const EdgeInsets.all(8),
                           child: Center(
-                            child: Image.asset(
-                              assetPath,
-                              width: imageSize,
-                              height: imageSize,
-                              fit: BoxFit.contain,
-                              errorBuilder: (c, e, s) =>
-                                  Icon(Icons.layers, color: fallbackColor, size: 40),
+                            child: _materialPreviewWidget(
+                              material,
+                              imageSize,
+                              imageSize,
                             ),
                           ),
                         ),
@@ -826,9 +1314,9 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                     ],
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 6),
                 SizedBox(
-                  height: 16,
+                  height: 24,
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
@@ -837,11 +1325,12 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        fontSize: 13,
+                        fontSize: 17,
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
                         shadows: [
-                          Shadow(color: Colors.black38, blurRadius: 3),
+                          Shadow(color: Colors.black54, blurRadius: 4),
+                          Shadow(color: Colors.black38, blurRadius: 2),
                         ],
                       ),
                     ),
@@ -876,7 +1365,7 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
         onAccept: (data) => _handleDrop(index, data),
         builder: (context, candidateData, rejectedData) {
           final isHovering = candidateData.isNotEmpty;
-          final slotTint = _layerColor(materialId)?.withOpacity(0.85);
+          final slotTint = _materialDef(materialId)?.slotColor.withOpacity(0.85);
 
           return AnimatedBuilder(
             animation: _slotPulseController,
@@ -895,7 +1384,7 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                     duration: const Duration(milliseconds: 180),
                     decoration: BoxDecoration(
                       color: materialId != null
-                          ? slotTint
+                          ? (slotTint ?? Colors.white.withOpacity(0.25))
                           : isHovering
                               ? const Color(0x4DFFF9C4)
                               : Colors.white.withOpacity(0.15),
@@ -914,18 +1403,29 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                         ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.water_drop_outlined,
-                                color: Color(0xFF4FC3F7),
-                                size: 18,
+                                color: Colors.white.withOpacity(0.55),
+                                size: 20,
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.black.withOpacity(0.25),
+                                    blurRadius: 3,
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 6),
                               Text(
-                                'Drop Here',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.white.withOpacity(0.7),
-                                  fontWeight: FontWeight.w700,
+                                isEs ? 'Soltar aquí' : 'Drop Here',
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 0.3,
+                                  shadows: [
+                                    Shadow(color: Colors.black87, blurRadius: 5),
+                                    Shadow(color: Colors.black54, blurRadius: 2, offset: Offset(0, 1)),
+                                  ],
                                 ),
                               ),
                             ],
@@ -934,16 +1434,10 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                             padding: const EdgeInsets.symmetric(horizontal: 12),
                             child: Row(
                               children: [
-                                Image.asset(
-                                  _materialAsset(materialId),
-                                  width: 40,
-                                  height: 40,
-                                  fit: BoxFit.contain,
-                                  errorBuilder: (c, e, s) => Icon(
-                                    Icons.layers,
-                                    color: _layerColor(materialId) ?? Colors.white,
-                                    size: 28,
-                                  ),
+                                _materialPreviewWidget(
+                                  _materialDef(materialId),
+                                  40,
+                                  40,
                                 ),
                                 const SizedBox(width: 10),
                                 Expanded(
@@ -951,9 +1445,9 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
                                     _materialLabel(materialId, isEs),
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
-                                      color: Colors.white,
+                                      color: Color(0xFF0277BD),
                                       fontWeight: FontWeight.w800,
-                                      fontSize: 11,
+                                      fontSize: 12,
                                       shadows: [
                                         Shadow(color: Colors.black38, blurRadius: 4),
                                       ],
@@ -979,49 +1473,43 @@ class _FilterGameScreenState extends ConsumerState<FilterGameScreen>
     );
   }
 
-  Color? _layerColor(int? materialId) {
-    switch (materialId) {
-      case 1:
-        return const Color(0xFF90A4AE);
-      case 2:
-        return const Color(0xFFFFD54F);
-      case 3:
-        return const Color(0xFF37474F);
-      case 4:
-        return const Color(0xFF81D4FA);
-      default:
-        return null;
+  _MaterialDef? _materialDef(int? materialId) {
+    if (materialId == null) return null;
+    for (final m in _activeBuild.materials) {
+      if (m.id == materialId) return m;
     }
-  }
-
-  String _materialAsset(int? materialId) {
-    switch (materialId) {
-      case 1:
-        return "assets/safewaterheroes/images/items/pebbles.png";
-      case 2:
-        return "assets/safewaterheroes/images/items/sand.png";
-      case 3:
-        return "assets/safewaterheroes/images/items/charcoal.png";
-      case 4:
-        return "assets/safewaterheroes/images/items/cloth.png";
-      default:
-        return '';
-    }
+    return null;
   }
 
   String _materialLabel(int? materialId, bool isEs) {
-    switch (materialId) {
-      case 1:
-        return isEs ? 'Piedras' : 'Pebbles';
-      case 2:
-        return isEs ? 'Arena' : 'Sand';
-      case 3:
-        return isEs ? 'Carbón' : 'Charcoal';
-      case 4:
-        return isEs ? 'Tela' : 'Cloth';
-      default:
-        return '';
+    final m = _materialDef(materialId);
+    if (m == null) return '';
+    return isEs ? m.labelEs : m.labelEn;
+  }
+
+  Widget _materialPreviewWidget(_MaterialDef? material, double width, double height) {
+    if (material == null) {
+      return Icon(Icons.layers, color: Colors.white.withOpacity(0.8), size: width * 0.7);
     }
+    final path = material.assetPath;
+    if (path != null && path.isNotEmpty) {
+      return Image.asset(
+        path,
+        width: width,
+        height: height,
+        fit: BoxFit.contain,
+        errorBuilder: (c, e, s) => Icon(
+          material.icon ?? Icons.layers,
+          color: material.slotColor,
+          size: width * 0.7,
+        ),
+      );
+    }
+    return Icon(
+      material.icon ?? Icons.precision_manufacturing_outlined,
+      color: material.slotColor,
+      size: width * 0.7,
+    );
   }
 
   Widget _buildPouringAnimation() {
