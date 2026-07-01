@@ -18,6 +18,7 @@ import '../gamescreen/solar_explora_wrapper.dart';
 import '../gamescreen/measurements_wrapper.dart';
 import '../gamescreen/safe_water_heroes_wrapper.dart';
 import '../gamescreen/animalwizz_wrapper.dart';
+import '../gamescreen/shape_theory_wrapper.dart';
 
 // import 'package:supersetfirebase/services/test_score.dart';
 class HomeScreen extends StatefulWidget {
@@ -47,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   // Page controller for carousel
   late PageController _pageController;
   int _currentPage = 0;
+  double? _lastViewportFraction;
 
   final List<String> _backgroundImages = [
     "assets/images/wallpapers/wallpaper1.png",
@@ -233,10 +235,46 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       'icon': Icons.pets,
       'route': (String pin) => AnimalWizzWrapper(userPin: pin),
     },
+    {
+      'title': 'Shape Theory',
+      'backgroundImage': 'assets/images/icon8.png',
+      'description': 'Master Shapes & Geometry!',
+      'icon': Icons.category,
+      'route': (String pin) => ShapeTheoryWrapper(userPin: pin),
+    },
   ];
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double targetViewportFraction = screenWidth > 1000
+        ? 0.35
+        : screenWidth > 800
+            ? 0.42
+            : screenWidth > 500
+                ? 0.50
+                : 0.60;
+
+    if (_lastViewportFraction != targetViewportFraction) {
+      final oldController = _pageController;
+      int currentPageIndex = 0;
+      if (oldController.hasClients) {
+        currentPageIndex = oldController.page?.round() ?? ((games.length * 1000) ~/ 2);
+      } else {
+        currentPageIndex = (games.length * 1000) ~/ 2;
+      }
+
+      _pageController = PageController(
+        viewportFraction: targetViewportFraction,
+        initialPage: currentPageIndex,
+      );
+      _lastViewportFraction = targetViewportFraction;
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        oldController.dispose();
+      });
+    }
+
     return Scaffold(
       backgroundColor: Colors.black, // Set background color
       extendBodyBehindAppBar: true,
@@ -333,63 +371,116 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         }
                         return Consumer<LanguageProvider>(
                           builder: (context, languageProvider, child) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "${languageProvider.translate('Hi')} $displayName",
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontSize: 62,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily:
-                                        'Honk-Regular-VariableFont_MORF,SHLN',
-                                    color: Colors.red,
+                            final isSmallScreen = screenWidth <= 600;
+                            
+                            if (isSmallScreen) {
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "${languageProvider.translate('Hi')} $displayName",
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily:
+                                          'Honk-Regular-VariableFont_MORF,SHLN',
+                                      color: Colors.red,
+                                    ),
                                   ),
-                                ),
-                                const Text(
-                                  " | ",
-                                  style: TextStyle(
-                                    fontSize: 48,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    shadows: [
-                                      Shadow(
-                                        color: Colors.black54,
-                                        offset: Offset(2, 2),
-                                        blurRadius: 4,
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        '${languageProvider.translate('Score')}: $totalScore',
+                                        style: const TextStyle(
+                                          fontSize: 28,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Galindo',
+                                          shadows: [
+                                            Shadow(
+                                              color: Colors.black54,
+                                              offset: Offset(2, 2),
+                                              blurRadius: 4,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      GestureDetector(
+                                        onTap: refreshTotalScore,
+                                        child: const Icon(
+                                          Icons.refresh,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-                                Text(
-                                  '${languageProvider.translate('Score')}: $totalScore',
-                                  style: const TextStyle(
-                                    fontSize: 48,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Galindo',
-                                    shadows: [
-                                      Shadow(
-                                        color: Colors.black54,
-                                        offset: Offset(2, 2),
-                                        blurRadius: 4,
-                                      ),
-                                    ],
+                                ],
+                              );
+                            } else {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "${languageProvider.translate('Hi')} $displayName",
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 62,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily:
+                                          'Honk-Regular-VariableFont_MORF,SHLN',
+                                      color: Colors.red,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 8),
-                                GestureDetector(
-                                  onTap: refreshTotalScore,
-                                  child: const Icon(
-                                    Icons.refresh,
-                                    color: Colors.white,
-                                    size: 24,
+                                  const Text(
+                                    " | ",
+                                    style: TextStyle(
+                                      fontSize: 48,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      shadows: [
+                                        Shadow(
+                                          color: Colors.black54,
+                                          offset: Offset(2, 2),
+                                          blurRadius: 4,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            );
+                                  Text(
+                                    '${languageProvider.translate('Score')}: $totalScore',
+                                    style: const TextStyle(
+                                      fontSize: 48,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Galindo',
+                                      shadows: [
+                                        Shadow(
+                                          color: Colors.black54,
+                                          offset: Offset(2, 2),
+                                          blurRadius: 4,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  GestureDetector(
+                                    onTap: refreshTotalScore,
+                                    child: const Icon(
+                                      Icons.refresh,
+                                      color: Colors.white,
+                                      size: 24,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }
                           },
                         );
                       },
@@ -400,13 +491,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   LayoutBuilder(
                     builder: (context, constraints) {
                       double maxWidth = constraints.maxWidth;
-                      double centerTileSize = maxWidth > 1000
-                          ? maxWidth * 0.35
-                          : maxWidth > 800
-                              ? maxWidth * 0.4
-                              : maxWidth > 500
-                                  ? maxWidth * 0.45
-                                  : maxWidth * 0.5;
+                      double centerTileSize = maxWidth * (targetViewportFraction - 0.05);
 
                       return SizedBox(
                         height: centerTileSize +

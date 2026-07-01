@@ -49,7 +49,7 @@ dependencies:
   go_router: ^12.1.3
   auto_size_text: ^3.0.0
   cached_network_image: ^3.4.1
-  font_awesome_flutter: ^10.7.0
+  font_awesome_flutter: ^11.0.0
   from_css_color: ^2.0.0
   intl: ^0.20.2
   json_path: ^0.6.3
@@ -74,6 +74,11 @@ dependencies:
 
   # AnimalWizz dependencies
   animate_do: ^2.1.0
+
+  # ShapeTheory dependencies
+  flame: ^1.36.0
+  flame_audio: ^2.12.0
+  flutter_bloc: ^9.1.1
 
 dev_dependencies:
   flutter_test:
@@ -144,6 +149,7 @@ flutter:
     - assets/images/icon5.png
     - assets/images/icon6.png
     - assets/images/icon7.png
+    - assets/images/icon8.png
     
     - assets/images/wallpapers/wallpaper1.png
     - assets/images/wallpapers/wallpaper2.png
@@ -195,4 +201,7 @@ flutter:
     - assets/animalwizz/images/
     - assets/animalwizz/sounds/
    
+    # ShapeTheory assets
+    - assets/shapetheory/images/
+    - assets/shapetheory/audio/
 
