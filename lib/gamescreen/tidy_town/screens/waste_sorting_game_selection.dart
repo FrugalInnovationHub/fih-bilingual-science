@@ -40,7 +40,7 @@ class _WasteSortingGameSelectionState extends State<WasteSortingGameSelection> {
       id: 'original',
       name: 'Waste Sorting Game',
       description: 'Learn to sort waste into the right bins!',
-      thumbnailImage: 'assets/tidytown/images/1.png', // Original game thumbnail
+      thumbnailImage: 'assets/tidytown/images/1.webp', // Original game thumbnail
       primaryColor: Colors.orange,
       secondaryColor: Colors.deepOrange,
     ),
@@ -49,7 +49,7 @@ class _WasteSortingGameSelectionState extends State<WasteSortingGameSelection> {
       name: 'Village Adventure',
       description: 'Help Farmer Sam keep the peaceful village clean!',
       thumbnailImage:
-          'assets/tidytown/images/village_thumbnail.png', // NEW: Village with Farmer Sam
+          'assets/tidytown/images/village_thumbnail.webp', // NEW: Village with Farmer Sam
       primaryColor: Colors.green,
       secondaryColor: Colors.lightGreen,
     ),
@@ -58,7 +58,7 @@ class _WasteSortingGameSelectionState extends State<WasteSortingGameSelection> {
       name: 'Town Explorer',
       description: 'Help Maya sort waste in the busy town center!',
       thumbnailImage:
-          'assets/tidytown/images/town_thumbnail.png', // NEW: Urban scene with Maya
+          'assets/tidytown/images/town_thumbnail.webp', // NEW: Urban scene with Maya
       primaryColor: Colors.blue,
       secondaryColor: Colors.lightBlue,
     ),
@@ -67,7 +67,7 @@ class _WasteSortingGameSelectionState extends State<WasteSortingGameSelection> {
       name: 'Space Mission',
       description: 'Help Captain Luna clean up space debris!',
       thumbnailImage:
-          'assets/tidytown/images/space_thumbnail.png', // NEW: Space scene with Captain Luna
+          'assets/tidytown/images/space_thumbnail.webp', // NEW: Space scene with Captain Luna
       primaryColor: Colors.purple,
       secondaryColor: Colors.deepPurple,
     ),
@@ -75,7 +75,7 @@ class _WasteSortingGameSelectionState extends State<WasteSortingGameSelection> {
       id: 'beach',
       name: 'Beach Cleanup with Alex',
       description: 'Help Ocean Alex save marine life and discover beach waste!',
-      thumbnailImage: 'assets/tidytown/images/beach_thumbnail.png',
+      thumbnailImage: 'assets/tidytown/images/beach_thumbnail.webp',
       primaryColor: Colors.cyan,
       secondaryColor: Colors.teal,
     ),

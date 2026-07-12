@@ -296,28 +296,28 @@ class _RecycleDetailScreenState extends State<RecycleDetailScreen> {
   final List<Map<String, dynamic>> recyclableItems = [
     {
       'name': 'Paper and Cardboard',
-      'image': 'assets/tidytown/images/recycle/paper.png',
+      'image': 'assets/tidytown/images/recycle/paper.webp',
       'isRecyclable': true,
       'story':
           "Hey! I'm paper, and I'm like a superhero that can transform! I can be recycled up to 7 times before I retire!",
     },
     {
       'name': 'Glass Containers',
-      'image': 'assets/tidytown/images/recycle/glass.png',
+      'image': 'assets/tidytown/images/recycle/glass.webp',
       'isRecyclable': true,
       'story':
           "Hi there! I'm glass, and I'm practically immortal! I can be recycled forever without losing my quality!",
     },
     {
       'name': 'Metal Cans',
-      'image': 'assets/tidytown/images/recycle/metal.png',
+      'image': 'assets/tidytown/images/recycle/metal.webp',
       'isRecyclable': true,
       'story':
           "Yo! I'm metal, and I'm like a phoenix! I can be melted down and reborn into something new over and over!",
     },
     {
       'name': 'Plastic Bottles',
-      'image': 'assets/tidytown/images/recycle/plastic.png',
+      'image': 'assets/tidytown/images/recycle/plastic.webp',
       'isRecyclable': true,
       'story':
           "Hello! I'm plastic, and I'm on a mission! When recycled, I can become new bottles, toys, or even clothes!",
@@ -331,7 +331,7 @@ class _RecycleDetailScreenState extends State<RecycleDetailScreen> {
     },
     {
       'name': 'Plastic Bags',
-      'image': 'assets/tidytown/images/recycle/plastic.png',
+      'image': 'assets/tidytown/images/recycle/plastic.webp',
       'isRecyclable': false,
       'story':
           "Hey! I'm a plastic bag, and I'm too thin to be recycled in regular bins! I need special recycling centers to handle me!",
@@ -615,7 +615,7 @@ class _RecycleDetailScreenState extends State<RecycleDetailScreen> {
           children: [
             Positioned.fill(
               child: Image.asset(
-                'assets/tidytown/images/recycle/whatcanbe.png',
+                'assets/tidytown/images/recycle/whatcanbe.webp',
                 fit: BoxFit.cover,
               ),
             ),
@@ -844,7 +844,7 @@ class _RecycleDetailScreenState extends State<RecycleDetailScreen> {
           // Background Image
           SizedBox.expand(
             child: Image.asset(
-              'assets/tidytown/images/recycle/learning.png',
+              'assets/tidytown/images/recycle/learning.webp',
               fit: BoxFit.cover,
             ),
           ),
@@ -1512,28 +1512,28 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
               if (isFirstPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/rocky_pic1.png', // Using a default background image
+                    'assets/tidytown/images/recycle/rocky_pic1.webp', // Using a default background image
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isSecondPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/rocky_pic2.png', // Using a default background image
+                    'assets/tidytown/images/recycle/rocky_pic2.webp', // Using a default background image
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isThirdPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/rocky_pic3.png', // Using a default background image
+                    'assets/tidytown/images/recycle/rocky_pic3.webp', // Using a default background image
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isFourthPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/rocky_pic4.png', // Using a default background image
+                    'assets/tidytown/images/recycle/rocky_pic4.webp', // Using a default background image
                     fit: BoxFit.cover,
                   ),
                 ),

@@ -46,7 +46,7 @@ class _DragDropQuizState extends State<DragDrop> {
         {"data": "El corazón", "image": "assets/bioappdr/heart.jpeg"},
         {"data": "La nariz", "image": "assets/bioappdr/nose.jpeg"},
         {"data": "El cerebro", "image": "assets/bioappdr/brain.jpg"},
-        {"data": "La boca", "image": "assets/bioappdr/mouth.png"},
+        {"data": "La boca", "image": "assets/bioappdr/mouth.webp"},
       ],
     },
     {
@@ -59,7 +59,7 @@ class _DragDropQuizState extends State<DragDrop> {
         {"data": "El corazón", "image": "assets/bioappdr/heart.jpeg"},
         {"data": "La nariz", "image": "assets/bioappdr/nose.jpeg"},
         {"data": "El cerebro", "image": "assets/bioappdr/brain.jpg"},
-        {"data": "La boca", "image": "assets/bioappdr/mouth.png"},
+        {"data": "La boca", "image": "assets/bioappdr/mouth.webp"},
       ],
     },
     {
@@ -72,7 +72,7 @@ class _DragDropQuizState extends State<DragDrop> {
         {"data": "El corazón", "image": "assets/bioappdr/heart.jpeg"},
         {"data": "La nariz", "image": "assets/bioappdr/nose.jpeg"},
         {"data": "El cerebro", "image": "assets/bioappdr/brain.jpg"},
-        {"data": "La boca", "image": "assets/bioappdr/mouth.png"},
+        {"data": "La boca", "image": "assets/bioappdr/mouth.webp"},
       ],
     },
     {
@@ -85,7 +85,7 @@ class _DragDropQuizState extends State<DragDrop> {
         {"data": "El corazón", "image": "assets/bioappdr/heart.jpeg"},
         {"data": "La nariz", "image": "assets/bioappdr/nose.jpeg"},
         {"data": "El cerebro", "image": "assets/bioappdr/brain.jpg"},
-        {"data": "La boca", "image": "assets/bioappdr/mouth.png"},
+        {"data": "La boca", "image": "assets/bioappdr/mouth.webp"},
       ],
     },
   ];
@@ -134,7 +134,7 @@ class _DragDropQuizState extends State<DragDrop> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset('assets/bioappdr/trophy.png',
+              Image.asset('assets/bioappdr/trophy.webp',
                   height: 100, width: 100),
               const SizedBox(height: 16),
               Text(

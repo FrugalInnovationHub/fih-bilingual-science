@@ -81,25 +81,25 @@ class _SortingGameScreenState extends ConsumerState<SortingGameScreen> {
   String _getAssetForItem(SortingItem item) {
     final name = item.nameEn.toLowerCase();
     
-    if (name.contains("tap")) return 'assets/safewaterheroes/images/sorting/source_tap.png';
-    if (name.contains("bottled")) return 'assets/safewaterheroes/images/sorting/source_bottle.png';
-    if (name.contains("tank")) return 'assets/safewaterheroes/images/sorting/source_tank.png';
+    if (name.contains("tap")) return 'assets/safewaterheroes/images/sorting/source_tap.webp';
+    if (name.contains("bottled")) return 'assets/safewaterheroes/images/sorting/source_bottle.webp';
+    if (name.contains("tank")) return 'assets/safewaterheroes/images/sorting/source_tank.webp';
     
-    if (name.contains("river")) return 'assets/safewaterheroes/images/sorting/source_river.png';
-    if (name.contains("pond")) return 'assets/safewaterheroes/images/sorting/source_pond.png';
-    if (name.contains("well")) return 'assets/safewaterheroes/images/sorting/source_well.png';
-    if (name.contains("rain")) return 'assets/safewaterheroes/images/sorting/source_rain.png';
-    if (name.contains("waterfall")) return 'assets/safewaterheroes/images/sorting/source_waterfall.png';
-    if (name.contains("handpump")) return 'assets/safewaterheroes/images/sorting/source_handpump.png';
+    if (name.contains("river")) return 'assets/safewaterheroes/images/sorting/source_river.webp';
+    if (name.contains("pond")) return 'assets/safewaterheroes/images/sorting/source_pond.webp';
+    if (name.contains("well")) return 'assets/safewaterheroes/images/sorting/source_well.webp';
+    if (name.contains("rain")) return 'assets/safewaterheroes/images/sorting/source_rain.webp';
+    if (name.contains("waterfall")) return 'assets/safewaterheroes/images/sorting/source_waterfall.webp';
+    if (name.contains("handpump")) return 'assets/safewaterheroes/images/sorting/source_handpump.webp';
     
-    if (name.contains("puddle")) return 'assets/safewaterheroes/images/sorting/source_puddle.png';
-    if (name.contains("flood")) return 'assets/safewaterheroes/images/sorting/source_flood.png';
-    if (name.contains("sewage")) return 'assets/safewaterheroes/images/sorting/source_sewage.png';
-    if (name.contains("trash")) return 'assets/safewaterheroes/images/sorting/source_trash.png';
-    if (name.contains("algae")) return 'assets/safewaterheroes/images/sorting/source_algae.png';
-    if (name.contains("animals")) return 'assets/safewaterheroes/images/sorting/source_animals.png';
+    if (name.contains("puddle")) return 'assets/safewaterheroes/images/sorting/source_puddle.webp';
+    if (name.contains("flood")) return 'assets/safewaterheroes/images/sorting/source_flood.webp';
+    if (name.contains("sewage")) return 'assets/safewaterheroes/images/sorting/source_sewage.webp';
+    if (name.contains("trash")) return 'assets/safewaterheroes/images/sorting/source_trash.webp';
+    if (name.contains("algae")) return 'assets/safewaterheroes/images/sorting/source_algae.webp';
+    if (name.contains("animals")) return 'assets/safewaterheroes/images/sorting/source_animals.webp';
 
-    return 'assets/safewaterheroes/images/sorting/source_generic.png'; 
+    return 'assets/safewaterheroes/images/sorting/source_generic.webp'; 
   }
 
   @override
@@ -150,11 +150,11 @@ class _SortingGameScreenState extends ConsumerState<SortingGameScreen> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             // FIX: Expanded must be here in the Row, NOT inside the builder
-                            Expanded(child: _buildImageBin(WaterType.safe, "assets/safewaterheroes/images/sorting/bin_safe.png", isEs ? "SEGURO" : "SAFE", Colors.green)),
+                            Expanded(child: _buildImageBin(WaterType.safe, "assets/safewaterheroes/images/sorting/bin_safe.webp", isEs ? "SEGURO" : "SAFE", Colors.green)),
                             const SizedBox(width: 8),
-                            Expanded(child: _buildImageBin(WaterType.needsFilter, "assets/safewaterheroes/images/sorting/bin_filter.png", isEs ? "FILTRO" : "FILTER", Colors.orange)),
+                            Expanded(child: _buildImageBin(WaterType.needsFilter, "assets/safewaterheroes/images/sorting/bin_filter.webp", isEs ? "FILTRO" : "FILTER", Colors.orange)),
                             const SizedBox(width: 8),
-                            Expanded(child: _buildImageBin(WaterType.unsafe, "assets/safewaterheroes/images/sorting/bin_unsafe.png", isEs ? "INSEGURO" : "UNSAFE", Colors.red)),
+                            Expanded(child: _buildImageBin(WaterType.unsafe, "assets/safewaterheroes/images/sorting/bin_unsafe.webp", isEs ? "INSEGURO" : "UNSAFE", Colors.red)),
                           ],
                         ),
                       ),

@@ -22,28 +22,28 @@ class HabitatConfig {
 
 const desertConfig = HabitatConfig(
   name: 'Desert',
-  backgroundImage: 'assets/animalwizz/images/desser_bg.png',
+  backgroundImage: 'assets/animalwizz/images/desser_bg.webp',
   bannerText: "🏜️ Let's explore the desert habitat!",
   arrowColor: Color(0xFF3E2723),
 );
 
 const forestConfig = HabitatConfig(
   name: 'Forest',
-  backgroundImage: 'assets/animalwizz/images/forest_bg.png',
+  backgroundImage: 'assets/animalwizz/images/forest_bg.webp',
   bannerText: "🌲 Let's explore the forest habitat!",
   arrowColor: Color(0xFF1B5E20),
 );
 
 const arcticConfig = HabitatConfig(
   name: 'Arctic',
-  backgroundImage: 'assets/animalwizz/images/arctic_bg.png',
+  backgroundImage: 'assets/animalwizz/images/arctic_bg.webp',
   bannerText: "❄️ Let's discover the arctic habitat!",
   arrowColor: Color(0xFF3E2723),
 );
 
 const oceanConfig = HabitatConfig(
   name: 'Ocean',
-  backgroundImage: 'assets/animalwizz/images/ocean_bg.png',
+  backgroundImage: 'assets/animalwizz/images/ocean_bg.webp',
   bannerText: "🌊 Let's dive into the ocean habitat!",
   arrowColor: Color(0xFF3E2723),
 );
@@ -418,7 +418,7 @@ class _HabitatPageState extends State<HabitatPage> {
                           .slideY(begin: -0.1, duration: 500.ms)
                           .fadeIn(duration: 500.ms),
                       const SizedBox(height: 20),
-                      Image.asset('assets/animalwizz/images/robot.png', height: 300),
+                      Image.asset('assets/animalwizz/images/robot.webp', height: 300),
                     ],
                   ),
                 ),

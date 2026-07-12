@@ -13,15 +13,15 @@ class _PlanetMatchGameState extends State<PlanetMatchGame> {
   bool isSpanish = false;
 
   final Map<String, String> planetImages = {
-    'Sun': 'assets/solarexplora/planet_tiles/Sun_tile.png',
-    'Mercury': 'assets/solarexplora/planet_tiles/Mercury_tile.png',
-    'Venus': 'assets/solarexplora/planet_tiles/Venus_tile.png',
-    'Earth': 'assets/solarexplora/planet_tiles/Earth_tile.png',
-    'Mars': 'assets/solarexplora/planet_tiles/Mars_tile.png',
-    'Jupiter': 'assets/solarexplora/planet_tiles/Jupiter_tile.png',
-    'Saturn': 'assets/solarexplora/planet_tiles/Saturn_tile.png',
-    'Uranus': 'assets/solarexplora/planet_tiles/Uranus_tile.png',
-    'Neptune': 'assets/solarexplora/planet_tiles/Neptune_tile.png',
+    'Sun': 'assets/solarexplora/planet_tiles/Sun_tile.webp',
+    'Mercury': 'assets/solarexplora/planet_tiles/Mercury_tile.webp',
+    'Venus': 'assets/solarexplora/planet_tiles/Venus_tile.webp',
+    'Earth': 'assets/solarexplora/planet_tiles/Earth_tile.webp',
+    'Mars': 'assets/solarexplora/planet_tiles/Mars_tile.webp',
+    'Jupiter': 'assets/solarexplora/planet_tiles/Jupiter_tile.webp',
+    'Saturn': 'assets/solarexplora/planet_tiles/Saturn_tile.webp',
+    'Uranus': 'assets/solarexplora/planet_tiles/Uranus_tile.webp',
+    'Neptune': 'assets/solarexplora/planet_tiles/Neptune_tile.webp',
   };
 
   final Map<String, String> spanishNames = {

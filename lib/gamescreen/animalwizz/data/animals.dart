@@ -185,7 +185,7 @@ const List<Animal> allAnimals = [
   Animal(
     name: 'Hawk',
     nameEs: 'Halcón',
-    image: 'assets/animalwizz/images/hawk.png',
+    image: 'assets/animalwizz/images/hawk.webp',
     description: 'Desert hawks have excellent vision and can spot prey from high in the sky.',
     descriptionEs: 'Los halcones del desierto tienen una excelente visión y pueden detectar presas desde lo alto del cielo.',
     category: 'Forest',
@@ -194,7 +194,7 @@ const List<Animal> allAnimals = [
   Animal(
     name: 'Desert Tortoise',
     nameEs: 'Tortuga del Desierto',
-    image: 'assets/animalwizz/images/tortoise.png',
+    image: 'assets/animalwizz/images/tortoise.webp',
     description: 'Desert tortoises can live for 50-80 years and dig burrows to escape the heat.',
     descriptionEs: 'Las tortugas del desierto pueden vivir de 50 a 80 años y cavan madrigueras para escapar del calor.',
     category: 'Desert',

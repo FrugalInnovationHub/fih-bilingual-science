@@ -57,7 +57,7 @@ class _FaceQuizGameState extends State<FaceQuizGame>
       },
       {
         'title_en': 'Mouth',
-        'image': 'assets/bioappdr/mouth.png',
+        'image': 'assets/bioappdr/mouth.webp',
         'desc_en': 'Enable speech.',
       },
       {

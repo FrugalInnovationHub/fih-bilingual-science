@@ -30,21 +30,21 @@ class _BeachWasteSortingGameState extends State<BeachWasteSortingGame>
     // Compost items (3 beach-specific items)
     {
       'name': 'Fresh Seaweed',
-      'image': 'assets/tidytown/images/compost/fresh_seaweed.png',
+      'image': 'assets/tidytown/images/compost/fresh_seaweed.webp',
       'correctBin': 'compost',
       'description':
           'I\'m natural seaweed that washed ashore! Alex knows I can decompose naturally and become rich soil for plants.',
     },
     {
       'name': 'Driftwood',
-      'image': 'assets/tidytown/images/compost/driftwood.png',
+      'image': 'assets/tidytown/images/compost/driftwood.webp',
       'correctBin': 'compost',
       'description':
           'I\'m natural driftwood that floated to the beach! Alex picked me up because I can break down and enrich the earth.',
     },
     {
       'name': 'Coconut Shells',
-      'image': 'assets/tidytown/images/compost/coconut_shells.png',
+      'image': 'assets/tidytown/images/compost/coconut_shells.webp',
       'correctBin': 'compost',
       'description':
           'I\'m coconut shells that fell naturally on the beach! Alex knows I can decompose and feed the soil with nutrients.',
@@ -53,21 +53,21 @@ class _BeachWasteSortingGameState extends State<BeachWasteSortingGame>
     // Recycle items (4 beach-specific items)
     {
       'name': 'Ocean Plastic Bottles',
-      'image': 'assets/tidytown/images/recycle/ocean_plastic_bottles.png',
+      'image': 'assets/tidytown/images/recycle/ocean_plastic_bottles.webp',
       'correctBin': 'recycle',
       'description':
           'Alex rescued me from the ocean waves! I was threatening sea turtles who might mistake me for food. I can be made into new products!',
     },
     {
       'name': 'Beach Cans',
-      'image': 'assets/tidytown/images/recycle/beach_cans.png',
+      'image': 'assets/tidytown/images/recycle/beach_cans.webp',
       'correctBin': 'recycle',
       'description':
           'I\'m aluminum cans left by beach visitors! Alex picked me up because I can be recycled into new cans forever.',
     },
     {
       'name': 'Glass Bottles',
-      'image': 'assets/tidytown/images/recycle/glass_bottles.png',
+      'image': 'assets/tidytown/images/recycle/glass_bottles.webp',
       'correctBin': 'recycle',
       'description':
           'Alex found me buried in the beach sand! I\'m glass bottles that can be melted down and made into new glass products.',
@@ -76,28 +76,28 @@ class _BeachWasteSortingGameState extends State<BeachWasteSortingGame>
     // Landfill items (5 beach-specific items)
     {
       'name': 'Dangerous Plastic Bags',
-      'image': 'assets/tidytown/images/landfill/dangerous_plastic_bags.png',
+      'image': 'assets/tidytown/images/landfill/dangerous_plastic_bags.webp',
       'correctBin': 'landfill',
       'description':
           'I\'m torn plastic bags that could harm sea turtles who mistake me for jellyfish! Alex wants to dispose of me safely.',
     },
     {
       'name': 'Waterlogged Papers',
-      'image': 'assets/tidytown/images/landfill/waterlogged_papers.png',
+      'image': 'assets/tidytown/images/landfill/waterlogged_papers.webp',
       'correctBin': 'landfill',
       'description':
           'I\'m papers that got soaked by seawater! Alex knows I\'m too damaged to recycle and need special disposal.',
     },
     {
       'name': 'Styrofoam Containers',
-      'image': 'assets/tidytown/images/landfill/styrofoam_containers.png',
+      'image': 'assets/tidytown/images/landfill/styrofoam_containers.webp',
       'correctBin': 'landfill',
       'description':
           'I\'m styrofoam food containers left by beachgoers! Alex picked me up because I don\'t break down naturally.',
     },
     {
       'name': 'Broken Flip Flops',
-      'image': 'assets/tidytown/images/landfill/broken_flip_flops.png',
+      'image': 'assets/tidytown/images/landfill/broken_flip_flops.webp',
       'correctBin': 'landfill',
       'description':
           'I\'m old flip flops that washed up on shore! Alex found me and knows I need to go to landfill safely.',
@@ -207,7 +207,7 @@ class _BeachWasteSortingGameState extends State<BeachWasteSortingGame>
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
-                'assets/tidytown/images/beach_alex_happy.png',
+                'assets/tidytown/images/beach_alex_happy.webp',
                 height: 100,
                 errorBuilder: (context, error, stackTrace) {
                   return const Icon(
@@ -263,9 +263,9 @@ class _BeachWasteSortingGameState extends State<BeachWasteSortingGame>
     final currentItem = beachItems[currentItemIndex];
     // Bin images and order (match original game sizes/logic)
     final binImages = {
-      'compost': 'assets/tidytown/images/game/bin_green.png',
-      'recycle': 'assets/tidytown/images/game/bin_yellow.png',
-      'landfill': 'assets/tidytown/images/game/bin_red.png',
+      'compost': 'assets/tidytown/images/game/bin_green.webp',
+      'recycle': 'assets/tidytown/images/game/bin_yellow.webp',
+      'landfill': 'assets/tidytown/images/game/bin_red.webp',
     };
     final binOrder = ['compost', 'recycle', 'landfill'];
 
@@ -276,7 +276,7 @@ class _BeachWasteSortingGameState extends State<BeachWasteSortingGame>
             decoration: const BoxDecoration(
               // Beach background image covering full screen
               image: DecorationImage(
-                image: AssetImage('assets/tidytown/images/background.png'),
+                image: AssetImage('assets/tidytown/images/background.webp'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -381,9 +381,9 @@ class _BeachWasteSortingGameState extends State<BeachWasteSortingGame>
                                         child: Image.asset(
                                           showFeedback
                                               ? (isCorrectAnswer
-                                                  ? 'assets/tidytown/images/beach_alex_happy.png'
-                                                  : 'assets/tidytown/images/beach_alex_sad.png')
-                                              : 'assets/tidytown/images/beach_alex_neutral.png',
+                                                  ? 'assets/tidytown/images/beach_alex_happy.webp'
+                                                  : 'assets/tidytown/images/beach_alex_sad.webp')
+                                              : 'assets/tidytown/images/beach_alex_neutral.webp',
                                           fit: BoxFit.contain,
                                           errorBuilder: (
                                             context,
@@ -720,7 +720,7 @@ class _BeachWasteSortingGameState extends State<BeachWasteSortingGame>
                               ),
                               padding: const EdgeInsets.all(12),
                               child: Image.asset(
-                                'assets/tidytown/images/beach_alex_happy.png',
+                                'assets/tidytown/images/beach_alex_happy.webp',
                                 width: 380,
                                 height: 380,
                                 fit: BoxFit.contain,
@@ -797,7 +797,7 @@ class _BeachWasteSortingGameState extends State<BeachWasteSortingGame>
                         ),
                         padding: const EdgeInsets.all(12),
                         child: Image.asset(
-                          'assets/tidytown/images/beach_alex_sad.png',
+                          'assets/tidytown/images/beach_alex_sad.webp',
                           width: 380,
                           height: 380,
                           fit: BoxFit.contain,

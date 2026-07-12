@@ -23,7 +23,7 @@ class _LearningPageState extends State<LearningPage> {
 
   final List<Map<String, String>> _lessons = [
     {
-      'image': 'assets/bioappdr/Body.png',
+      'image': 'assets/bioappdr/Body.webp',
       'title_en': 'Human Body',
       'title_es': 'Cuerpo Humano',
       'description_en':
@@ -32,7 +32,7 @@ class _LearningPageState extends State<LearningPage> {
           'El cuerpo humano es una estructura compleja compuesta por múltiples sistemas de órganos que trabajan juntos para mantener la vida y la salud. Cada sistema, como el esquelético, muscular y nervioso, desempeña un papel vital en las funciones corporales.',
     },
     {
-      'image': 'assets/bioappdr/Heart.png',
+      'image': 'assets/bioappdr/Heart.webp',
       'title_en': 'Heart',
       'title_es': 'Corazón',
       'function_en':
@@ -47,7 +47,7 @@ class _LearningPageState extends State<LearningPage> {
           'Esencial para la circulación; sin él, la vida no puede sostenerse',
     },
     {
-      'image': 'assets/bioappdr/Lungs.png',
+      'image': 'assets/bioappdr/Lungs.webp',
       'title_en': 'Lungs',
       'title_es': 'Pulmones',
       'function_en':
@@ -61,7 +61,7 @@ class _LearningPageState extends State<LearningPage> {
           'Vitales para la respiración y el suministro de oxígeno a los tejidos',
     },
     {
-      'image': 'assets/bioappdr/Brain.png',
+      'image': 'assets/bioappdr/Brain.webp',
       'title_en': 'Brain',
       'title_es': 'Cerebro',
       'function_en':
@@ -76,7 +76,7 @@ class _LearningPageState extends State<LearningPage> {
           'Actúa como el centro de control del cuerpo; su daño puede perjudicar gravemente o terminar la vida',
     },
     {
-      'image': 'assets/bioappdr/Stomach.png',
+      'image': 'assets/bioappdr/Stomach.webp',
       'title_en': 'Stomach',
       'title_es': 'Estómago',
       'function_en':
@@ -106,7 +106,7 @@ class _LearningPageState extends State<LearningPage> {
           'Crucial para el metabolismo, la desintoxicación y la producción de bilis.',
     },
     {
-      'image': 'assets/bioappdr/Kidney.png',
+      'image': 'assets/bioappdr/Kidney.webp',
       'title_en': 'Kidney',
       'title_es': 'Riñón',
       'function_en':

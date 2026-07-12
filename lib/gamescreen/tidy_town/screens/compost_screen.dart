@@ -198,42 +198,42 @@ class _CompostDetailScreenState extends State<CompostDetailScreen> {
   final List<Map<String, dynamic>> compostableItems = [
     {
       'name': 'Fruit and Vegetable Scraps',
-      'image': 'assets/tidytown/images/compost/CompostLearning1.png',
+      'image': 'assets/tidytown/images/compost/CompostLearning1.webp',
       'isCompostable': true,
       'story':
           "Wheee! I'm a banana peel and I love joining my veggie and fruit friends in the compost pot! Together, we turn into super soil that helps new plants grow. Composting is our happy dance for the Earth!",
     },
     {
       'name': 'Coffee Grounds',
-      'image': 'assets/tidytown/images/compost/CompostLearning2.png',
+      'image': 'assets/tidytown/images/compost/CompostLearning2.webp',
       'isCompostable': true,
       'story':
           "Hey there! I'm coffee grounds, and I'm not just for making you energetic! I'm full of nitrogen that makes worms dance with joy!",
     },
     {
       'name': 'Eggshells',
-      'image': 'assets/tidytown/images/compost/CompostLearning3.png',
+      'image': 'assets/tidytown/images/compost/CompostLearning3.webp',
       'isCompostable': true,
       'story':
           "Crack! I'm an eggshell, and I'm not just a breakfast leftover! I add calcium to the soil, making plants grow as strong as superheroes!",
     },
     {
       'name': 'Yard Trimmings',
-      'image': 'assets/tidytown/images/compost/CompostLearning4.png',
+      'image': 'assets/tidytown/images/compost/CompostLearning4.webp',
       'isCompostable': true,
       'story':
           "Yo! I'm yard trimmings, and I'm not just garden waste! I'm like a cozy blanket for worms and a buffet for helpful bacteria! ",
     },
     {
       'name': 'Plastic Bags',
-      'image': 'assets/tidytown/images/compost/CompostLearning5.png',
+      'image': 'assets/tidytown/images/compost/CompostLearning5.webp',
       'isCompostable': false,
       'story':
           "Oops! I'm a plastic bag, and I'm not compostable! I'm like a party crasher at the compost party - I just don't belong here!",
     },
     {
       'name': 'Meat and Dairy',
-      'image': 'assets/tidytown/images/compost/CompostLearning6.png',
+      'image': 'assets/tidytown/images/compost/CompostLearning6.webp',
       'isCompostable': false,
       'story':
           "Hey! I'm meat and dairy, and I'm not compostable! I'm like a stinky guest that nobody wants at the compost party!",
@@ -469,7 +469,7 @@ class _CompostDetailScreenState extends State<CompostDetailScreen> {
           children: [
             Positioned.fill(
               child: Image.asset(
-                'assets/tidytown/images/recycle/whatcanbe.png',
+                'assets/tidytown/images/recycle/whatcanbe.webp',
                 fit: BoxFit.cover,
               ),
             ),
@@ -698,7 +698,7 @@ class _CompostDetailScreenState extends State<CompostDetailScreen> {
           // Background Image
           SizedBox.expand(
             child: Image.asset(
-              'assets/tidytown/images/recycle/learning.png',
+              'assets/tidytown/images/recycle/learning.webp',
               fit: BoxFit.cover,
             ),
           ),

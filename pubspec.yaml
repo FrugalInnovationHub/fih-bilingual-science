@@ -142,19 +142,19 @@ flutter:
           weight: 700
 
   assets:
-    - assets/images/icon1.png
-    - assets/images/icon2.png
-    - assets/images/icon3.png
-    - assets/images/icon4.png
-    - assets/images/icon5.png
-    - assets/images/icon6.png
-    - assets/images/icon7.png
-    - assets/images/icon8.png
+    - assets/images/icon1.webp
+    - assets/images/icon2.webp
+    - assets/images/icon3.webp
+    - assets/images/icon4.webp
+    - assets/images/icon5.webp
+    - assets/images/icon6.webp
+    - assets/images/icon7.webp
+    - assets/images/icon8.webp
     
-    - assets/images/wallpapers/wallpaper1.png
-    - assets/images/wallpapers/wallpaper2.png
-    - assets/images/wallpapers/wallpaper3.png
-    - assets/images/wallpapers/wallpaper4.png
+    - assets/images/wallpapers/wallpaper1.webp
+    - assets/images/wallpapers/wallpaper2.webp
+    - assets/images/wallpapers/wallpaper3.webp
+    - assets/images/wallpapers/wallpaper4.webp
     
     # Tidy Town assets
     - assets/tidytown/images/

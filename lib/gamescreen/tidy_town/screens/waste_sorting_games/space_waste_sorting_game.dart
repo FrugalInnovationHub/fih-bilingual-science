@@ -31,9 +31,9 @@ class _SpaceWasteSortingGameState
 
   @override
   Map<String, String> get binImages => {
-        'compost': 'assets/tidytown/images/game/bin_green.png',
-        'recycle': 'assets/tidytown/images/game/bin_yellow.png',
-        'landfill': 'assets/tidytown/images/game/bin_red.png',
+        'compost': 'assets/tidytown/images/game/bin_green.webp',
+        'recycle': 'assets/tidytown/images/game/bin_yellow.webp',
+        'landfill': 'assets/tidytown/images/game/bin_red.webp',
       };
 
   @override
@@ -44,28 +44,28 @@ class _SpaceWasteSortingGameState
         // COMPOST ITEMS (4+)
         {
           'name': 'Space Garden Scraps',
-          'image': 'assets/tidytown/images/game/apple_core.png',
+          'image': 'assets/tidytown/images/game/apple_core.webp',
           'correctBin': 'compost',
           'description':
               'I\'m leftover food from the space station garden! Captain Luna can compost me to grow more plants in space!',
         },
         {
           'name': 'Astronaut Food Waste',
-          'image': 'assets/tidytown/images/game/banana_peel.png',
+          'image': 'assets/tidytown/images/game/banana_peel.webp',
           'correctBin': 'compost',
           'description':
               'I\'m food scraps from Captain Luna\'s space meals! I can become soil for space farming!',
         },
         {
           'name': 'Space Coffee Grounds',
-          'image': 'assets/tidytown/images/game/coffee_grounds.png',
+          'image': 'assets/tidytown/images/game/coffee_grounds.webp',
           'correctBin': 'compost',
           'description':
               'I\'m coffee grounds from Captain Luna\'s morning brew! I can help grow plants in the space garden!',
         },
         {
           'name': 'Hydroponic Plant Waste',
-          'image': 'assets/tidytown/images/game/apple_core.png',
+          'image': 'assets/tidytown/images/game/apple_core.webp',
           'correctBin': 'compost',
           'description':
               'I\'m old plant matter from the space station\'s hydroponic farm! Captain Luna can compost me for new crops!',
@@ -73,28 +73,28 @@ class _SpaceWasteSortingGameState
         // RECYCLE ITEMS (4+)
         {
           'name': 'Satellite Metal Piece',
-          'image': 'assets/tidytown/images/game/aluminum_can.png',
+          'image': 'assets/tidytown/images/game/aluminum_can.webp',
           'correctBin': 'recycle',
           'description':
               'Captain Luna found me floating from an old satellite! I can be recycled into new space equipment!',
         },
         {
           'name': 'Fuel Container',
-          'image': 'assets/tidytown/images/game/plastic_bottle.png',
+          'image': 'assets/tidytown/images/game/plastic_bottle.webp',
           'correctBin': 'recycle',
           'description':
               'Captain Luna discovered me drifting near the space station! I held rocket fuel and can be recycled!',
         },
         {
           'name': 'Mission Reports',
-          'image': 'assets/tidytown/images/game/newspaper.png',
+          'image': 'assets/tidytown/images/game/newspaper.webp',
           'correctBin': 'recycle',
           'description':
               'I\'m old space mission documents Captain Luna collected! I can be recycled into new paper!',
         },
         {
           'name': 'Space Station Metal Scraps',
-          'image': 'assets/tidytown/images/game/aluminum_can.png',
+          'image': 'assets/tidytown/images/game/aluminum_can.webp',
           'correctBin': 'recycle',
           'description':
               'I\'m metal pieces from space station maintenance! Captain Luna can recycle me into new parts!',
@@ -102,28 +102,28 @@ class _SpaceWasteSortingGameState
         // LANDFILL ITEMS (4+) - Including your specified items
         {
           'name': 'Rocket Waste',
-          'image': 'assets/tidytown/images/game/broken_glass.png',
+          'image': 'assets/tidytown/images/game/broken_glass.webp',
           'correctBin': 'landfill',
           'description':
               'I\'m damaged rocket components Captain Luna found! I\'m too contaminated with fuel to recycle safely!',
         },
         {
           'name': 'Space Jet Waste',
-          'image': 'assets/tidytown/images/game/plastic_bag.png',
+          'image': 'assets/tidytown/images/game/plastic_bag.webp',
           'correctBin': 'landfill',
           'description':
               'I\'m debris from old space jets! Captain Luna knows I contain hazardous materials that need special disposal!',
         },
         {
           'name': 'Damaged Solar Panel',
-          'image': 'assets/tidytown/images/game/broken_glass.png',
+          'image': 'assets/tidytown/images/game/broken_glass.webp',
           'correctBin': 'landfill',
           'description':
               'I\'m a broken solar panel Captain Luna found! I\'m too damaged and contain toxic materials for safe recycling!',
         },
         {
           'name': 'Contaminated Lab Equipment',
-          'image': 'assets/tidytown/images/game/plastic_bag.png',
+          'image': 'assets/tidytown/images/game/plastic_bag.webp',
           'correctBin': 'landfill',
           'description':
               'I\'m lab equipment from space experiments! Captain Luna knows I\'m contaminated and need hazardous waste disposal!',

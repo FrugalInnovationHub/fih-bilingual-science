@@ -236,35 +236,35 @@ class _LunaStoryScreenState extends State<LunaStoryScreen> {
               if (isFirstPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/luna1.png',
+                    'assets/tidytown/images/recycle/luna1.webp',
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isSecondPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/luna2.png',
+                    'assets/tidytown/images/recycle/luna2.webp',
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isThirdPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/luna3.png',
+                    'assets/tidytown/images/recycle/luna3.webp',
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isFourthPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/luna4.png',
+                    'assets/tidytown/images/recycle/luna4.webp',
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isFifthPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/luna5.png',
+                    'assets/tidytown/images/recycle/luna5.webp',
                     fit: BoxFit.cover,
                   ),
                 )

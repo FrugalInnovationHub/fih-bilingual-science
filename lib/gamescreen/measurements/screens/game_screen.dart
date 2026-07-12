@@ -602,16 +602,16 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   // Helper function to get image path for an object
   String _getImagePath(String objectName) {
     final imageMap = {
-      'Ruler': 'assets/measurements/images/ruler.png',
-      'Ball': 'assets/measurements/images/ball.png',
-      'Book': 'assets/measurements/images/book.png',
-      'Car': 'assets/measurements/images/car.png',
-      'Apple': 'assets/measurements/images/apple.png',
-      'House': 'assets/measurements/images/house.png',
-      'Truck': 'assets/measurements/images/truck.png',
-      'Road': 'assets/measurements/images/road.png',
-      'Running Track': 'assets/measurements/images/track.png',
-      'Tree': 'assets/measurements/images/tree.png',
+      'Ruler': 'assets/measurements/images/ruler.webp',
+      'Ball': 'assets/measurements/images/ball.webp',
+      'Book': 'assets/measurements/images/book.webp',
+      'Car': 'assets/measurements/images/car.webp',
+      'Apple': 'assets/measurements/images/apple.webp',
+      'House': 'assets/measurements/images/house.webp',
+      'Truck': 'assets/measurements/images/truck.webp',
+      'Road': 'assets/measurements/images/road.webp',
+      'Running Track': 'assets/measurements/images/track.webp',
+      'Tree': 'assets/measurements/images/tree.webp',
     };
     return imageMap[objectName] ?? '';
   }

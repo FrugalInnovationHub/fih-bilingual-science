@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // NOTE: Some animal images and sounds need to be added to assets folder:
-// Missing images: cow.png, monkey.png, giraffe.png, gorilla.png
+// Missing images: cow.webp, monkey.webp, giraffe.webp, gorilla.webp
 // Missing sounds: All animal sounds (cow.mp3, lion.mp3, etc.)
 // Use jpg versions where png is not available
 
@@ -83,7 +83,7 @@ const List<AnimalModel> animalData = [
   AnimalModel(
     englishName: 'Penguin',
     spanishName: 'Pingüino',
-    image: 'assets/animalwizz/images/penguin.png',
+    image: 'assets/animalwizz/images/penguin.webp',
     sound: 'assets/animalwizz/sounds/penguin.mp3',
     correctFood: FoodType.fish,
     factEnglish: 'Penguins are great swimmers and love to eat fish from the ocean!',
@@ -127,7 +127,7 @@ const List<AnimalModel> animalData = [
   AnimalModel(
     englishName: 'Sheep',
     spanishName: 'Oveja',
-    image: 'assets/animalwizz/images/sheep.png',
+    image: 'assets/animalwizz/images/sheep.webp',
     sound: 'assets/animalwizz/sounds/sheep.mp3',
     correctFood: FoodType.grass,
     factEnglish: 'Sheep are gentle farm animals that love to eat grass and plants!',
@@ -149,7 +149,7 @@ const List<AnimalModel> animalData = [
   AnimalModel(
     englishName: 'Frog',
     spanishName: 'Rana',
-    image: 'assets/animalwizz/images/frog.png',
+    image: 'assets/animalwizz/images/frog.webp',
     sound: 'assets/animalwizz/sounds/frog.mp3',
     correctFood: FoodType.fish, // closest available option in your current FoodType enum
     factEnglish: 'Frogs are amphibians that eat insects and live near water!',
@@ -161,7 +161,7 @@ const List<AnimalModel> animalData = [
   AnimalModel(
     englishName: 'Gorilla',
     spanishName: 'Gorila',
-    image: 'assets/animalwizz/images/chimpanzee.jpg', // TODO: Add gorilla.png
+    image: 'assets/animalwizz/images/chimpanzee.jpg', // TODO: Add gorilla.webp
     sound: 'assets/animalwizz/sounds/gorilla.mp3',
     correctFood: FoodType.fruits,
     factEnglish: 'Gorillas are strong primates that love to eat fruits and plants!',

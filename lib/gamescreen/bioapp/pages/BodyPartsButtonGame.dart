@@ -42,7 +42,7 @@ class _BodyPartsButtonGameState extends State<BodyPartsButtonGame>
   final Map<String, ui.Image> _loadedImages = {};
 
   // Configuration
-  static const String _bodyImagePath = 'assets/bioappdr/Body.png';
+  static const String _bodyImagePath = 'assets/bioappdr/Body.webp';
 
   // Store button positions for line drawing
   Map<int, Offset> _buttonPositions = {};
@@ -54,7 +54,7 @@ class _BodyPartsButtonGameState extends State<BodyPartsButtonGame>
     {
       'name_en': 'Heart',
       'name_es': 'Corazón',
-      'imagePath': 'assets/bioappdr/Heart.png',
+      'imagePath': 'assets/bioappdr/Heart.webp',
       'description_en':
           'This organ pumps blood through your body, delivering oxygen and nutrients to your cells. It beats about 100,000 times a day!',
       'description_es':
@@ -68,7 +68,7 @@ class _BodyPartsButtonGameState extends State<BodyPartsButtonGame>
     {
       'name_en': 'Brain',
       'name_es': 'Cerebro',
-      'imagePath': 'assets/bioappdr/Brain.png',
+      'imagePath': 'assets/bioappdr/Brain.webp',
       'description_en':
           'This organ controls all bodily functions, thoughts, emotions, and memory. It\'s the command center of your body.',
       'description_es':
@@ -82,7 +82,7 @@ class _BodyPartsButtonGameState extends State<BodyPartsButtonGame>
     {
       'name_en': 'Lungs',
       'name_es': 'Pulmones',
-      'imagePath': 'assets/bioappdr/Lungs.png',
+      'imagePath': 'assets/bioappdr/Lungs.webp',
       'description_en':
           'These organs help you breathe by taking in oxygen and releasing carbon dioxide. They expand and contract as you breathe.',
       'description_es':
@@ -110,7 +110,7 @@ class _BodyPartsButtonGameState extends State<BodyPartsButtonGame>
     {
       'name_en': 'Stomach',
       'name_es': 'Estómago',
-      'imagePath': 'assets/bioappdr/Stomach.png',
+      'imagePath': 'assets/bioappdr/Stomach.webp',
       'description_en':
           'This organ digests food and mixes it with digestive juices. It breaks down food before it passes to the intestines.',
       'description_es':
@@ -124,7 +124,7 @@ class _BodyPartsButtonGameState extends State<BodyPartsButtonGame>
     {
       'name_en': 'Kidneys',
       'name_es': 'Riñones',
-      'imagePath': 'assets/bioappdr/Kidney.png',
+      'imagePath': 'assets/bioappdr/Kidney.webp',
       'description_en':
           'These organs filter waste from your blood and make urine. They help maintain the proper balance of water and minerals in your body.',
       'description_es':

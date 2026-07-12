@@ -42,10 +42,10 @@ class _LoginScreenState extends State<LoginScreen>
   ];
 
   final List<String> _backgroundImages = [
-    "assets/images/wallpapers/wallpaper1.png",
-    "assets/images/wallpapers/wallpaper2.png",
-    "assets/images/wallpapers/wallpaper3.png",
-    "assets/images/wallpapers/wallpaper4.png",
+    "assets/images/wallpapers/wallpaper1.webp",
+    "assets/images/wallpapers/wallpaper2.webp",
+    "assets/images/wallpapers/wallpaper3.webp",
+    "assets/images/wallpapers/wallpaper4.webp",
   ];
 
   @override
@@ -482,6 +482,7 @@ class _LoginScreenState extends State<LoginScreen>
                 child: LetsPlayButton(
                   onPressed: _isLoading ? null : _login,
                   text: languageProvider.translate("Let's Play"),
+                  isLoading: _isLoading,
                 ),
               ),
             ),
@@ -633,8 +634,13 @@ class _LoginScreenState extends State<LoginScreen>
 class LetsPlayButton extends StatefulWidget {
   final VoidCallback? onPressed;
   final String text;
-  const LetsPlayButton(
-      {super.key, required this.onPressed, this.text = "Let's Play"});
+  final bool isLoading;
+  const LetsPlayButton({
+    super.key,
+    required this.onPressed,
+    this.text = "Let's Play",
+    this.isLoading = false,
+  });
 
   @override
   State<LetsPlayButton> createState() => _LetsPlayButtonState();
@@ -653,7 +659,7 @@ class _LetsPlayButtonState extends State<LetsPlayButton> {
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: GestureDetector(
-        onTap: widget.onPressed,
+        onTap: widget.isLoading ? null : widget.onPressed,
         child: Container(
           width: 250,
           height: boxHeight - 10,
@@ -700,10 +706,12 @@ class _LetsPlayButtonState extends State<LetsPlayButton> {
                     ),
                     child: SizedBox(
                       width: 250,
-                      child: Text(
-                        widget.text,
-                        textAlign: TextAlign.center,
-                      ),
+                      child: widget.isLoading
+                          ? const ThreeDotsLoader(color: Colors.black)
+                          : Text(
+                              widget.text,
+                              textAlign: TextAlign.center,
+                            ),
                     ),
                   ),
                 ),
@@ -712,6 +720,72 @@ class _LetsPlayButtonState extends State<LetsPlayButton> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ThreeDotsLoader extends StatefulWidget {
+  final Color color;
+  const ThreeDotsLoader({super.key, this.color = Colors.black});
+
+  @override
+  State<ThreeDotsLoader> createState() => _ThreeDotsLoaderState();
+}
+
+class _ThreeDotsLoaderState extends State<ThreeDotsLoader>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(3, (index) {
+        return AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            final delay = index * 0.2;
+            double progress = (_controller.value - delay) % 1.0;
+            double scale = 1.0;
+            double opacity = 0.3;
+            if (progress < 0.4) {
+              final val = progress / 0.4;
+              scale = 1.0 + (0.4 * (1.0 - (val - 0.5).abs() * 2));
+              opacity = 0.3 + (0.7 * (1.0 - (val - 0.5).abs() * 2));
+            }
+            return Opacity(
+              opacity: opacity.clamp(0.3, 1.0),
+              child: Transform.scale(
+                scale: scale.clamp(1.0, 1.4),
+                child: Container(
+                  width: 8,
+                  height: 8,
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  decoration: BoxDecoration(
+                    color: widget.color,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      }),
     );
   }
 }

@@ -34,10 +34,10 @@ const animalsQuizConfig = QuizConfig(
       questionEn: 'What do carnivores eat?',
       questionEs: '¿Qué comen los carnívoros?',
       options: [
-        QuizOption(textEn: 'Fruits', textEs: 'Frutas', image: 'assets/animalwizz/images/herbivore.png'),
+        QuizOption(textEn: 'Fruits', textEs: 'Frutas', image: 'assets/animalwizz/images/herbivore.webp'),
         QuizOption(textEn: 'Plants', textEs: 'Plantas', image: 'assets/animalwizz/images/grass.jpg'),
-        QuizOption(textEn: 'Meat', textEs: 'Carne', image: 'assets/animalwizz/images/carnivore.png'),
-        QuizOption(textEn: 'Leaves', textEs: 'Hojas', image: 'assets/animalwizz/images/herbivore.png'),
+        QuizOption(textEn: 'Meat', textEs: 'Carne', image: 'assets/animalwizz/images/carnivore.webp'),
+        QuizOption(textEn: 'Leaves', textEs: 'Hojas', image: 'assets/animalwizz/images/herbivore.webp'),
       ],
       correctIndex: 2,
     ),
@@ -57,7 +57,7 @@ const habitatsQuizConfig = QuizConfig(
       questionEs: '¿Qué animal vive en el desierto?',
       options: [
         QuizOption(textEn: 'Camel', textEs: 'Camello', image: 'assets/animalwizz/images/camel.jpg'),
-        QuizOption(textEn: 'Penguin', textEs: 'Pingüino', image: 'assets/animalwizz/images/penguin.png'),
+        QuizOption(textEn: 'Penguin', textEs: 'Pingüino', image: 'assets/animalwizz/images/penguin.webp'),
         QuizOption(textEn: 'Eagle', textEs: 'Águila', image: 'assets/animalwizz/images/eagle.jpg'),
         QuizOption(textEn: 'Bear', textEs: 'Oso', image: 'assets/animalwizz/images/bear.jpg'),
       ],
@@ -67,10 +67,10 @@ const habitatsQuizConfig = QuizConfig(
       questionEn: 'Where do polar bears live?',
       questionEs: '¿Dónde viven los osos polares?',
       options: [
-        QuizOption(textEn: 'Arctic', textEs: 'Ártico', image: 'assets/animalwizz/images/habitat_arctic.png'),
-        QuizOption(textEn: 'Jungle', textEs: 'Selva', image: 'assets/animalwizz/images/habitat_forest.png'),
-        QuizOption(textEn: 'Desert', textEs: 'Desierto', image: 'assets/animalwizz/images/habitat_desert.png'),
-        QuizOption(textEn: 'Ocean', textEs: 'Océano', image: 'assets/animalwizz/images/habitat_ocean.png'),
+        QuizOption(textEn: 'Arctic', textEs: 'Ártico', image: 'assets/animalwizz/images/habitat_arctic.webp'),
+        QuizOption(textEn: 'Jungle', textEs: 'Selva', image: 'assets/animalwizz/images/habitat_forest.webp'),
+        QuizOption(textEn: 'Desert', textEs: 'Desierto', image: 'assets/animalwizz/images/habitat_desert.webp'),
+        QuizOption(textEn: 'Ocean', textEs: 'Océano', image: 'assets/animalwizz/images/habitat_ocean.webp'),
       ],
       correctIndex: 0,
     ),
@@ -89,10 +89,10 @@ const habitatsQuizConfig = QuizConfig(
       questionEn: 'Which habitat has cacti?',
       questionEs: '¿Qué hábitat tiene cactus?',
       options: [
-        QuizOption(textEn: 'Rainforest', textEs: 'Selva tropical', image: 'assets/animalwizz/images/habitat_forest.png'),
-        QuizOption(textEn: 'Arctic', textEs: 'Ártico', image: 'assets/animalwizz/images/habitat_arctic.png'),
-        QuizOption(textEn: 'Desert', textEs: 'Desierto', image: 'assets/animalwizz/images/habitat_desert.png'),
-        QuizOption(textEn: 'Ocean', textEs: 'Océano', image: 'assets/animalwizz/images/habitat_ocean.png'),
+        QuizOption(textEn: 'Rainforest', textEs: 'Selva tropical', image: 'assets/animalwizz/images/habitat_forest.webp'),
+        QuizOption(textEn: 'Arctic', textEs: 'Ártico', image: 'assets/animalwizz/images/habitat_arctic.webp'),
+        QuizOption(textEn: 'Desert', textEs: 'Desierto', image: 'assets/animalwizz/images/habitat_desert.webp'),
+        QuizOption(textEn: 'Ocean', textEs: 'Océano', image: 'assets/animalwizz/images/habitat_ocean.webp'),
       ],
       correctIndex: 2,
     ),
@@ -157,7 +157,7 @@ const foodChainQuizConfig = QuizConfig(
       options: [
         QuizOption(textEn: 'Grass', textEs: 'Hierba', image: 'assets/animalwizz/images/grass.jpg'),
         QuizOption(textEn: 'Snake', textEs: 'Serpiente', image: 'assets/animalwizz/images/snake.webp'),
-        QuizOption(textEn: 'Frog', textEs: 'Rana', image: 'assets/animalwizz/images/frog.png'),
+        QuizOption(textEn: 'Frog', textEs: 'Rana', image: 'assets/animalwizz/images/frog.webp'),
         QuizOption(textEn: 'Lion', textEs: 'León', image: 'assets/animalwizz/images/lion.jpg'),
       ],
       correctIndex: 0,
@@ -167,7 +167,7 @@ const foodChainQuizConfig = QuizConfig(
       questionEs: '¿Quién come la hierba en esta cadena?',
       options: [
         QuizOption(textEn: 'Grasshopper', textEs: 'Saltamontes', image: 'assets/animalwizz/images/grasshopper.webp'),
-        QuizOption(textEn: 'Frog', textEs: 'Rana', image: 'assets/animalwizz/images/frog.png'),
+        QuizOption(textEn: 'Frog', textEs: 'Rana', image: 'assets/animalwizz/images/frog.webp'),
         QuizOption(textEn: 'Snake', textEs: 'Serpiente', image: 'assets/animalwizz/images/snake.webp'),
         QuizOption(textEn: 'Tiger', textEs: 'Tigre', image: 'assets/animalwizz/images/tiger.jpg'),
       ],
@@ -178,7 +178,7 @@ const foodChainQuizConfig = QuizConfig(
       questionEs: '¿Quién come al saltamontes?',
       options: [
         QuizOption(textEn: 'Snake', textEs: 'Serpiente', image: 'assets/animalwizz/images/snake.webp'),
-        QuizOption(textEn: 'Frog', textEs: 'Rana', image: 'assets/animalwizz/images/frog.png'),
+        QuizOption(textEn: 'Frog', textEs: 'Rana', image: 'assets/animalwizz/images/frog.webp'),
         QuizOption(textEn: 'Lion', textEs: 'León', image: 'assets/animalwizz/images/lion.jpg'),
         QuizOption(textEn: 'Bear', textEs: 'Oso', image: 'assets/animalwizz/images/bear.jpg'),
       ],
@@ -250,7 +250,7 @@ const feedAnimalsQuizConfig = QuizConfig(
     QuizQuestion(
       questionEn: 'What does a Penguin eat?',
       questionEs: '¿Qué come un Pingüino?',
-      questionImage: 'assets/animalwizz/images/penguin.png',
+      questionImage: 'assets/animalwizz/images/penguin.webp',
       options: [
         QuizOption(textEn: '🥩 Meat', textEs: '🥩 Carne'),
         QuizOption(textEn: '🌿 Grass', textEs: '🌿 Hierba'),
@@ -302,7 +302,7 @@ const feedAnimalsQuizConfig = QuizConfig(
     QuizQuestion(
       questionEn: 'What does a Sheep eat?',
       questionEs: '¿Qué come una Oveja?',
-      questionImage: 'assets/animalwizz/images/sheep.png',
+      questionImage: 'assets/animalwizz/images/sheep.webp',
       options: [
         QuizOption(textEn: '🥩 Meat', textEs: '🥩 Carne'),
         QuizOption(textEn: '🌿 Grass', textEs: '🌿 Hierba'),

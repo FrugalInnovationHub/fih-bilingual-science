@@ -51,10 +51,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   double? _lastViewportFraction;
 
   final List<String> _backgroundImages = [
-    "assets/images/wallpapers/wallpaper1.png",
-    "assets/images/wallpapers/wallpaper2.png",
-    "assets/images/wallpapers/wallpaper3.png",
-    "assets/images/wallpapers/wallpaper4.png",
+    "assets/images/wallpapers/wallpaper1.webp",
+    "assets/images/wallpapers/wallpaper2.webp",
+    "assets/images/wallpapers/wallpaper3.webp",
+    "assets/images/wallpapers/wallpaper4.webp",
   ];
 
   @override
@@ -128,6 +128,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    
+    // Precache all wallpaper images to prevent flicker during rotation
+    for (final imagePath in _backgroundImages) {
+      precacheImage(AssetImage(imagePath), context);
+    }
+    
+    // Precache game tile background icons so they display instantly
+    for (final game in games) {
+      final String? bg = game['backgroundImage'];
+      if (bg != null) {
+        precacheImage(AssetImage(bg), context);
+      }
+    }
+
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshTotalScore();
     });
@@ -187,42 +201,42 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final List<Map<String, dynamic>> games = [
     {
       'title': 'Tidy Town',
-      'backgroundImage': 'assets/images/icon1.png',
+      'backgroundImage': 'assets/images/icon1.webp',
       'description': 'Fun with Lab!',
       'icon': Icons.calculate,
       'route': (String pin) => TidyTownWrapper(userPin: pin),
     },
     {
       'title': 'Color Theory',
-      'backgroundImage': 'assets/images/icon2.png',
+      'backgroundImage': 'assets/images/icon2.webp',
       'description': 'Master Chemistry!',
       'icon': Icons.functions,
       'route': (String pin) => ColorTheoryWrapper(userPin: pin),
     },
     {
       'title': 'Bio App',
-      'backgroundImage': 'assets/images/icon3.png',
+      'backgroundImage': 'assets/images/icon3.webp',
       'description': 'Learn new compounds & more!',
       'icon': Icons.show_chart,
       'route': (String pin) => BioAppWrapper(userPin: pin),
     },
     {
       'title': 'Solar Explora',
-      'backgroundImage': 'assets/images/icon4.png',
+      'backgroundImage': 'assets/images/icon4.webp',
       'description': 'Explore the Solar System!',
       'icon': Icons.rocket_launch,
       'route': (String pin) => SolarExploraWrapper(userPin: pin),
     },
     {
       'title': 'Measurements',
-      'backgroundImage': 'assets/images/icon5.png',
+      'backgroundImage': 'assets/images/icon5.webp',
       'description': 'Learn Measurements!',
       'icon': Icons.straighten,
       'route': (String pin) => MeasurementsWrapper(userPin: pin),
     },
     {
       'title': 'Safe Water Heroes',
-      'backgroundImage': 'assets/images/icon6.png',
+      'backgroundImage': 'assets/images/icon6.webp',
       'description': 'Become a Safe Water Hero!',
       'icon': Icons.water_drop,
       'route': (String pin) => SafeWaterHeroesWrapper(userPin: pin),
@@ -230,14 +244,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     {
       'title': 'AnimalWizz',
-      'backgroundImage': 'assets/images/icon7.png',
+      'backgroundImage': 'assets/images/icon7.webp',
       'description': 'Learn, play, and explore the jungle!',
       'icon': Icons.pets,
       'route': (String pin) => AnimalWizzWrapper(userPin: pin),
     },
     {
       'title': 'Shape Theory',
-      'backgroundImage': 'assets/images/icon8.png',
+      'backgroundImage': 'assets/images/icon8.webp',
       'description': 'Master Shapes & Geometry!',
       'icon': Icons.category,
       'route': (String pin) => ShapeTheoryWrapper(userPin: pin),

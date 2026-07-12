@@ -193,7 +193,7 @@ class _UnifiedQuizPageState extends State<UnifiedQuizPage> {
     final questionText = _isSpanish ? q.questionEs : q.questionEn;
 
     return BackgroundScaffold(
-      backgroundImage: 'assets/animalwizz/images/quiz_background.png',
+      backgroundImage: 'assets/animalwizz/images/quiz_background.webp',
       child: Stack(
         children: [
           Padding(

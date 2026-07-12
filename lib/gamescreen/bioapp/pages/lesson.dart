@@ -25,7 +25,7 @@ class _LessonState extends State<Lesson> {
           "¡El cuerpo humano es un sistema complejo y asombroso de órganos y estructuras que trabajan juntos para mantener la vida. ¡Exploremos algunos de sus componentes clave!",
     },
     {
-      "image": "assets/bioappdr/Heart.png",
+      "image": "assets/bioappdr/Heart.webp",
       "title_en": "Heart",
       "title_es": "Corazón",
       "function_en":

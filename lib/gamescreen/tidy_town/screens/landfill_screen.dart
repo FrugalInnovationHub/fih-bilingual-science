@@ -198,42 +198,42 @@ class _LandfillDetailScreenState extends State<LandfillDetailScreen> {
   final List<Map<String, dynamic>> landfillItems = [
     {
       'name': 'Plastic Bags',
-      'image': 'assets/tidytown/images/landfill/LandfillLearning1.png',
+      'image': 'assets/tidytown/images/landfill/LandfillLearning1.webp',
       'isLandfill': true,
       'story':
           "Hi! I'm a plastic bag, and I'm one of the biggest problems in landfills! I take hundreds of years to break down and can harm wildlife. Please reuse me or use cloth bags instead! 🛍️",
     },
     {
       'name': 'Styrofoam',
-      'image': 'assets/tidytown/images/landfill/LandfillLearning2.png',
+      'image': 'assets/tidytown/images/landfill/LandfillLearning2.webp',
       'isLandfill': true,
       'story':
           "Hey there! I'm Styrofoam, and I'm not biodegradable! I take up lots of space in landfills and can break into tiny pieces that harm animals. Try to avoid using me! 🚫",
     },
     {
       'name': 'Batteries',
-      'image': 'assets/tidytown/images/landfill/LandfillLearning3.png',
+      'image': 'assets/tidytown/images/landfill/LandfillLearning3.webp',
       'isLandfill': true,
       'story':
           "Zap! I'm a battery, and I'm dangerous in landfills! I can leak harmful chemicals. Please recycle me at special collection points! 🔋",
     },
     {
       'name': 'Food Waste',
-      'image': 'assets/tidytown/images/landfill/LandfillLearning4.png',
+      'image': 'assets/tidytown/images/landfill/LandfillLearning4.webp',
       'isLandfill': false,
       'story':
           "Yum! I'm food waste, and I don't belong in landfills! I can be composted to make rich soil for plants! 🍎",
     },
     {
       'name': 'Paper',
-      'image': 'assets/tidytown/images/landfill/LandfillLearning5.png',
+      'image': 'assets/tidytown/images/landfill/LandfillLearning5.webp',
       'isLandfill': false,
       'story':
           "Hi! I'm paper, and I can be recycled many times! Please put me in the recycling bin instead of the landfill! 📄",
     },
     {
       'name': 'Glass',
-      'image': 'assets/tidytown/images/landfill/LandfillLearning6.png',
+      'image': 'assets/tidytown/images/landfill/LandfillLearning6.webp',
       'isLandfill': false,
       'story':
           "Clink! I'm glass, and I can be recycled forever! Please recycle me instead of sending me to the landfill! 🍶",
@@ -465,7 +465,7 @@ class _LandfillDetailScreenState extends State<LandfillDetailScreen> {
           children: [
             Positioned.fill(
               child: Image.asset(
-                'assets/tidytown/images/recycle/whatcanbe.png',
+                'assets/tidytown/images/recycle/whatcanbe.webp',
                 fit: BoxFit.cover,
               ),
             ),
@@ -740,7 +740,7 @@ class _LandfillDetailScreenState extends State<LandfillDetailScreen> {
         children: [
           SizedBox.expand(
             child: Image.asset(
-              'assets/tidytown/images/recycle/learning.png',
+              'assets/tidytown/images/recycle/learning.webp',
               fit: BoxFit.cover,
             ),
           ),

@@ -60,7 +60,7 @@ class _AnimalWordPuzzlePageState extends State<AnimalWordPuzzlePage> {
 
   final Map<int, String> animalImages = {
     1: 'assets/animalwizz/images/elephant.jpg',
-    2: 'assets/animalwizz/images/sheep.png',
+    2: 'assets/animalwizz/images/sheep.webp',
     3: 'assets/animalwizz/images/kangaroo.jpg',
     4: 'assets/animalwizz/images/cat.jpg',
   };

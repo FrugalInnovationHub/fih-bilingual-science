@@ -34,49 +34,49 @@ class _WasteSortingGameState extends State<WasteSortingGame>
   final List<Map<String, dynamic>> wasteItems = [
     {
       'name': 'Plastic Bottle',
-      'image': 'assets/tidytown/images/game/plastic_bottle.png',
+      'image': 'assets/tidytown/images/game/plastic_bottle.webp',
       'correctBin': 'recycle',
       'description': 'I am a Plastic Bottle!',
     },
     {
       'name': 'Apple Core',
-      'image': 'assets/tidytown/images/game/apple_core.png',
+      'image': 'assets/tidytown/images/game/apple_core.webp',
       'correctBin': 'compost',
       'description': 'hey! I am an apple core!',
     },
     {
       'name': 'Newspaper',
-      'image': 'assets/tidytown/images/game/newspaper.png',
+      'image': 'assets/tidytown/images/game/newspaper.webp',
       'correctBin': 'recycle',
       'description': 'I am a Newspaper!',
     },
     {
       'name': 'Broken Glass',
-      'image': 'assets/tidytown/images/game/broken_glass.png',
+      'image': 'assets/tidytown/images/game/broken_glass.webp',
       'correctBin': 'landfill',
       'description': 'I am a broken glass!',
     },
     {
       'name': 'Banana Peel',
-      'image': 'assets/tidytown/images/game/banana_peel.png',
+      'image': 'assets/tidytown/images/game/banana_peel.webp',
       'correctBin': 'compost',
       'description': 'I am a Banana Peel!',
     },
     {
       'name': 'Plastic Bag',
-      'image': 'assets/tidytown/images/game/plastic_bag.png',
+      'image': 'assets/tidytown/images/game/plastic_bag.webp',
       'correctBin': 'landfill',
       'description': 'I am a Plastic Bag! where do i go?',
     },
     {
       'name': 'Aluminum Can',
-      'image': 'assets/tidytown/images/game/aluminum_can.png',
+      'image': 'assets/tidytown/images/game/aluminum_can.webp',
       'correctBin': 'recycle',
       'description': 'I am an Aluminum Can!',
     },
     {
       'name': 'Coffee Grounds',
-      'image': 'assets/tidytown/images/game/coffee_grounds.png',
+      'image': 'assets/tidytown/images/game/coffee_grounds.webp',
       'correctBin': 'compost',
       'description': 'I am a Coffee Grounds!',
     },
@@ -258,9 +258,9 @@ class _WasteSortingGameState extends State<WasteSortingGame>
   Widget build(BuildContext context) {
     // Map bin types to image assets
     final binImages = {
-      'compost': 'assets/tidytown/images/game/bin_green.png',
-      'recycle': 'assets/tidytown/images/game/bin_yellow.png',
-      'landfill': 'assets/tidytown/images/game/bin_red.png',
+      'compost': 'assets/tidytown/images/game/bin_green.webp',
+      'recycle': 'assets/tidytown/images/game/bin_yellow.webp',
+      'landfill': 'assets/tidytown/images/game/bin_red.webp',
     };
     final binOrder = ['compost', 'recycle', 'landfill'];
 

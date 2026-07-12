@@ -19,20 +19,20 @@ class _SelectImagePageState extends State<SelectImagePage> {
       'spanish': 'El corazón',
       'answer': 'Heart',
       'options': [
-        {'label': 'Heart', 'image': 'assets/bioappdr/images/heart.png'},
-        {'label': 'Lungs', 'image': 'assets/bioappdr/images/lungs.png'},
-        {'label': 'Muscle', 'image': 'assets/bioappdr/images/muscle.png'},
-        {'label': 'Tongue', 'image': 'assets/bioappdr/images/tongue.png'},
+        {'label': 'Heart', 'image': 'assets/bioappdr/images/heart.webp'},
+        {'label': 'Lungs', 'image': 'assets/bioappdr/images/lungs.webp'},
+        {'label': 'Muscle', 'image': 'assets/bioappdr/images/muscle.webp'},
+        {'label': 'Tongue', 'image': 'assets/bioappdr/images/tongue.webp'},
       ],
     },
     {
       'spanish': 'Los pulmones',
       'answer': 'Lungs',
       'options': [
-        {'label': 'Lungs', 'image': 'assets/bioappdr/images/lungs.png'},
-        {'label': 'Heart', 'image': 'assets/bioappdr/images/heart.png'},
+        {'label': 'Lungs', 'image': 'assets/bioappdr/images/lungs.webp'},
+        {'label': 'Heart', 'image': 'assets/bioappdr/images/heart.webp'},
         {'label': 'Bone', 'image': 'assets/bioappdr/bone.jpeg'},
-        {'label': 'Tongue', 'image': 'assets/bioappdr/images/tongue.png'},
+        {'label': 'Tongue', 'image': 'assets/bioappdr/images/tongue.webp'},
       ],
     },
     {
@@ -40,9 +40,9 @@ class _SelectImagePageState extends State<SelectImagePage> {
       'answer': 'Bone',
       'options': [
         {'label': 'Bone', 'image': 'assets/bioappdr/bone.jpeg'},
-        {'label': 'Lungs', 'image': 'assets/bioappdr/images/lungs.png'},
-        {'label': 'Heart', 'image': 'assets/bioappdr/images/heart.png'},
-        {'label': 'Tongue', 'image': 'assets/bioappdr/images/tongue.png'},
+        {'label': 'Lungs', 'image': 'assets/bioappdr/images/lungs.webp'},
+        {'label': 'Heart', 'image': 'assets/bioappdr/images/heart.webp'},
+        {'label': 'Tongue', 'image': 'assets/bioappdr/images/tongue.webp'},
       ],
     },
   ];

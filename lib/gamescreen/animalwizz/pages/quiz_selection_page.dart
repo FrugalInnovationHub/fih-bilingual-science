@@ -17,19 +17,19 @@ class QuizSelectionPage extends StatelessWidget {
     },
     {
       'title': 'Habitats',
-      'image': 'assets/animalwizz/images/animal_habitats.png',
+      'image': 'assets/animalwizz/images/animal_habitats.webp',
       'color': Colors.green,
       'icon': Icons.landscape,
     },
     {
       'title': 'Life Cycles',
-      'image': 'assets/animalwizz/images/butterfly.png',
+      'image': 'assets/animalwizz/images/butterfly.webp',
       'color': Colors.blue,
       'icon': Icons.refresh,
     },
     {
       'title': 'Food Chain',
-      'image': 'assets/animalwizz/images/foodchain.png',
+      'image': 'assets/animalwizz/images/foodchain.webp',
       'color': Colors.purple,
       'icon': Icons.restaurant,
     },
@@ -46,7 +46,7 @@ class QuizSelectionPage extends StatelessWidget {
     final grid = ResponsiveGridConfig.of(context);
 
     return BackgroundScaffold(
-      backgroundImage: 'assets/animalwizz/images/quiz_background.png',
+      backgroundImage: 'assets/animalwizz/images/quiz_background.webp',
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: grid.horizontalPadding),
         child: Column(

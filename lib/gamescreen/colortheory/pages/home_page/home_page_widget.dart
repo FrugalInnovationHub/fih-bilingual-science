@@ -150,7 +150,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
               ClipRRect(
                 borderRadius: BorderRadius.circular(0.0),
                 child: Image.asset(
-                  'assets/colortheory/images/cloud-final.png',
+                  'assets/colortheory/images/cloud-final.webp',
                   width: double.infinity,
                   height: double.infinity,
                   fit: BoxFit.cover,
@@ -175,7 +175,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
               ClipRRect(
                 borderRadius: BorderRadius.circular(0.0),
                 child: Image.asset(
-                  'assets/colortheory/images/cloud-final.png',
+                  'assets/colortheory/images/cloud-final.webp',
                   width: double.infinity,
                   height: double.infinity,
                   fit: BoxFit.cover,
@@ -402,7 +402,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                         ClipRRect(
                           borderRadius: BorderRadius.circular(0.0),
                           child: Image.asset(
-                            'assets/colortheory/images/ground.png',
+                            'assets/colortheory/images/ground.webp',
                             width: double.infinity,
                             height: double.infinity,
                             fit: BoxFit.fill,
@@ -427,7 +427,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                         ClipRRect(
                           borderRadius: BorderRadius.circular(0.0),
                           child: Image.asset(
-                            'assets/colortheory/images/ground.png',
+                            'assets/colortheory/images/ground.webp',
                             width: double.infinity,
                             height: double.infinity,
                             fit: BoxFit.fill,
@@ -459,7 +459,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(0.0),
                             child: Image.asset(
-                              'assets/colortheory/images/dino-final.png',
+                              'assets/colortheory/images/dino-final.webp',
                               width: 200.0,
                               height: 200.0,
                               fit: BoxFit.cover,
@@ -485,7 +485,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(0.0),
                                       child: Image.asset(
-                                        'assets/colortheory/images/cactus.png',
+                                        'assets/colortheory/images/cactus.webp',
                                         width: 200.0,
                                         height: 200.0,
                                         fit: BoxFit.cover,
@@ -499,7 +499,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(0.0),
                                       child: Image.asset(
-                                        'assets/colortheory/images/mushroom.png',
+                                        'assets/colortheory/images/mushroom.webp',
                                         width: 200.0,
                                         height: 200.0,
                                         fit: BoxFit.cover,
@@ -513,7 +513,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(0.0),
                                       child: Image.asset(
-                                        'assets/colortheory/images/wave.png',
+                                        'assets/colortheory/images/wave.webp',
                                         width: 200.0,
                                         height: 200.0,
                                         fit: BoxFit.cover,
@@ -527,7 +527,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(0.0),
                                       child: Image.asset(
-                                        'assets/colortheory/images/wood.png',
+                                        'assets/colortheory/images/wood.webp',
                                         width: 200.0,
                                         height: 200.0,
                                         fit: BoxFit.cover,
@@ -541,7 +541,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(0.0),
                                       child: Image.asset(
-                                        'assets/colortheory/images/lava-final.png',
+                                        'assets/colortheory/images/lava-final.webp',
                                         width: 200.0,
                                         height: 200.0,
                                         fit: BoxFit.cover,
@@ -555,7 +555,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(0.0),
                                       child: Image.asset(
-                                        'assets/colortheory/images/snake.png',
+                                        'assets/colortheory/images/snake.webp',
                                         width: 200.0,
                                         height: 200.0,
                                         fit: BoxFit.cover,
@@ -569,7 +569,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(0.0),
                                       child: Image.asset(
-                                        'assets/colortheory/images/bomb-final.png',
+                                        'assets/colortheory/images/bomb-final.webp',
                                         width: 200.0,
                                         height: 200.0,
                                         fit: BoxFit.cover,
@@ -583,7 +583,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(0.0),
                                       child: Image.asset(
-                                        'assets/colortheory/images/flame.png',
+                                        'assets/colortheory/images/flame.webp',
                                         width: 200.0,
                                         height: 200.0,
                                         fit: BoxFit.cover,
@@ -1521,7 +1521,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(0.0),
                                   child: Image.asset(
-                                    'assets/colortheory/images/color_theory_trans_icon-final.png',
+                                    'assets/colortheory/images/color_theory_trans_icon-final.webp',
                                     width: 400.0,
                                     height: 300.0,
                                     fit: BoxFit.cover,
@@ -1887,7 +1887,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(0.0),
                                   child: Image.asset(
-                                    'assets/colortheory/images/color_theory_trans_icon-final.png',
+                                    'assets/colortheory/images/color_theory_trans_icon-final.webp',
                                     width: 400.0,
                                     height: 300.0,
                                     fit: BoxFit.cover,
@@ -2271,7 +2271,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(0.0),
                                   child: Image.asset(
-                                    'assets/colortheory/images/color_theory_trans_icon-final.png',
+                                    'assets/colortheory/images/color_theory_trans_icon-final.webp',
                                     width: 400.0,
                                     height: 300.0,
                                     fit: BoxFit.cover,

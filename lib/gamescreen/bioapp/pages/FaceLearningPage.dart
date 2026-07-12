@@ -53,7 +53,7 @@ class _Facelearningpage extends State<Facelearningpage> {
           'Vital para la percepción del gusto, la deglución y el habla clara.',
     },
     {
-      'image': 'assets/bioappdr/mouth.png',
+      'image': 'assets/bioappdr/mouth.webp',
       'title_en': 'Mouth',
       'title_es': 'Boca',
       'function_en':

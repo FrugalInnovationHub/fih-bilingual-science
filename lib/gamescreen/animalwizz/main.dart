@@ -54,7 +54,7 @@ class _JungleMainPageState extends State<JungleMainPage> {
                 children: [
                   const CircleAvatar(
                     radius: 45,
-                    backgroundImage: AssetImage('assets/animalwizz/images/user_icon.png'),
+                    backgroundImage: AssetImage('assets/animalwizz/images/user_icon.webp'),
                     backgroundColor: Colors.green,
                   ),
                   const SizedBox(height: 15),
@@ -140,7 +140,7 @@ class _JungleMainPageState extends State<JungleMainPage> {
           IconButton(
             onPressed: _showProfileDialog,
             icon: const CircleAvatar(
-              backgroundImage: AssetImage('assets/animalwizz/images/user_icon.png'),
+              backgroundImage: AssetImage('assets/animalwizz/images/user_icon.webp'),
             ),
           ),
         ],
@@ -203,7 +203,7 @@ class JungleHomePage extends StatelessWidget {
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/animalwizz/images/jungle_bg.png'),
+              image: AssetImage('assets/animalwizz/images/jungle_bg.webp'),
               fit: BoxFit.cover,
             ),
           ),
@@ -235,21 +235,21 @@ class JungleHomePage extends StatelessWidget {
                 children: [
                   _buildAnimatedCard(
                     context,
-                    image: 'assets/animalwizz/images/video_icon.png',
+                    image: 'assets/animalwizz/images/video_icon.webp',
                     label: 'Lessons',
                     onTap: () => onNavigate(1),
                     glowColor: Colors.greenAccent,
                   ),
                   _buildAnimatedCard(
                     context,
-                    image: 'assets/animalwizz/images/quiz_icon.png',
+                    image: 'assets/animalwizz/images/quiz_icon.webp',
                     label: 'Games',
                     onTap: () => onNavigate(2),
                     glowColor: Colors.cyanAccent,
                   ),
                   _buildAnimatedCard(
                     context,
-                    image: 'assets/animalwizz/images/quiz_icon.png',
+                    image: 'assets/animalwizz/images/quiz_icon.webp',
                     label: 'Quiz',
                     onTap: () => onNavigate(3),
                     glowColor: Colors.amberAccent,

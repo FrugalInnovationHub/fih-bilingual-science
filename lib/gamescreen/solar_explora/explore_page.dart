@@ -43,7 +43,7 @@ class _ExplorePageState extends State<ExplorePage> {
     final Map<String, dynamic> planetData = {
       'Sun': {
         'spanishName': 'Sol',
-        'backgroundImage': 'assets/solarexplora/Sun.png',
+        'backgroundImage': 'assets/solarexplora/Sun.webp',
         'englishFacts': [
           'The Sun is a giant ball of hot gas and its over 100 times wider than Earth!',
           'It’s so big that more than a million Earths could fit inside it!',
@@ -59,7 +59,7 @@ class _ExplorePageState extends State<ExplorePage> {
       },
       'Mercury': {
         'spanishName': 'Mercurio',
-        'backgroundImage': 'assets/solarexplora/Mercury.png',
+        'backgroundImage': 'assets/solarexplora/Mercury.webp',
         'englishFacts': [
           'Mercury is the closest planet to the Sun.',
           'It’s the smallest planet in the solar system.',
@@ -77,7 +77,7 @@ class _ExplorePageState extends State<ExplorePage> {
       },
       'Venus': {
         'spanishName': 'Venus',
-        'backgroundImage': 'assets/solarexplora/Venus.png',
+        'backgroundImage': 'assets/solarexplora/Venus.webp',
         'englishFacts': [
           'Venus is the hottest planet in our solar system. Even hotter than Mercury!',
           'Venus spins backwards, so the Sun rises in the west and sets in the east.',
@@ -95,7 +95,7 @@ class _ExplorePageState extends State<ExplorePage> {
       },
       'Earth': {
         'spanishName': 'Tierra',
-        'backgroundImage': 'assets/solarexplora/Earth.png',
+        'backgroundImage': 'assets/solarexplora/Earth.webp',
         'englishFacts': [
           'Earth is the only planet we know with life.',
           'Earth is the only planet with liquid water on the surface.',
@@ -113,7 +113,7 @@ class _ExplorePageState extends State<ExplorePage> {
       },
       'Mars': {
         'spanishName': 'Marte',
-        'backgroundImage': 'assets/solarexplora/Mars.png',
+        'backgroundImage': 'assets/solarexplora/Mars.webp',
         'englishFacts': [
           'Mars is known as the Red Planet because of its rusty color.',
           'Mars has seasons, just like Earth!',
@@ -131,7 +131,7 @@ class _ExplorePageState extends State<ExplorePage> {
       },
       'Jupiter': {
         'spanishName': 'Júpiter',
-        'backgroundImage': 'assets/solarexplora/Jupiter.png',
+        'backgroundImage': 'assets/solarexplora/Jupiter.webp',
         'englishFacts': [
           'Jupiter is the biggest planet in the solar system!',
           'It has a giant storm called the Great Red Spot – it’s bigger than Earth!',
@@ -147,7 +147,7 @@ class _ExplorePageState extends State<ExplorePage> {
       },
       'Saturn': {
         'spanishName': 'Saturno',
-        'backgroundImage': 'assets/solarexplora/Saturn.png',
+        'backgroundImage': 'assets/solarexplora/Saturn.webp',
         'englishFacts': [
           'Saturn is famous for its beautiful rings.',
           'Its rings are made of ice and rock.',
@@ -163,7 +163,7 @@ class _ExplorePageState extends State<ExplorePage> {
       },
       'Uranus': {
         'spanishName': 'Urano',
-        'backgroundImage': 'assets/solarexplora/Uranus.png',
+        'backgroundImage': 'assets/solarexplora/Uranus.webp',
         'englishFacts': [
           'It’s the coldest planet in the solar system.',
           'Uranus was the first planet discovered with a telescope.',
@@ -179,7 +179,7 @@ class _ExplorePageState extends State<ExplorePage> {
       },
       'Neptune': {
         'spanishName': 'Neptuno',
-        'backgroundImage': 'assets/solarexplora/Neptune.png',
+        'backgroundImage': 'assets/solarexplora/Neptune.webp',
         'englishFacts': [
           'Neptune is the farthest planet from the Sun.',
           'It has super strong winds – faster than any hurricane on Earth!',

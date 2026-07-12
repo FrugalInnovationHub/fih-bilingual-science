@@ -195,7 +195,7 @@ class _LifeCyclesGamePageState extends State<LifeCyclesGamePage>
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/animalwizz/images/forest_bg.png'),
+                image: AssetImage('assets/animalwizz/images/forest_bg.webp'),
                 fit: BoxFit.cover,
               ),
             ),

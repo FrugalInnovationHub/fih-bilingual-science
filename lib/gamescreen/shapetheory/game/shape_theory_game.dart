@@ -34,8 +34,16 @@ class ShapeTheoryGame extends FlameGame
   @override
   Future<void> onLoad() async {
     // Set custom asset prefixes for ShapeTheory game
-    images.prefix = 'shapetheory/images/';
-    FlameAudio.audioCache.prefix = 'shapetheory/audio/';
+    images.prefix = 'assets/shapetheory/images/';
+    FlameAudio.audioCache.prefix = 'assets/shapetheory/audio/';
+
+    // Preload all images to prevent network loading latency
+    await images.loadAll([
+      Assets.background,
+      Assets.ground,
+      Assets.dino,
+      Assets.icon,
+    ]);
 
     // debugMode = true;
     Configuration.currentDifficulty = await GameStorage.loadDifficulty();
@@ -44,7 +52,15 @@ class ShapeTheoryGame extends FlameGame
     add(Background());
 
     await FlameAudio.bgm.initialize();
-    await FlameAudio.audioCache.load(Assets.bgm);
+    await FlameAudio.audioCache.loadAll([
+      Assets.bgm,
+      'circleEnglish.mp3',
+      'diamondEnglish.mp3',
+      'hexagonEnglish.mp3',
+      'rectangleEnglish.mp3',
+      'squareEnglish.mp3',
+      'triangleEnglish.mp3',
+    ]);
 
     if (Configuration.soundEnabled) {
       startBgm();

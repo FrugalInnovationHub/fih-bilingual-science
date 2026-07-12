@@ -36,10 +36,10 @@ class _SignupScreenState extends State<SignupScreen>
   ];
 
   final List<String> _backgroundImages = [
-    "assets/images/wallpapers/wallpaper1.png",
-    "assets/images/wallpapers/wallpaper2.png",
-    "assets/images/wallpapers/wallpaper3.png",
-    "assets/images/wallpapers/wallpaper4.png",
+    "assets/images/wallpapers/wallpaper1.webp",
+    "assets/images/wallpapers/wallpaper2.webp",
+    "assets/images/wallpapers/wallpaper3.webp",
+    "assets/images/wallpapers/wallpaper4.webp",
   ];
 
   @override

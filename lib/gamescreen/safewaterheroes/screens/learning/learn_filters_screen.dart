@@ -13,7 +13,7 @@ class LearnFiltersScreen extends ConsumerWidget {
   const LearnFiltersScreen({super.key});
 
   static const String _regularFilterCover =
-      'assets/safewaterheroes/images/Regular_filter_Cover.png';
+      'assets/safewaterheroes/images/Regular_filter_Cover.webp';
   static const String _osmosisFilterCover =
       AppAssets.osmosisFilterCover;
 

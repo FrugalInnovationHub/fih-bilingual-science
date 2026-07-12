@@ -11,28 +11,28 @@ class JungleLessonsPage extends StatelessWidget {
   static final List<Map<String, dynamic>> _lessons = [
     {
       'title': 'Habitats',
-      'image': 'assets/animalwizz/images/habitat_forest.png',
+      'image': 'assets/animalwizz/images/habitat_forest.webp',
       'color': Colors.green,
       'icon': Icons.landscape,
       'ready': true,
     },
     {
       'title': 'Animals',
-      'image': 'assets/animalwizz/images/animal_habitats.png',
+      'image': 'assets/animalwizz/images/animal_habitats.webp',
       'color': Colors.orange,
       'icon': Icons.pets,
       'ready': false,
     },
     {
       'title': 'Life Cycles',
-      'image': 'assets/animalwizz/images/butterfly.png',
+      'image': 'assets/animalwizz/images/butterfly.webp',
       'color': Colors.blue,
       'icon': Icons.refresh,
       'ready': false,
     },
     {
       'title': 'Food Chain',
-      'image': 'assets/animalwizz/images/foodchain.png',
+      'image': 'assets/animalwizz/images/foodchain.webp',
       'color': Colors.purple,
       'icon': Icons.restaurant,
       'ready': false,

@@ -32,13 +32,13 @@ class GamesSelectionPage extends StatelessWidget {
     },
     {
       'title': 'Food Chain',
-      'image': 'assets/animalwizz/images/foodchain.png',
+      'image': 'assets/animalwizz/images/foodchain.webp',
       'color': Colors.purple,
       'icon': Icons.restaurant,
     },
     {
       'title': 'Life Cycles',
-      'image': 'assets/animalwizz/images/butterfly.png',
+      'image': 'assets/animalwizz/images/butterfly.webp',
       'color': Colors.blue,
       'icon': Icons.refresh,
     },
@@ -49,7 +49,7 @@ class GamesSelectionPage extends StatelessWidget {
     final grid = ResponsiveGridConfig.of(context);
 
     return BackgroundScaffold(
-      backgroundImage: 'assets/animalwizz/images/quiz_background.png',
+      backgroundImage: 'assets/animalwizz/images/quiz_background.webp',
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: grid.horizontalPadding),
         child: Column(
@@ -114,7 +114,7 @@ class GamesSelectionPage extends StatelessWidget {
       case 'Memory Match':
         destination = const MemoryGamePage(
           lessonTitle: 'All Animals',
-          lessonImage: 'assets/animalwizz/images/animal_habitats.png',
+          lessonImage: 'assets/animalwizz/images/animal_habitats.webp',
         );
       case 'Word Puzzle':
         destination = const AnimalWordPuzzlePage(sectionName: 'Animals');

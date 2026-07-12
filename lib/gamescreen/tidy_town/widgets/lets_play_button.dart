@@ -50,7 +50,7 @@ class LetsPlayButton extends StatelessWidget {
         decoration: BoxDecoration(
           image: const DecorationImage(
             image: AssetImage(
-              'assets/tidytown/images/1.png',
+              'assets/tidytown/images/1.webp',
             ), // ✅ Your image path
             fit: BoxFit.cover, // Or BoxFit.fill, BoxFit.fitWidth, etc.
           ),

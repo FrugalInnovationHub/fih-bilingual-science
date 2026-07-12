@@ -322,63 +322,63 @@ class _WallyStoryScreenState extends State<WallyStoryScreen> {
               if (isFirstPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/wally1.png',
+                    'assets/tidytown/images/recycle/wally1.webp',
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isSecondPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/wally2.png',
+                    'assets/tidytown/images/recycle/wally2.webp',
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isThirdPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/wally3.png',
+                    'assets/tidytown/images/recycle/wally3.webp',
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isFourthPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/wally4.png',
+                    'assets/tidytown/images/recycle/wally4.webp',
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isFifthPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/wally5.png',
+                    'assets/tidytown/images/recycle/wally5.webp',
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isSixthPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/wally6.png',
+                    'assets/tidytown/images/recycle/wally6.webp',
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isSeventhPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/wally7.png',
+                    'assets/tidytown/images/recycle/wally7.webp',
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isEighthPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/wally8.png',
+                    'assets/tidytown/images/recycle/wally8.webp',
                     fit: BoxFit.cover,
                   ),
                 )
               else if (isMoralPage)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/tidytown/images/recycle/moral.png',
+                    'assets/tidytown/images/recycle/moral.webp',
                     fit: BoxFit.cover,
                   ),
                 ),

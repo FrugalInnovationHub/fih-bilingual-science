@@ -248,7 +248,7 @@ class _TrackingQuizPageState extends State<TrackingQuizPage> {
         Animal(
           name: 'Penguin',
           nameEs: 'Pingüino',
-          image: 'assets/animalwizz/images/penguin.png',
+          image: 'assets/animalwizz/images/penguin.webp',
           sound: null,
           clues: [
             'I waddle and cannot fly but swim very well.',
@@ -418,7 +418,7 @@ class _TrackingQuizPageState extends State<TrackingQuizPage> {
       ),
       body: Container(
         decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage('assets/animalwizz/images/quiz_background.png'), fit: BoxFit.cover),
+          image: DecorationImage(image: AssetImage('assets/animalwizz/images/quiz_background.webp'), fit: BoxFit.cover),
         ),
         child: SafeArea(
           child: Padding(

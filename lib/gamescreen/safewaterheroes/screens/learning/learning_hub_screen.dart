@@ -10,9 +10,9 @@ class LearningHubScreen extends ConsumerWidget {
   const LearningHubScreen({super.key});
 
   static const String _section1Cover =
-      'assets/safewaterheroes/images/Learning_Section1_Cover.png';
+      'assets/safewaterheroes/images/Learning_Section1_Cover.webp';
   static const String _section2Cover =
-      'assets/safewaterheroes/images/Learning_Section2_Cover.png';
+      'assets/safewaterheroes/images/Learning_Section2_Cover.webp';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

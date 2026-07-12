@@ -55,7 +55,7 @@ class _FoodChainGamePageState extends State<FoodChainGamePage> {
       'category': 'tertiary',
       'label': 'Tertiary Consumer',
       'label_es': 'Consumidor terciario',
-      'image': 'assets/animalwizz/images/hawk.png',
+      'image': 'assets/animalwizz/images/hawk.webp',
       'description': 'Tertiary consumers like hawks are at the top of the food chain.',
       'description_es': 'Los consumidores terciarios como los halcones están en la cima de la cadena alimentaria.'
     },

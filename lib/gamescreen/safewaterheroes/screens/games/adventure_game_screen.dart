@@ -57,7 +57,7 @@ class SceneScript {
 final List<SceneScript> _scenes = [
   SceneScript(
     id: 'pond',
-    bgAsset: 'assets/safewaterheroes/images/scenes/scene_pond.png',
+    bgAsset: 'assets/safewaterheroes/images/scenes/scene_pond.webp',
     correctAnswer: WaterType.needsFilter,
     narrationEn: [
       "We found a quiet pond.",
@@ -78,7 +78,7 @@ final List<SceneScript> _scenes = [
   ),
   SceneScript(
     id: 'river',
-    bgAsset: 'assets/safewaterheroes/images/scenes/scene_river.png',
+    bgAsset: 'assets/safewaterheroes/images/scenes/scene_river.webp',
     correctAnswer: WaterType.needsFilter,
     narrationEn: [
       "Here is a big flowing river.",
@@ -99,7 +99,7 @@ final List<SceneScript> _scenes = [
   ),
   SceneScript(
     id: 'stream',
-    bgAsset: 'assets/safewaterheroes/images/scenes/scene_stream.png',
+    bgAsset: 'assets/safewaterheroes/images/scenes/scene_stream.webp',
     correctAnswer: WaterType.needsFilter,
     narrationEn: [
       "Look at this small stream.",
@@ -120,7 +120,7 @@ final List<SceneScript> _scenes = [
   ),
   SceneScript(
     id: 'pump',
-    bgAsset: 'assets/safewaterheroes/images/scenes/scene_pump.png',
+    bgAsset: 'assets/safewaterheroes/images/scenes/scene_pump.webp',
     correctAnswer: WaterType.needsFilter,
     narrationEn: [
       "This is a village handpump.",
@@ -141,7 +141,7 @@ final List<SceneScript> _scenes = [
   ),
   SceneScript(
     id: 'tap',
-    bgAsset: 'assets/safewaterheroes/images/scenes/scene_tap.png',
+    bgAsset: 'assets/safewaterheroes/images/scenes/scene_tap.webp',
     correctAnswer: WaterType.safe,
     narrationEn: [
       "We found a community tap.",
@@ -162,7 +162,7 @@ final List<SceneScript> _scenes = [
   ),
   SceneScript(
     id: 'puddle',
-    bgAsset: 'assets/safewaterheroes/images/scenes/scene_puddle.png',
+    bgAsset: 'assets/safewaterheroes/images/scenes/scene_puddle.webp',
     correctAnswer: WaterType.unsafe,
     narrationEn: [
       "Oh no. A muddy puddle on the ground.",
@@ -234,14 +234,14 @@ class _AdventureGameScreenState extends ConsumerState<AdventureGameScreen> with 
 
   // --- KID ASSET SWAP LOGIC ---
   String get _kidAsset {
-    // Assets needed: kid_walking.png, kid_thinking.png, kid_asking.png
+    // Assets needed: kid_walking.webp, kid_thinking.webp, kid_asking.webp
     if (_phase == AdventurePhase.entering || _phase == AdventurePhase.exiting || _phase == AdventurePhase.intro) {
       return AppAssets.kidWalking; 
     }
     if (_phase == AdventurePhase.deciding) {
-      return 'assets/safewaterheroes/images/kid_asking.png'; // Assuming asset exists, fallback logic in builder
+      return 'assets/safewaterheroes/images/kid_asking.webp'; // Assuming asset exists, fallback logic in builder
     }
-    return 'assets/safewaterheroes/images/kid_thinking.png'; // Narrating or Feedback
+    return 'assets/safewaterheroes/images/kid_thinking.webp'; // Narrating or Feedback
   }
 
   // --- AUDIO QUEUE HELPER (AWAITABLE) ---
@@ -487,7 +487,7 @@ class _AdventureGameScreenState extends ConsumerState<AdventureGameScreen> with 
                 padding: const EdgeInsets.all(20),
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/safewaterheroes/images/cloud.png'), // Ensure this asset exists!
+                    image: AssetImage('assets/safewaterheroes/images/cloud.webp'), // Ensure this asset exists!
                     fit: BoxFit.fill,
                   ),
                 ),

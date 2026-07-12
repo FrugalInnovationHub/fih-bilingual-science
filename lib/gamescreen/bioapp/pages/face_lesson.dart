@@ -64,7 +64,7 @@ class _FaceLessonState extends State<FaceLesson> {
     },
     {
       // MOUTH
-      "image": "assets/bioappdr/mouth.png",
+      "image": "assets/bioappdr/mouth.webp",
       "title_en": "Mouth",
       "title_es": "Boca",
       "function_en": "Ingests food, initiates digestion, enables speech.",

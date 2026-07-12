@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const CircleAvatar(
                   radius: 30,
                   backgroundImage: AssetImage(
-                    'assets/tidytown/images/avatar.png',
+                    'assets/tidytown/images/avatar.webp',
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -377,7 +377,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/tidytown/images/home_back.png',
+              'assets/tidytown/images/home_back.webp',
               fit: BoxFit.fill,
             ),
           ),
